@@ -1,5 +1,6 @@
 package com.example.servemesystem;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +27,8 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirstFragmentDirections.ActionFirstFragmentToSecondFragment action =
-                        FirstFragmentDirections.
-                                actionFirstFragmentToSecondFragment("From FirstFragment");
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(action);
+                Intent registerIntent = new Intent(getActivity(),RegistrationActivity.class);
+                startActivity(registerIntent);
             }
         });
     }
