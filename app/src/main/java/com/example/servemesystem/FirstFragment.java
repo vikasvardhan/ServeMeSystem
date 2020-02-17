@@ -27,8 +27,16 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registerIntent = new Intent(getActivity(),RegistrationActivity.class);
+                Intent registerIntent = new Intent(getActivity(), RegistrationActivity.class);
                 startActivity(registerIntent);
+            }
+        });
+
+        view.findViewById(R.id.button_settings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(settingsIntent);
             }
         });
     }
