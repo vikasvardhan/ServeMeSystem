@@ -1,0 +1,37 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/base_header">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="sound"
+            app:summaryOff="Now is Off"
+            app:summaryOn="Now is On"
+            app:title="@string/sound" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/notification_header">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="receive_communication"
+            app:summaryOff="Now is Off"
+            app:summaryOn="Now is On"
+            app:title="@string/receive_communication" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/service_header">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="use_points"
+            app:summaryOff="Now is Off"
+            app:summaryOn="Now is On"
+            app:title="@string/use_points" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
