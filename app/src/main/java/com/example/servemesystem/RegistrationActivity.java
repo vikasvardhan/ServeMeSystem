@@ -9,22 +9,26 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
-EditText firstName;
-EditText lastName;
-EditText email;
-EditText phoneNumber;
-EditText username;
-EditText password;
-EditText confirmPassword;
+    DatabaseHelper db;
+
+    EditText firstName;
+    EditText lastName;
+    EditText email;
+    EditText phoneNumber;
+    EditText username;
+    EditText password;
+    EditText confirmPassword;
 Button register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        db = new DatabaseHelper(this);
         firstName = findViewById(R.id.edittext_firstName);
         lastName = findViewById(R.id.edittext_lastName);
         email = findViewById(R.id.edittext_email);
@@ -35,7 +39,12 @@ Button register;
         register = findViewById(R.id.button_register);
         register.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                checkDataEntered();
+                if(checkDataEntered()){
+                    Boolean insert = db.insert(firstName.getText().toString(),lastName.getText().toString(), email.getText().toString(), phoneNumber.getText().toString(), username.getText().toString(), password.getText().toString());
+                    if(insert){
+                        Toast.makeText(getApplicationContext(), "User Registered Succcessfully", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
@@ -48,9 +57,9 @@ Button register;
         else if (type == "phone")
             return(!TextUtils.isEmpty(input) && Patterns.PHONE.matcher(input).matches());
         else if (type == "username")
-            return(!TextUtils.isEmpty(input) && !((String) input).matches("^[a-z0-9]{3,15}$"));
+            return(!TextUtils.isEmpty(input) && ((String) input).matches("^[a-z0-9A-Z]{6,10}$"));
         else if(type == "password")
-            return(!TextUtils.isEmpty(input) && !((String) input).matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\\\S+$).{4,}$"));
+            return(!TextUtils.isEmpty(input) && ((String) input).matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"));
         else if(type == "confirmPassword")
             return(!TextUtils.isEmpty(input) && input != password);
         return false;
@@ -61,43 +70,60 @@ Button register;
         return TextUtils.isEmpty(str);
     }
 
-    void checkDataEntered(){
+    boolean checkDataEntered(){
+        boolean valid = true;
         if(isEmpty(firstName)){
             firstName.setError("First Name is required");
+            valid = false;
         }
         if(isEmpty(lastName)){
             lastName.setError("Last Name is required");
+            valid = false;
         }
         if(isEmpty(email)){
             email.setError("Last Name is required");
+            valid = false;
+        }
+        else if(!isOfType(email,"email")){
+            email.setError("Enter valid email!");
+            valid = false;
         }
         if(isEmpty(phoneNumber)){
             phoneNumber.setError("Last Name is required");
+            valid = false;
+        }
+        else if(!isOfType(phoneNumber,"phone")){
+            phoneNumber.setError("Enter valid phone number!");
+            valid = false;
         }
         if(isEmpty(username)){
-            username.setError("Last Name is required");
+            username.setError("Username is required");
+            valid = false;
+        }
+        else if(!isOfType(username,"username")){
+            username.setError("Username should be of the designated pattern");
+            valid = false;
         }
         if(isEmpty(password)){
-            password.setError("Last Name is required");
+            password.setError("Password is required");
+            valid = false;
+        }
+        else if(!isOfType(password,"password")){
+            password.setError("Password should be of the designated pattern");
+            valid = false;
         }
         if(isEmpty(confirmPassword)){
-            confirmPassword.setError("Last Name is required");
+            confirmPassword.setError("Confirm Password is required");
+            valid = false;
         }
-        if(!isOfType(email,"email")){
-            email.setError("Enter valid email!");
-        }
-        if(!isOfType(phoneNumber,"phone")){
-            phoneNumber.setError("Enter valid phone number!");
-        }
-        if(!isOfType(username,"username")){
-            username.setError("Username should be of the designated pattern");
-        }
-        if(!isOfType(password,"password")){
-            password.setError("Password should be of the designated pattern");
-        }
-        if(!isOfType(confirmPassword,"confirmPassword")){
+        else if(!isOfType(confirmPassword,"confirmPassword")){
             confirmPassword.setError("Confirm password should match Password");
+            valid = false;
         }
-
+        if(!db.checkUser(username.getText().toString())){
+            Toast.makeText(getApplicationContext(), "User already exists!", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        return valid;
     }
 }
