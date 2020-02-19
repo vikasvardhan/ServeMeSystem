@@ -1,116 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".RegistrationActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/loginscrn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Registration"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
+    <TextView
+        android:id="@+id/firstNameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
 
-    <LinearLayout
+        android:text="@string/firstName"/>
+    <EditText
+        android:id="@+id/edittext_firstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:ems="10"/>
+    <TextView
+        android:id="@+id/lstText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+
+        android:text="@string/lastName"/>
+    <EditText
+        android:id="@+id/edittext_lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:ems="10"/>
+    <TextView
+        android:id="@+id/emailTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+
+        android:text="@string/email"/>
+    <EditText
+        android:id="@+id/edittext_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:inputType="textEmailAddress"
+        android:ems="10"/>
+    <TextView
+        android:id="@+id/phoneTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+
+        android:text="@string/phonenumber"/>
+    <EditText
+        android:id="@+id/edittext_phonenumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:inputType="phone"
+        android:ems="10"/>
+    <TextView
+        android:id="@+id/usernameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        android:layout_marginLeft="100dp" />
+    <EditText
+        android:id="@+id/edittext_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:ems="10" />
+    <TextView
+        android:id="@+id/passwordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        android:layout_marginLeft="100dp" />
+    <EditText
+        android:id="@+id/edittext_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:inputType="textPassword"
+        android:ems="10" />
+    <TextView
+        android:id="@+id/cnfPswdText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm_password"
+        android:layout_marginLeft="100dp" />
+    <EditText
+        android:id="@+id/edittext_cnf_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:inputType="textPassword"
+        android:ems="10" />
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:text="Register" />
+    <TextView android:id="@+id/lnkLogin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        tools:context="com.demo.easylearn.RegisterActivity">
-
-        <EditText
-            android:id="@+id/edittext_firstName"
-            android:layout_width="206dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="2dp"
-            android:background="#ffffff"
-            android:hint="@string/firstName"/>
-
-        <EditText
-            android:id="@+id/edittext_lastName"
-            android:layout_width="206dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="2dp"
-            android:background="#ffffff"
-            android:hint="@string/lastName"/>
-
-        <EditText
-            android:id="@+id/edittext_email"
-            android:layout_width="206dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="2dp"
-            android:background="#ffffff"
-            android:inputType="textEmailAddress"
-            android:hint="@string/email"/>
-
-        <EditText
-            android:id="@+id/edittext_phonenumber"
-            android:layout_width="206dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="2dp"
-            android:background="#ffffff"
-            android:inputType="phone"
-            android:hint="@string/phonenumber"/>
-
-        <EditText
-            android:id="@+id/edittext_username"
-            android:layout_width="206dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="2dp"
-            android:background="#ffffff"
-            android:hint="@string/username"/>
-
-        <EditText
-            android:id="@+id/edittext_password"
-            android:layout_width="206dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:inputType="textPassword"
-            android:hint="@string/password"/>
-
-        <EditText
-            android:id="@+id/edittext_cnf_password"
-            android:layout_width="206dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:inputType="textPassword"
-            android:hint="@string/confirm_password"/>
-
-        <Button
-            android:id="@+id/button_register"
-            android:layout_width="206dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:background="#04ea00"
-            android:text="@string/register"
-            android:textColor="#ffffff" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:textColor="#ffffff"
-                android:text="@string/already_registered"/>
-
-            <TextView
-                android:id="@+id/textview_login"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:paddingLeft="10dp"
-                android:textStyle="bold"
-                android:textColor="#04ea00"
-                android:textSize="16sp"
-                android:text="@string/login"/>
-
-        </LinearLayout>
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Already Registered? Login here"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textColor="#3F51B5"
+        android:onClick="redirectLogin"/>
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

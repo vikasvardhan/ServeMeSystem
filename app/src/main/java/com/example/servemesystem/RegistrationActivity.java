@@ -2,6 +2,7 @@ package com.example.servemesystem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.service.autofill.RegexValidator;
 import android.text.TextUtils;
@@ -11,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -43,10 +46,24 @@ Button register;
                     Boolean insert = db.insert(firstName.getText().toString(),lastName.getText().toString(), email.getText().toString(), phoneNumber.getText().toString(), username.getText().toString(), password.getText().toString());
                     if(insert){
                         Toast.makeText(getApplicationContext(), "User Registered Succcessfully", Toast.LENGTH_SHORT).show();
+
+                        Timer timer = new Timer();
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                finish();
+                               redirectLogin();
+                            }
+                        }, 500);
                     }
                 }
             }
         });
+    }
+
+    void redirectLogin(){
+        Intent registerIntent = new Intent(RegistrationActivity.this, MainActivity.class);
+        startActivity(registerIntent);
     }
 
     boolean isOfType(EditText text, String type) {
