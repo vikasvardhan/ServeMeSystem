@@ -26,7 +26,8 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText username;
     EditText password;
     EditText confirmPassword;
-Button register;
+    Button register;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,13 @@ Button register;
         register.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 if(checkDataEntered()){
-                    Boolean insert = db.insert(firstName.getText().toString(),lastName.getText().toString(), email.getText().toString(), phoneNumber.getText().toString(), username.getText().toString(), password.getText().toString());
+                    Boolean insert = db.insertUser(firstName.getText().toString(),
+                                                   lastName.getText().toString(),
+                                                   email.getText().toString(),
+                                                   phoneNumber.getText().toString(),
+                                                   username.getText().toString(),
+                                                   password.getText().toString(),
+                                                   "customer");
                     if(insert){
                         Toast.makeText(getApplicationContext(), "User Registered Succcessfully", Toast.LENGTH_SHORT).show();
 
