@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
@@ -26,6 +28,13 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText username;
     EditText password;
     EditText confirmPassword;
+    TextInputLayout fNameText;
+    TextInputLayout lNameText;
+    TextInputLayout emailText;
+    TextInputLayout phoneText;
+    TextInputLayout uNameText;
+    TextInputLayout pwdText;
+    TextInputLayout cnfPwdText;
     Button register;
 
     @Override
@@ -41,6 +50,13 @@ public class RegistrationActivity extends AppCompatActivity {
         password = findViewById(R.id.edittext_password);
         confirmPassword = findViewById(R.id.edittext_cnf_password);
         register = findViewById(R.id.button_register);
+        fNameText = findViewById(R.id.firstTxt);
+        lNameText = findViewById(R.id.lstTxt);
+        emailText = findViewById(R.id.emailtxt);
+        phoneText = findViewById(R.id.phonetxt);
+        uNameText = findViewById(R.id.usrnameTxt);
+        pwdText = findViewById(R.id.passwordText);
+        cnfPwdText = findViewById(R.id.cnfpasswordText);
         register.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 if(checkDataEntered()){
@@ -81,7 +97,7 @@ public class RegistrationActivity extends AppCompatActivity {
         else if (type == "phone")
             return(!TextUtils.isEmpty(input) && Patterns.PHONE.matcher(input).matches());
         else if (type == "username")
-            return(!TextUtils.isEmpty(input) && ((String) input).matches("^[a-z0-9A-Z]{6,10}$"));
+            return(!TextUtils.isEmpty(input) && ((String) input).matches("^[a-z0-9A-Z]{6,15}$"));
         else if(type == "password")
             return(!TextUtils.isEmpty(input) && ((String) input).matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"));
         else if(type == "confirmPassword")
@@ -96,52 +112,64 @@ public class RegistrationActivity extends AppCompatActivity {
 
     boolean checkDataEntered(){
         boolean valid = true;
+        fNameText.setError(null);
         if(isEmpty(firstName)){
-            firstName.setError("First Name is required");
+            fNameText.setError("\u2022 First Name is required");
             valid = false;
         }
+        lNameText.setError(null);
         if(isEmpty(lastName)){
-            lastName.setError("Last Name is required");
+            lNameText.setError("\u2022 Last Name is required");
             valid = false;
         }
+        emailText.setError(null);
         if(isEmpty(email)){
-            email.setError("Last Name is required");
+            emailText.setError("\u2022 Email is required");
             valid = false;
         }
         else if(!isOfType(email,"email")){
-            email.setError("Enter valid email!");
+            emailText.setError("\u2022 Enter a valid email! (###@###.com)");
             valid = false;
         }
+        phoneText.setError(null);
         if(isEmpty(phoneNumber)){
-            phoneNumber.setError("Last Name is required");
+            phoneText.setError("\u2022 Phone number is required");
             valid = false;
         }
         else if(!isOfType(phoneNumber,"phone")){
-            phoneNumber.setError("Enter valid phone number!");
+            phoneText.setError("\u2022 Enter valid phone number!");
             valid = false;
         }
+        uNameText.setError(null);
         if(isEmpty(username)){
-            username.setError("Username is required");
+            uNameText.setError("\u2022 Username is required");
             valid = false;
         }
         else if(!isOfType(username,"username")){
-            username.setError("Username should be of the designated pattern");
+            uNameText.setError("\u2022 Username should be of 6 to 15 characters in length \n" +
+                    "\u2022 Username should be alphanumeric");
             valid = false;
         }
+        pwdText.setError(null);
         if(isEmpty(password)){
-            password.setError("Password is required");
+            pwdText.setError("Password is required");
             valid = false;
         }
         else if(!isOfType(password,"password")){
-            password.setError("Password should be of the designated pattern");
+            pwdText.setError("\u2022 Password should have minimum 8 characters \n" +
+                    "\u2022 Should have at least one Upper Case letter \n" +
+                    "\u2022 Should have at least one Lower Case letter \n" +
+                    "\u2022 Should have at least one Number \n" +
+                    "\u2022 Should have at least one special character");
             valid = false;
         }
+        cnfPwdText.setError(null);
         if(isEmpty(confirmPassword)){
-            confirmPassword.setError("Confirm Password is required");
+            cnfPwdText.setError("Confirm Password is required");
             valid = false;
         }
         else if(!isOfType(confirmPassword,"confirmPassword")){
-            confirmPassword.setError("Confirm password should match Password");
+            cnfPwdText.setError("Confirm password should match Password");
             valid = false;
         }
         if(!db.checkUser(username.getText().toString())){
