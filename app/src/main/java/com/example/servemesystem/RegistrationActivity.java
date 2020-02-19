@@ -61,7 +61,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 finish();
                                redirectLogin();
                             }
-                        }, 500);
+                        }, 1500);
                     }
                 }
             }
