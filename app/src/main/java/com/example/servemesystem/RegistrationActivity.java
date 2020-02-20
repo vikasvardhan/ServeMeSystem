@@ -97,7 +97,7 @@ public class RegistrationActivity extends AppCompatActivity {
         else if(type == "email")
             return (!TextUtils.isEmpty(input) && Patterns.EMAIL_ADDRESS.matcher(input).matches());
         else if (type == "phone")
-            return(!TextUtils.isEmpty(input) && Patterns.PHONE.matcher(input).matches());
+            return(!TextUtils.isEmpty(input) && Patterns.PHONE.matcher(input).matches() && ((String) input).length() == 10);
         else if (type == "username")
             return(!TextUtils.isEmpty(input) && ((String) input).matches("^[a-z0-9A-Z]{6,15}$"));
         else if(type == "password")
@@ -145,7 +145,8 @@ public class RegistrationActivity extends AppCompatActivity {
             valid = false;
         }
         else if(!isOfType(phoneNumber,"phone")){
-            phoneText.setError("\u2022 Enter valid phone number!");
+            phoneText.setError("\u2022 Enter a valid phone number! \n" +
+                    "\u2022 Phone number should contain 10 numbers");
             valid = false;
         }
         uNameText.setError(null);
