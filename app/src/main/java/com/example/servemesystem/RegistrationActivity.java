@@ -93,7 +93,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         CharSequence input = text.getText().toString();
         if(type == "name")
-            return(!TextUtils.isEmpty(input) &&  ((String) input).matches("^[a-zA-Z]$"));
+            return(!TextUtils.isEmpty(input) &&  ((String) input).matches("^[a-zA-Z]*$"));
         else if(type == "email")
             return (!TextUtils.isEmpty(input) && Patterns.EMAIL_ADDRESS.matcher(input).matches());
         else if (type == "phone")
@@ -103,7 +103,7 @@ public class RegistrationActivity extends AppCompatActivity {
         else if(type == "password")
             return(!TextUtils.isEmpty(input) && ((String) input).matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"));
         else if(type == "confirmPassword")
-            return(!TextUtils.isEmpty(input) && input != password);
+            return(!TextUtils.isEmpty(input) && input.equals(password.getText().toString()));
         return false;
     };
 
