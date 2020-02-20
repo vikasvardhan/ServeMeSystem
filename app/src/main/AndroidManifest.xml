@@ -16,7 +16,8 @@
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".RegistrationActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:label = "Registration "/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

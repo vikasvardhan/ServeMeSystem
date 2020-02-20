@@ -92,7 +92,9 @@ public class RegistrationActivity extends AppCompatActivity {
     boolean isOfType(EditText text, String type) {
 
         CharSequence input = text.getText().toString();
-        if(type == "email")
+        if(type == "name")
+            return(!TextUtils.isEmpty(input) &&  ((String) input).matches("^[a-zA-Z]$"));
+        else if(type == "email")
             return (!TextUtils.isEmpty(input) && Patterns.EMAIL_ADDRESS.matcher(input).matches());
         else if (type == "phone")
             return(!TextUtils.isEmpty(input) && Patterns.PHONE.matcher(input).matches());
@@ -117,10 +119,16 @@ public class RegistrationActivity extends AppCompatActivity {
             fNameText.setError("\u2022 First Name is required");
             valid = false;
         }
+        else if(!isOfType(firstName, "name")){
+            fNameText.setError("\u2022 First Name must contain only alphabets");
+        }
         lNameText.setError(null);
         if(isEmpty(lastName)){
             lNameText.setError("\u2022 Last Name is required");
             valid = false;
+        }
+        else if(!isOfType(lastName, "name")){
+            lNameText.setError("\u2022 Last Name must contain only alphabets");
         }
         emailText.setError(null);
         if(isEmpty(email)){
