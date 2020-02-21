@@ -4,6 +4,7 @@
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
+            app:icon="@drawable/ic_sound_black_24dp"
             app:key="sound"
             app:summaryOff="Now is Off"
             app:summaryOn="Now is On"
@@ -15,6 +16,7 @@
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
+            app:icon="@drawable/ic_communication_black_24dp"
             app:key="receive_communication"
             app:summaryOff="Now is Off"
             app:summaryOn="Now is On"
@@ -26,6 +28,7 @@
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
+            app:icon="@drawable/ic_use_point_black_24dp"
             app:key="use_points"
             app:summaryOff="Now is Off"
             app:summaryOn="Now is On"
