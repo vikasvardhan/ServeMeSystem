@@ -16,7 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 public class FirstFragment extends Fragment {
 
-    DatabaseHelper db;
+    DatabaseAccess db;
     EditText username;
     EditText password;
     Button submit;
@@ -31,7 +31,7 @@ public class FirstFragment extends Fragment {
         password = (EditText) view.findViewById(R.id.editText_loginPassword);
         submit = (Button) view.findViewById(R.id.button_submit);
 
-        db = new DatabaseHelper(getActivity());
+        db = DatabaseAccess.getInstance(getActivity());
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

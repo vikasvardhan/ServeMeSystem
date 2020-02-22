@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.service.autofill.RegexValidator;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -22,7 +23,7 @@ import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
-    DatabaseHelper db;
+    DatabaseAccess db;
 
     EditText firstName;
     EditText lastName;
@@ -47,7 +48,7 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         //DB
-        db = new DatabaseHelper(this);
+        db =  DatabaseAccess.getInstance(getApplicationContext());
 
         //Edit Text Values
         firstName = findViewById(R.id.edittext_firstName);
