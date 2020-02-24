@@ -10,23 +10,31 @@
         android:name="com.example.servemesystem.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
-
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_FirstFragment_to_customerActivity"
+            app:destination="@id/customerActivity" />
+        <action
+            android:id="@+id/action_FirstFragment_to_vendorHome"
+            app:destination="@id/vendorHome" />
     </fragment>
+    <activity
+        android:id="@+id/customerActivity"
+        android:name="com.example.servemesystem.CustomerActivity"
+        android:label="activity_customer"
+        tools:layout="@layout/activity_customer" />
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.servemesystem.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-
-        <argument
-            android:name="myArg"
-            app:argType="string" />
-    </fragment>
+        android:id="@+id/createServiceRequest"
+        android:name="com.example.servemesystem.CreateServiceRequest"
+        android:label="fragment_create_service_request"
+        tools:layout="@layout/fragment_create_service_request" />
+    <activity
+        android:id="@+id/vendorHome"
+        android:name="com.example.servemesystem.VendorHome"
+        android:label="activity_vendor_home"
+        tools:layout="@layout/activity_vendor_home" />
+    <fragment
+        android:id="@+id/customerManageServiceRequests"
+        android:name="com.example.servemesystem.CustomerManageServiceRequests"
+        android:label="fragment_customer_manage_service_requests"
+        tools:layout="@layout/fragment_customer_manage_service_requests" />
 </navigation>

@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 public class FirstFragment extends Fragment {
@@ -26,6 +28,7 @@ public class FirstFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState)
     {
+        Fragment curr = this;
         View view = inflater.inflate(R.layout.fragment_first, container, false);
         username = (EditText) view.findViewById(R.id.editText_loginUsername);
         password = (EditText) view.findViewById(R.id.editText_loginPassword);
@@ -33,22 +36,33 @@ public class FirstFragment extends Fragment {
 
         db = DatabaseAccess.getInstance(getActivity());
 
+        // Inflate the layout for this fragment
+        return view;
+    }
+
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        final NavController navController = Navigation.findNavController(view);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean validCredentials = db.authenticate(username.getText().toString(),
-                                                           password.getText().toString());
+                        password.getText().toString());
                 if(validCredentials){
                     Toast.makeText(getActivity(), "Login successful" , Toast.LENGTH_SHORT).show();
                     //check user type
                     String userType = db.getAccountType(username.getText().toString());
                     if(userType.equals("customer")){
-                        Intent settingsIntent = new Intent(getActivity(), CustomerHome.class);
-                        startActivity(settingsIntent);
+                        navController.navigate(R.id.customerActivity);
+//                        Integer settingsIntent = new Intent(getActivity(), CustomerActivity.class);
+//                        startActivity();
                     }
                     else{
-                        Intent settingsIntent = new Intent(getActivity(), VendorHome.class);
-                        startActivity(settingsIntent);
+//                        Intent settingsIntent = new Intent(getActivity(), VendorHome.class);
+//                        startActivity(settingsIntent);
+                        navController.navigate(R.id.vendorHome);
                     }
 
                 }
@@ -58,13 +72,6 @@ public class FirstFragment extends Fragment {
                 }
             }
         });
-
-        // Inflate the layout for this fragment
-        return view;
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         view.findViewById(R.id.textView_register).setOnClickListener(new View.OnClickListener() {
             @Override
