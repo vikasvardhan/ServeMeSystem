@@ -23,6 +23,11 @@
     <string name="lastName">Last Name</string>
     <string name="title_activity_settings">Settings</string>
 
+    <!--    Vendor Drawer Options-->
+    <string name="menu_item_vendor_view_service_requests">View Service Requests</string>
+    <string name="menu_item_vendor_manage_service_requests">Manage Service Requests</string>
+    <string name="menu_item_vendor_profile">Profile</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -53,4 +58,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="regInitials">Initials</string>
     <string name="regCred">Credentials</string>
+
+    <string name="navigation_drawer_open"> Open Navigation Drawer </string>
+    <string name="navigation_drawer_close"> Close Navigation Drawer </string>
 </resources>

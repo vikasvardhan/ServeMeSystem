@@ -9,15 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VendorHome"></activity>
-        <activity android:name=".CustomerHome" />
+        <activity
+            android:name=".CustomerActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".VendorHome"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".RegistrationActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:label = "Registration "/>
+            android:label="Registration "
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

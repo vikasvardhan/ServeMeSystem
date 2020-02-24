@@ -1,7 +1,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.servemesystem.CustomerHome">
+    tools:context="com.example.servemesystem.CustomerHome"
+    tools:showIn="navigation_view">
+    <item
+        android:id="@+id/menuItem_customer_createServiceRequest"
+        android:orderInCategory="100"
+        android:title="Create Service Request"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menuItem_customer_manageServiceRequest"
+        android:orderInCategory="100"
+        android:title="Manage Service Requests"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menuItem_customer_profile"
+        android:orderInCategory="100"
+        android:title="Profile"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_settings_customer"
         android:orderInCategory="100"
