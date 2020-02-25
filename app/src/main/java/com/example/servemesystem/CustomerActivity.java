@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -79,6 +80,11 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_home,
                         new CustomerProfile()).commit();
                 break;
+            case R.id.action_settings_customer:
+                Intent settingsIntent = new Intent(CustomerActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+
 
         }
         drawer.closeDrawer(GravityCompat.START);
