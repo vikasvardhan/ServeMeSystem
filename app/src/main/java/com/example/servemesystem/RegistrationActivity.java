@@ -4,12 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.service.autofill.RegexValidator;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,25 +15,41 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.seatgeek.placesautocomplete.DetailsCallback;
+import com.seatgeek.placesautocomplete.OnPlaceSelectedListener;
+import com.seatgeek.placesautocomplete.PlacesAutocompleteTextView;
+import com.seatgeek.placesautocomplete.model.AddressComponent;
+import com.seatgeek.placesautocomplete.model.AddressComponentType;
+import com.seatgeek.placesautocomplete.model.Place;
+import com.seatgeek.placesautocomplete.model.PlaceDetails;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
     DatabaseAccess db;
-
+    //Edit Text Values
     EditText firstName;
     EditText lastName;
     EditText email;
     EditText phoneNumber;
+    EditText address;
+    EditText city;
+    EditText state;
+    EditText pinCode;
     EditText username;
     EditText password;
     EditText confirmPassword;
+
+    //Text View Values
     TextInputLayout fNameText;
     TextInputLayout lNameText;
     TextInputLayout emailText;
     TextInputLayout phoneText;
+    TextInputLayout addressText;
+    TextInputLayout cityText;
+    TextInputLayout stateText;
+    TextInputLayout pinCodeText;
     TextInputLayout uNameText;
     TextInputLayout pwdText;
     TextInputLayout cnfPwdText;
@@ -43,12 +57,15 @@ public class RegistrationActivity extends AppCompatActivity {
 
     ViewFlipper regVf;
 
+    PlacesAutocompleteTextView placesAutocomplete;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         //DB
-        db =  DatabaseAccess.getInstance(getApplicationContext());
+        db = DatabaseAccess.getInstance(getApplicationContext());
 
         //Edit Text Values
         firstName = findViewById(R.id.edittext_firstName);
@@ -59,6 +76,11 @@ public class RegistrationActivity extends AppCompatActivity {
         password = findViewById(R.id.edittext_password);
         confirmPassword = findViewById(R.id.edittext_cnf_password);
         register = findViewById(R.id.button_register);
+        address = findViewById(R.id.edittext_address);
+        city = findViewById(R.id.edittext_city);
+        state = findViewById(R.id.edittext_state);
+        pinCode = findViewById(R.id.edittext_pinCode);
+
 
         //Text View Values
         fNameText = findViewById(R.id.firstTxt);
@@ -68,9 +90,50 @@ public class RegistrationActivity extends AppCompatActivity {
         uNameText = findViewById(R.id.usrnameTxt);
         pwdText = findViewById(R.id.passwordText);
         cnfPwdText = findViewById(R.id.cnfpasswordText);
+        addressText = findViewById(R.id.addressTxt);
+        cityText = findViewById(R.id.cityTxt);
+        stateText = findViewById(R.id.stateTxt);
+        pinCodeText = findViewById(R.id.pinCode);
 
         //View Flipper
         regVf = (ViewFlipper) findViewById(R.id.reg_flipper);
+
+        placesAutocomplete = findViewById(R.id.edittext_address);
+
+        placesAutocomplete.setOnPlaceSelectedListener(
+                new OnPlaceSelectedListener() {
+                    @Override
+                    public void onPlaceSelected(final Place place) {
+                        placesAutocomplete.getDetailsFor(place, new DetailsCallback() {
+                            @Override
+                            public void onSuccess(final PlaceDetails details) {
+                                Log.d("test", "details " + details);
+                                address.setText(details.name);
+                                for (AddressComponent component : details.address_components) {
+                                    for (AddressComponentType type : component.types) {
+                                        switch (type) {
+                                            case LOCALITY:
+                                                city.setText(component.long_name);
+                                                break;
+                                            case ADMINISTRATIVE_AREA_LEVEL_1:
+                                                state.setText(component.short_name);
+                                                break;
+                                            case POSTAL_CODE:
+                                                pinCode.setText(component.long_name);
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(final Throwable failure) {
+                                Log.d("test", "failure " + failure);
+                            }
+                        });
+                    }
+                });
+
         register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if (checkDataEntered("credentials")) {
@@ -121,8 +184,6 @@ public class RegistrationActivity extends AppCompatActivity {
         return false;
     }
 
-    ;
-
     boolean isEmpty(EditText text) {
         CharSequence str = text.getText().toString();
         return TextUtils.isEmpty(str);
@@ -131,13 +192,19 @@ public class RegistrationActivity extends AppCompatActivity {
     public void directView(View v) {
         if (v.getTag().equals("initials")) {
             if (checkDataEntered("initials")) {
-                regVf.setInAnimation(AnimationUtils.loadAnimation(this,R.anim.slide_in_right));
-                regVf.setOutAnimation(AnimationUtils.loadAnimation(this,R.anim.slide_out_left));
+                regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
+                regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
+                regVf.showNext();
+            }
+        } else if (v.getTag().equals("address")) {
+            if (checkDataEntered("address")) {
+                regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
+                regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
                 regVf.showNext();
             }
         } else if (v.getTag().equals("back")) {
-            regVf.setInAnimation(AnimationUtils.loadAnimation(this,android.R.anim.slide_in_left));
-            regVf.setOutAnimation(AnimationUtils.loadAnimation(this,android.R.anim.slide_out_right));
+            regVf.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
+            regVf.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
             regVf.showPrevious();
         }
     }
@@ -175,6 +242,23 @@ public class RegistrationActivity extends AppCompatActivity {
                 phoneText.setError("\u2022 Enter a valid phone number! \n" +
                         "\u2022 Phone number should contain 10 numbers");
                 valid = false;
+            }
+        } else if (type.equals("address")) {
+            addressText.setError(null);
+            if (isEmpty(address)) {
+                addressText.setError("\u2022 Address is required");
+            }
+            cityText.setError(null);
+            if (isEmpty(city)) {
+                cityText.setError("\u2022 City is required");
+            }
+            stateText.setError(null);
+            if (isEmpty(state)) {
+                stateText.setError("\u2022 State is required");
+            }
+            pinCodeText.setError(null);
+            if (isEmpty(pinCode)) {
+                pinCodeText.setError("\u2022 Pincode is required");
             }
         } else {
             uNameText.setError(null);
