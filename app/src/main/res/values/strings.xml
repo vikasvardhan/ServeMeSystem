@@ -61,4 +61,9 @@
 
     <string name="navigation_drawer_open"> Open Navigation Drawer </string>
     <string name="navigation_drawer_close"> Close Navigation Drawer </string>
+    <string name="regAddress">Address</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="pinCode">PinCode</string>
 </resources>
