@@ -5,6 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class DatabaseAccess {
     private SQLiteOpenHelper openHelper;
@@ -13,6 +17,7 @@ public class DatabaseAccess {
     Cursor c = null;
 
     private DatabaseAccess(Context context) {
+        context.deleteDatabase(DatabaseHelper.DB_NAME);
         this.openHelper = new DatabaseHelper(context);
     }
 
@@ -30,6 +35,175 @@ public class DatabaseAccess {
     public void close() {
         if (db != null)
             this.db.close();
+    }
+
+    public List<ServiceRequest> getConfirmedRequestsForVendor(int userId){
+        List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
+        String query = "SELECT * from service_request"
+                + " WHERE Vendor_ID=?"
+                + " AND Status='Confirmed'";
+
+        Log.d("SQL Query", query);
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        ServiceRequest serviceRequest = null;
+        if(cursor.moveToFirst()){
+            do{
+                serviceRequest = new ServiceRequest();
+                serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
+                serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
+                serviceRequest.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
+                serviceRequest.setCategory(cursor.getString(cursor.getColumnIndex("Category")));
+                serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
+                serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+                serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
+                serviceRequest.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                serviceRequest.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
+                serviceRequest.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
+                serviceRequests.add(serviceRequest);
+            }while(cursor.moveToNext());
+        }
+        for(ServiceRequest sr: serviceRequests)
+        {
+            Log.d("SQL Query Category", sr.getCategory());
+            Log.d("SQL Query Title", sr.getTitle());
+        }
+        return serviceRequests;
+    }
+
+    public List<ServiceRequest> getCompletedRequestsForCustomer(int userId){
+        List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
+        String query = "SELECT * from service_request"
+                + " LEFT JOIN user_account"
+                + " ON service_request.Vendor_ID=user_account.user_id"
+                + " WHERE service_request.User_ID=?"
+                + " AND service_request.Status='Completed'";
+
+        Log.d("SQL Query", query);
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        ServiceRequest serviceRequest = null;
+        if(cursor.moveToFirst()){
+            do{
+                serviceRequest = new ServiceRequest();
+                serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
+                serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
+                serviceRequest.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
+                serviceRequest.setCategory(cursor.getString(cursor.getColumnIndex("Category")));
+                serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
+                serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+                serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
+                serviceRequest.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                serviceRequest.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
+                serviceRequest.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
+                String lastName = cursor.getString(cursor.getColumnIndex("last_name"));
+                String firstName = cursor.getString(cursor.getColumnIndex("first_name"));
+                String name = lastName + ", " + firstName;
+                serviceRequest.setServicedBy(name);
+                serviceRequests.add(serviceRequest);
+            }while(cursor.moveToNext());
+        }
+        for(ServiceRequest sr: serviceRequests)
+        {
+            Log.d("SQL Query Category", sr.getCategory());
+            Log.d("SQL Query Title", sr.getTitle());
+        }
+        return serviceRequests;
+    }
+
+    public List<ServiceRequest> getConfirmedRequestsForCustomer(int userId){
+        List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
+        String query = "SELECT * from service_request"
+                + " LEFT JOIN user_account"
+                + " ON service_request.Vendor_ID=user_account.user_id"
+                + " WHERE service_request.User_ID=?"
+                + " AND service_request.Status='Confirmed'";
+
+        Log.d("SQL Query", query);
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        ServiceRequest serviceRequest = null;
+        if(cursor.moveToFirst()){
+            do{
+                serviceRequest = new ServiceRequest();
+                serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
+                serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
+                serviceRequest.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
+                serviceRequest.setCategory(cursor.getString(cursor.getColumnIndex("Category")));
+                serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
+                serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+                serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
+                serviceRequest.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                serviceRequest.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
+                serviceRequest.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
+                String lastName = cursor.getString(cursor.getColumnIndex("last_name"));
+                String firstName = cursor.getString(cursor.getColumnIndex("first_name"));
+                String name = lastName + ", " + firstName;
+                serviceRequest.setServicedBy(name);
+                serviceRequests.add(serviceRequest);
+            }while(cursor.moveToNext());
+        }
+        for(ServiceRequest sr: serviceRequests)
+        {
+            Log.d("SQL Query Category", sr.getCategory());
+            Log.d("SQL Query Title", sr.getTitle());
+        }
+        return serviceRequests;
+    }
+
+    public List<ServiceRequest> getPendingRequestsForCustomer(int userId){
+        List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
+        String query = "select * from service_request"
+                        + " where User_ID=?"
+                        + " and Status='Pending'";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        ServiceRequest serviceRequest = null;
+        if(cursor.moveToFirst()){
+            do{
+                serviceRequest = new ServiceRequest();
+                serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
+                serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
+                serviceRequest.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
+                serviceRequest.setCategory(cursor.getString(cursor.getColumnIndex("Category")));
+                serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
+                serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+                serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
+                serviceRequest.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                serviceRequest.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
+                serviceRequest.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
+                serviceRequests.add(serviceRequest);
+            }while(cursor.moveToNext());
+        }
+//        Log.d("SQL Query Title", sr.getTitle());
+        return serviceRequests;
+    }
+
+    public UserAccount getAccount(String username) {
+        String user_type = "";
+        UserAccount uc = null;
+        open();
+        Cursor cursor = db.rawQuery("Select * from user_account where username = ?",
+                new String[]{username});
+        if (cursor.moveToFirst()) {
+
+            Log.d("SQL User found", "NEW USER");
+
+            uc = new UserAccount();
+            uc.setUserId(cursor.getInt(cursor.getColumnIndex("user_id")));
+            uc.setUserType(cursor.getString(cursor.getColumnIndex("user_type")));
+            uc.setUsername(cursor.getString(cursor.getColumnIndex("username")));
+            uc.setEmail(cursor.getString(cursor.getColumnIndex("email")));
+            uc.setAddress(cursor.getString(cursor.getColumnIndex("address")));
+            uc.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
+            uc.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
+            uc.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
+            uc.setPoints(cursor.getInt(cursor.getColumnIndex("points")));
+            uc.setRating(cursor.getDouble(cursor.getColumnIndex("rating")));
+
+            Log.d("SQL USERNAME", uc.getUsername());
+        }
+        return uc;
     }
 
     public boolean insertUser(String firstName,
@@ -52,19 +226,6 @@ public class DatabaseAccess {
 
         if (ins == -1) return false;
         else return true;
-    }
-
-    public String getAccountType(String username) {
-        String user_type = "";
-        open();
-        Cursor cursor = db.rawQuery("Select user_type from user_account where username = ?",
-                new String[]{username});
-        if (cursor.moveToFirst()) {
-            user_type = cursor.getString(cursor.getColumnIndex("user_type"));
-        }
-//        user_type = cursor.getString( cursor.getColumnIndex("user_type") );
-
-        return user_type;
     }
 
     //checking if credentials are valid

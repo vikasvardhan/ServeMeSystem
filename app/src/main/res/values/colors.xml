@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#2F4F4F</color>
     <color name="colorAccent">#2F4F4F</color>
     <color name="textSecondary">#ffffff</color>
+    <color name="pressed_color">#4d90fe</color>
+    <color name="default_color">#ffffff</color>
 </resources>
