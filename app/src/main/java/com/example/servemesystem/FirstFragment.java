@@ -1,6 +1,9 @@
 package com.example.servemesystem;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +21,15 @@ import androidx.navigation.fragment.NavHostFragment;
 
 public class FirstFragment extends Fragment {
 
+    public static final String PREFERENCES = "Preferences" ;
+
     DatabaseAccess db;
     EditText username;
     EditText password;
     Button submit;
+
+    SharedPreferences pref;
+    Intent intent;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -34,9 +42,9 @@ public class FirstFragment extends Fragment {
         password = (EditText) view.findViewById(R.id.editText_loginPassword);
         submit = (Button) view.findViewById(R.id.button_submit);
 
-        db = DatabaseAccess.getInstance(getActivity());
+        pref = getActivity().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 
-        // Inflate the layout for this fragment
+        db = DatabaseAccess.getInstance(getActivity()); // Inflate the layout for this fragment
         return view;
     }
 
@@ -48,23 +56,38 @@ public class FirstFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 boolean validCredentials = db.authenticate(username.getText().toString(),
                         password.getText().toString());
+
                 if(validCredentials){
+
                     Toast.makeText(getActivity(), "Login successful" , Toast.LENGTH_SHORT).show();
+
                     //check user type
-                    String userType = db.getAccountType(username.getText().toString());
+                    UserAccount user = db.getAccount(username.getText().toString());
+                    String userType = user.getUserType();
+
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putInt(UserAccount.USERID, user.getUserId());
+                    editor.putString(UserAccount.USERNAME, user.getUsername());
+                    editor.putString(UserAccount.USERTYPE, user.getUserType());
+                    editor.commit();
+
                     if(userType.equals("customer")){
-                        navController.navigate(R.id.customerActivity);
+                        intent = new Intent(getActivity(), CustomerActivity.class);
+                        startActivity(intent);
+//                        navController.navigate(R.id.customerActivity);
 //                        Integer settingsIntent = new Intent(getActivity(), CustomerActivity.class);
 //                        startActivity();
                     }
                     else{
+                        intent = new Intent(getActivity(), VendorHome.class);
+                        startActivity(intent);
 //                        Intent settingsIntent = new Intent(getActivity(), VendorHome.class);
 //                        startActivity(settingsIntent);
                         navController.navigate(R.id.vendorHome);
                     }
-
                 }
                 else
                 {
@@ -85,14 +108,6 @@ public class FirstFragment extends Fragment {
 //            @Override
 //            public void onClick(View view) {
 //
-//            }
-//        });
-
-//        view.findViewById(R.id.button_settings).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
-//                startActivity(settingsIntent);
 //            }
 //        });
     }
