@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -77,6 +78,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
     CardView cardCust;
     CardView cardVend;
+
+    CheckBox consent;
 
 
     @Override
@@ -160,9 +163,6 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         }));
 
-        //cardVend.setCardElevation(10);
-
-
         placesAutocomplete = findViewById(R.id.edittext_address);
 
         placesAutocomplete.setOnPlaceSelectedListener(
@@ -198,6 +198,8 @@ public class RegistrationActivity extends AppCompatActivity {
                         });
                     }
                 });
+
+       consent = (CheckBox)findViewById(R.id.checkbox_consent);
 
         register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -270,10 +272,12 @@ public class RegistrationActivity extends AppCompatActivity {
             regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
             regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
             regVf.setDisplayedChild(1);
+
         } else if (v.getTag().equals("initials")) {//1
             if (checkDataEntered("initials")) {
                 regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
                 regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
+                consent.setVisibility(View.INVISIBLE);
                 if (UserType == "customer")
                     regVf.setDisplayedChild(4);
                 else
@@ -290,6 +294,7 @@ public class RegistrationActivity extends AppCompatActivity {
             if(checkDataEntered("services")){
                 regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
                 regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
+                consent.setVisibility(View.VISIBLE);
                 regVf.showNext();
             }
         } else if (v.getTag().equals("back") || v.getTag().equals("back_cred")) {
@@ -396,6 +401,12 @@ public class RegistrationActivity extends AppCompatActivity {
             }
             if (!db.checkUser(username.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "User already exists!", Toast.LENGTH_SHORT).show();
+                valid = false;
+            }
+            TextInputLayout consentChkBox = (TextInputLayout)findViewById(R.id.checkBox);
+            consentChkBox.setError(null);
+            if(UserType.equals("vendor") && !consent.isChecked()){
+                consentChkBox.setError("\u2022 Vendor's must agree to pay 20% to ServeMe");
                 valid = false;
             }
         }
