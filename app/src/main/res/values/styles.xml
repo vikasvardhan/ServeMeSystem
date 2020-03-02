@@ -16,6 +16,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="counterText">
         <item name="android:textColor">#aa5353cc</item>
     </style>
@@ -30,4 +31,17 @@
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
+    <string-array name="categoried">
+        <item>Appliances</item>
+        <item>Electrical</item>
+        <item>Plumbing</item>
+        <item>Home Cleaning</item>
+        <item>Tutoring</item>
+        <item>Packaging and Moving</item>
+        <item>Computer Repair</item>
+        <item>Home Repair and Painting</item>
+        <item>Pest Control</item>
+    </string-array>
 </resources>
+
+

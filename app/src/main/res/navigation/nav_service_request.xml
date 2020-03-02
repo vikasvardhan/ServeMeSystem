@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/ServiceCategoryFragment"
+    android:id="@+id/nav_service_request">
+
+    <fragment
+        android:id="@+id/ServiceCategoryFragment"
+        android:name="com.example.servemesystem.ServiceCategoryFragment"
+        android:label="Service Category Fragment"
+        tools:layout="@layout/fragment_service_category">
+        <action
+            android:id="@+id/action_ServiceCategoryFragment_to_ServiceDetailFragment"
+            app:destination="@id/ServiceDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ServiceDetailFragment"
+        android:name="com.example.servemesystem.ServiceDetailFragment"
+        android:label="Service Detail Fragment"
+        tools:layout="@layout/fragment_service_detail">
+
+    </fragment>
+</navigation>
