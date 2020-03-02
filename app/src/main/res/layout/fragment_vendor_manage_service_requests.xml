@@ -20,6 +20,7 @@
         app:itemBackground="@color/colorAccent"
         app:itemHorizontalTranslationEnabled="false"
         app:itemTextColor="@android:color/white"
-        app:menu="@menu/menu_vendor_bottom_nav" />
-    
+        app:menu="@menu/menu_vendor_bottom_nav"
+        app:itemIconTint="@android:color/white"/>
+
 </FrameLayout>

@@ -4,16 +4,19 @@
     <item
         android:id="@+id/menuItem_vendor_displayPendingRequests"
         android:title="Pending"
+        android:icon="@drawable/ic_access_time_black_24dp"
         android:orderInCategory="1"
         app:showAsAction="never" />
     <item
         android:id="@+id/menuItem_vendor_displayConfirmedRequests"
         android:title="Confirmed"
+        android:icon="@drawable/ic_check_circle_black_24dp"
         android:orderInCategory="2"
         app:showAsAction="never" />
     <item
         android:id="@+id/menuItem_vendor_displayCompletedRequests"
         android:title="Completed"
+        android:icon="@drawable/ic_check_box_black_24dp"
         android:orderInCategory="3"
         app:showAsAction="never" />
 </menu>
