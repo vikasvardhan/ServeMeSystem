@@ -37,7 +37,7 @@ public class DatabaseAccess {
             this.db.close();
     }
 
-    public List<ServiceRequest> getConfirmedRequestsForVendor(int userId){
+    public List<ServiceRequest> getConfirmedRequestsForVendor(int userId) {
         List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
         String query = "SELECT * from service_request"
                 + " WHERE Vendor_ID=?"
@@ -47,8 +47,8 @@ public class DatabaseAccess {
 
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         ServiceRequest serviceRequest = null;
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 serviceRequest = new ServiceRequest();
                 serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
                 serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
@@ -61,17 +61,16 @@ public class DatabaseAccess {
                 serviceRequest.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
                 serviceRequest.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
                 serviceRequests.add(serviceRequest);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
-        for(ServiceRequest sr: serviceRequests)
-        {
+        for (ServiceRequest sr : serviceRequests) {
             Log.d("SQL Query Category", sr.getCategory());
             Log.d("SQL Query Title", sr.getTitle());
         }
         return serviceRequests;
     }
 
-    public List<ServiceRequest> getCompletedRequestsForCustomer(int userId){
+    public List<ServiceRequest> getCompletedRequestsForCustomer(int userId) {
         List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
         String query = "SELECT * from service_request"
                 + " LEFT JOIN user_account"
@@ -83,8 +82,8 @@ public class DatabaseAccess {
 
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         ServiceRequest serviceRequest = null;
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 serviceRequest = new ServiceRequest();
                 serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
                 serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
@@ -101,17 +100,16 @@ public class DatabaseAccess {
                 String name = lastName + ", " + firstName;
                 serviceRequest.setServicedBy(name);
                 serviceRequests.add(serviceRequest);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
-        for(ServiceRequest sr: serviceRequests)
-        {
+        for (ServiceRequest sr : serviceRequests) {
             Log.d("SQL Query Category", sr.getCategory());
             Log.d("SQL Query Title", sr.getTitle());
         }
         return serviceRequests;
     }
 
-    public List<ServiceRequest> getConfirmedRequestsForCustomer(int userId){
+    public List<ServiceRequest> getConfirmedRequestsForCustomer(int userId) {
         List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
         String query = "SELECT * from service_request"
                 + " LEFT JOIN user_account"
@@ -123,8 +121,8 @@ public class DatabaseAccess {
 
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         ServiceRequest serviceRequest = null;
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 serviceRequest = new ServiceRequest();
                 serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
                 serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
@@ -141,26 +139,25 @@ public class DatabaseAccess {
                 String name = lastName + ", " + firstName;
                 serviceRequest.setServicedBy(name);
                 serviceRequests.add(serviceRequest);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
-        for(ServiceRequest sr: serviceRequests)
-        {
+        for (ServiceRequest sr : serviceRequests) {
             Log.d("SQL Query Category", sr.getCategory());
             Log.d("SQL Query Title", sr.getTitle());
         }
         return serviceRequests;
     }
 
-    public List<ServiceRequest> getPendingRequestsForCustomer(int userId){
+    public List<ServiceRequest> getPendingRequestsForCustomer(int userId) {
         List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
         String query = "select * from service_request"
-                        + " where User_ID=?"
-                        + " and Status='Pending'";
+                + " where User_ID=?"
+                + " and Status='Pending'";
 
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         ServiceRequest serviceRequest = null;
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 serviceRequest = new ServiceRequest();
                 serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
                 serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
@@ -173,7 +170,7 @@ public class DatabaseAccess {
                 serviceRequest.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
                 serviceRequest.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
                 serviceRequests.add(serviceRequest);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 //        Log.d("SQL Query Title", sr.getTitle());
         return serviceRequests;
@@ -212,7 +209,14 @@ public class DatabaseAccess {
                               String phoneNumber,
                               String username,
                               String password,
-                              String userType) {
+                              String userType,
+                              String address,
+                              String city,
+                              String state,
+                              String pincode,
+                              String service,
+                              String sampleRate,
+                              String tasks) {
         open();
         ContentValues contentValues = new ContentValues();
         contentValues.put("first_name", firstName);
@@ -222,8 +226,27 @@ public class DatabaseAccess {
         contentValues.put("username", username);
         contentValues.put("password", password);
         contentValues.put("user_type", userType);
+        contentValues.put("address", address + "," + city + "," + state + "," + pincode);
         long ins = db.insert("user_account", null, contentValues);
 
+        Cursor cursor = db.rawQuery("Select user_id from user_account where username = ?",
+                new String[]{username});
+        Integer userId = 0;
+        if(cursor.moveToFirst())
+            userId = cursor.getInt(cursor.getColumnIndex("user_id"));
+        if (ins != -1 && userId > 0) {
+            contentValues = new ContentValues();
+            contentValues.put("User_ID", userId.toString());
+            contentValues.put("Balance", 0);
+            long walletIns = db.insert("wallet", null, contentValues);
+            if (userType == "vendor") {
+                contentValues = new ContentValues();
+                contentValues.put("Vendor_ID", userId.toString());
+                contentValues.put("Service", service);
+                contentValues.put("Hourly_Rate", sampleRate);
+                long vendSrvc = db.insert("vendor_services", null, contentValues);
+            }
+        }
         if (ins == -1) return false;
         else return true;
     }

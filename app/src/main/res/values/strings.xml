@@ -66,4 +66,13 @@
     <string name="city">City</string>
     <string name="state">State</string>
     <string name="pinCode">PinCode</string>
+    <string name="userType">User Type</string>
+    <string name="userType_customer">Customer</string>
+    <string name="userType_vendor">Vendor</string>
+    <string name="vendor">Vendor</string>
+    <string name="regServices">Services</string>
+    <string name="services">Choose Category</string>
+    <string name="sampleRate">Sample Rates</string>
+    <string name="tasks">Tasks</string>
+    <string name="consent">Agree to pay 20% of the amount to app holder</string>
 </resources>
