@@ -66,7 +66,8 @@
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_margin="10dp"
-                        android:clickable="true">
+                        android:clickable="true"
+                        app:cardElevation="10dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -103,7 +104,8 @@
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_margin="10dp"
-                        android:clickable="true">
+                        android:clickable="true"
+                        app:cardElevation="10dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -149,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="20dp"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/gradient"
                         android:onClick="directView"
                         android:tag="userType"
                         android:text="Next"
@@ -254,7 +256,7 @@
                         android:layout_marginTop="40dp"
                         android:layout_marginRight="100dp"
                         android:layout_marginBottom="20dp"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/gradient"
                         android:onClick="directView"
                         android:tag="back"
                         android:text="Back"
@@ -266,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="20dp"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/gradient"
                         android:onClick="directView"
                         android:tag="initials"
                         android:text="Next"
@@ -370,7 +372,7 @@
                         android:layout_marginTop="40dp"
                         android:layout_marginRight="100dp"
                         android:layout_marginBottom="20dp"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/gradient"
                         android:onClick="directView"
                         android:tag="back"
                         android:text="Back"
@@ -382,7 +384,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="20dp"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/gradient"
                         android:onClick="directView"
                         android:tag="address"
                         android:text="Next"
@@ -416,50 +418,75 @@
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/serviceCategories"
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardService"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/services">
+                    android:layout_margin="10dp"
+                    app:cardElevation="10dp">
 
-                    <Spinner
-                        android:id="@+id/spinnerServices"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:ems="15">
-
-                    </Spinner>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/sampleRate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                    <EditText
-                        android:id="@+id/edittext_sampleRate"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ems="15"
-                        android:hint="@string/sampleRate"
-                        android:inputType="phone" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tasks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/serviceCategories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/services">
 
-                    <EditText
-                        android:id="@+id/edittext_tasks"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="15"
-                        android:hint="@string/tasks" />
-                </com.google.android.material.textfield.TextInputLayout>
+                            <Spinner
+                                android:id="@+id/spinnerServices"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:ems="15">
+
+                            </Spinner>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/sampleRate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp">
+
+                            <EditText
+                                android:id="@+id/edittext_sampleRate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="15"
+                                android:hint="@string/sampleRate"
+                                android:inputType="phone" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tasks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp">
+
+                            <EditText
+                                android:id="@+id/edittext_tasks"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="15"
+                                android:hint="@string/tasks" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/lnkAddMore"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:gravity="center"
+                            android:text="Add More"
+                            android:textColor="@color/colorAccent"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -473,7 +500,7 @@
                         android:layout_marginTop="40dp"
                         android:layout_marginRight="100dp"
                         android:layout_marginBottom="20dp"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/gradient"
                         android:onClick="directView"
                         android:tag="back"
                         android:text="Back"
@@ -485,7 +512,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="20dp"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/gradient"
                         android:onClick="directView"
                         android:tag="services"
                         android:text="Next"
@@ -576,9 +603,10 @@
                         android:id="@+id/checkbox_consent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ems="15"
+                        android:ems="20"
                         android:hint="@string/consent"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:visibility="invisible"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
@@ -593,7 +621,7 @@
                         android:layout_marginTop="40dp"
                         android:layout_marginRight="100dp"
                         android:layout_marginBottom="20dp"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/gradient"
                         android:onClick="directView"
                         android:tag="back_cred"
                         android:text="Back"
@@ -605,7 +633,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="20dp"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/gradient"
                         android:text="Register"
                         android:textColor="@color/textSecondary" />
                 </LinearLayout>

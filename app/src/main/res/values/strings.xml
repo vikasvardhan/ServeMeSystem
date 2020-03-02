@@ -74,5 +74,5 @@
     <string name="services">Choose Category</string>
     <string name="sampleRate">Sample Rates</string>
     <string name="tasks">Tasks</string>
-    <string name="consent">Agree to pay 20% of the amount to app holder</string>
+    <string name="consent">Agree to pay 20% of the amount to ServeMe</string>
 </resources>
