@@ -89,7 +89,7 @@ public class ServiceDetailFragment extends Fragment {
 
 
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         EditText timeHint = view.findViewById(R.id.detail_time_input);
         timeHint.setHint(sdf.format(cal.getTime()));
 

@@ -1,16 +1,22 @@
 package com.example.servemesystem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.service.autofill.RegexValidator;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -40,6 +46,8 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText username;
     EditText password;
     EditText confirmPassword;
+    EditText sampleRate;
+    EditText tasks;
 
     //Text View Values
     TextInputLayout fNameText;
@@ -53,11 +61,22 @@ public class RegistrationActivity extends AppCompatActivity {
     TextInputLayout uNameText;
     TextInputLayout pwdText;
     TextInputLayout cnfPwdText;
+    TextInputLayout sampleRateText;
+    TextInputLayout tasksText;
     Button register;
 
     ViewFlipper regVf;
 
     PlacesAutocompleteTextView placesAutocomplete;
+
+    String UserType = "customer";
+    String selectedService = "";
+
+    private Spinner spinner;
+    private static final String[] categories = {"Appliances", "Electrical", "Plumbing", "Home Cleaning", "Tutoring", "Packaging and Moving", "Computer Repair", "Home Repair and Painting", "Pest Control"};
+
+    CardView cardCust;
+    CardView cardVend;
 
 
     @Override
@@ -80,6 +99,8 @@ public class RegistrationActivity extends AppCompatActivity {
         city = findViewById(R.id.edittext_city);
         state = findViewById(R.id.edittext_state);
         pinCode = findViewById(R.id.edittext_pinCode);
+        sampleRate = findViewById(R.id.edittext_sampleRate);
+        tasks = findViewById((R.id.edittext_tasks));
 
 
         //Text View Values
@@ -94,9 +115,53 @@ public class RegistrationActivity extends AppCompatActivity {
         cityText = findViewById(R.id.cityTxt);
         stateText = findViewById(R.id.stateTxt);
         pinCodeText = findViewById(R.id.pinCode);
+        sampleRateText = findViewById((R.id.sampleRate));
+        tasksText = findViewById((R.id.tasks));
 
         //View Flipper
         regVf = (ViewFlipper) findViewById(R.id.reg_flipper);
+
+        spinner = (Spinner) findViewById(R.id.spinnerServices);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(RegistrationActivity.this, android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                Log.v("item", (String) parent.getItemAtPosition(position));
+                selectedService = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        cardCust = findViewById(R.id.cardCust);
+        cardVend = findViewById(R.id.cardVend);
+        cardCust.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        cardCust.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardCust.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+                cardVend.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.default_color));
+                UserType = "customer";
+
+            }
+        }));
+        cardVend.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardVend.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+                cardCust.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.default_color));
+                UserType = "vendor";
+            }
+        }));
+
+        //cardVend.setCardElevation(10);
+
 
         placesAutocomplete = findViewById(R.id.edittext_address);
 
@@ -143,7 +208,14 @@ public class RegistrationActivity extends AppCompatActivity {
                             phoneNumber.getText().toString(),
                             username.getText().toString(),
                             password.getText().toString(),
-                            "customer");
+                            UserType,
+                            address.getText().toString(),
+                            city.getText().toString(),
+                            state.getText().toString(),
+                            pinCode.getText().toString(),
+                            selectedService,
+                            sampleRate.getText().toString(),
+                            tasks.getText().toString());
                     if (insert) {
                         Toast.makeText(getApplicationContext(), "User Registered Succcessfully", Toast.LENGTH_SHORT).show();
 
@@ -181,6 +253,9 @@ public class RegistrationActivity extends AppCompatActivity {
             return (!TextUtils.isEmpty(input) && ((String) input).matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"));
         else if (type == "confirmPassword")
             return (!TextUtils.isEmpty(input) && input.equals(password.getText().toString()));
+        else if(type == "number"){
+            return(!TextUtils.isEmpty(input) && ((String)input).matches("\\d+"));
+        }
         return false;
     }
 
@@ -190,22 +265,40 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void directView(View v) {
-        if (v.getTag().equals("initials")) {
+        //0
+        if (v.getTag().equals("userType")) {
+            regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
+            regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
+            regVf.setDisplayedChild(1);
+        } else if (v.getTag().equals("initials")) {//1
             if (checkDataEntered("initials")) {
                 regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
                 regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
-                regVf.showNext();
+                if (UserType == "customer")
+                    regVf.setDisplayedChild(4);
+                else
+                    regVf.showNext();
+
             }
-        } else if (v.getTag().equals("address")) {
+        } else if (v.getTag().equals("address")) {//2
             if (checkDataEntered("address")) {
                 regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
                 regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
                 regVf.showNext();
             }
-        } else if (v.getTag().equals("back")) {
+        } else if (v.getTag().equals("services")) {
+            if(checkDataEntered("services")){
+                regVf.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_right));
+                regVf.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left));
+                regVf.showNext();
+            }
+        } else if (v.getTag().equals("back") || v.getTag().equals("back_cred")) {
             regVf.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
             regVf.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
-            regVf.showPrevious();
+            if (v.getTag().equals("back_cred") && UserType.equals("customer"))
+                regVf.setDisplayedChild(1);
+            else
+                regVf.showPrevious();
         }
     }
 
@@ -247,20 +340,31 @@ public class RegistrationActivity extends AppCompatActivity {
             addressText.setError(null);
             if (isEmpty(address)) {
                 addressText.setError("\u2022 Address is required");
+                valid = false;
             }
             cityText.setError(null);
             if (isEmpty(city)) {
                 cityText.setError("\u2022 City is required");
+                valid = false;
             }
             stateText.setError(null);
             if (isEmpty(state)) {
                 stateText.setError("\u2022 State is required");
+                valid = false;
             }
             pinCodeText.setError(null);
             if (isEmpty(pinCode)) {
                 pinCodeText.setError("\u2022 Pincode is required");
+                valid = false;
             }
-        } else {
+        }
+        else if(type.equals("services")){
+            sampleRateText.setError(null);
+            if(!isOfType(sampleRate,"number")){
+                sampleRateText.setError("Rate has to be a number");
+                valid = false;
+            }
+        }else {
             uNameText.setError(null);
             if (isEmpty(username)) {
                 uNameText.setError("\u2022 Username is required");
