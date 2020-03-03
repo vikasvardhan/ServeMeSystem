@@ -22,11 +22,6 @@
         android:name="com.example.servemesystem.CustomerActivity"
         android:label="activity_customer"
         tools:layout="@layout/activity_customer" />
-    <fragment
-        android:id="@+id/createServiceRequest"
-        android:name="com.example.servemesystem.CreateServiceRequest"
-        android:label="fragment_create_service_request"
-        tools:layout="@layout/fragment_create_service_request" />
     <activity
         android:id="@+id/vendorHome"
         android:name="com.example.servemesystem.VendorHome"

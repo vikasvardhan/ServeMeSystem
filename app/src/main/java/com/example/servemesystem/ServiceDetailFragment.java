@@ -150,7 +150,7 @@ public class ServiceDetailFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
         Button submitButton = view.findViewById(R.id.detail_submit_button);
