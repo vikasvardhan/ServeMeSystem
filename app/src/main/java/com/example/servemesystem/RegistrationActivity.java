@@ -34,6 +34,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class RegistrationActivity extends AppCompatActivity {
+    //Anushka did this
     DatabaseAccess db;
     //Edit Text Values
     EditText firstName;
