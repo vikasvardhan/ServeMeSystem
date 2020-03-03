@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,7 +27,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class CustomerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class CustomerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
 
@@ -41,18 +42,17 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
         drawer = findViewById(R.id.customer_drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
-                                                                drawer,
-                                                                toolbar,
-                                                                R.string.navigation_drawer_open,
-                                                                R.string.navigation_drawer_close);
+                drawer,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navView = findViewById(R.id.nav_view_customer);
         navView.setNavigationItemSelectedListener(this);
 
-        if(savedInstanceState == null)
-        {
+        if (savedInstanceState == null) {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_home,
 //                    new CreateServiceRequest()).commit();
 //            navView.setCheckedItem(R.id.menuItem_customer_createServiceRequest);
@@ -69,9 +69,9 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
 //        });
     }
 
-    public void logout(){
+    public void logout() {
         SharedPreferences sharedpreferences = getSharedPreferences(FirstFragment.PREFERENCES,
-                                                                   Context.MODE_PRIVATE);
+                Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -100,21 +100,21 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
     }
 
     @Override
-    public void onBackPressed(){
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else{
+        } else {
             super.onBackPressed();
         }
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item){
-        switch (item.getItemId()){
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.menuItem_customer_createServiceRequest:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_home,
-                        new CreateServiceRequest()).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_customer_home, new ServiceCategoryFragment())
+                        .commit();
                 break;
             case R.id.menuItem_customer_manageServiceRequest:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_home,

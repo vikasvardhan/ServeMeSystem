@@ -109,6 +109,14 @@ public class DatabaseAccess {
         return serviceRequests;
     }
 
+    public int getNewServiceId() {
+        String query = "SELECT MAX(Service_ID) as service_id from service_request";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        int serviceId = cursor.getInt(cursor.getColumnIndex("service_id"));
+        return serviceId + 1;
+    }
+
     public List<ServiceRequest> getConfirmedRequestsForCustomer(int userId) {
         List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
         String query = "SELECT * from service_request"
@@ -232,7 +240,7 @@ public class DatabaseAccess {
         Cursor cursor = db.rawQuery("Select user_id from user_account where username = ?",
                 new String[]{username});
         Integer userId = 0;
-        if(cursor.moveToFirst())
+        if (cursor.moveToFirst())
             userId = cursor.getInt(cursor.getColumnIndex("user_id"));
         if (ins != -1 && userId > 0) {
             contentValues = new ContentValues();
@@ -247,6 +255,24 @@ public class DatabaseAccess {
                 long vendSrvc = db.insert("vendor_services", null, contentValues);
             }
         }
+        if (ins == -1) return false;
+        else return true;
+    }
+
+    public boolean insertServiceRequest(ServiceRequest serviceRequest) {
+        open();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Service_ID", serviceRequest.getServiceId());
+        contentValues.put("User_ID", serviceRequest.getCustomerId());
+        contentValues.put("Vendor_ID", serviceRequest.getVendorId());
+        contentValues.put("Category", serviceRequest.getCategory());
+        contentValues.put("Datetime", serviceRequest.getServiceTime());
+        contentValues.put("Location", serviceRequest.getLocation());
+        contentValues.put("Title", serviceRequest.getTitle());
+        contentValues.put("Description", serviceRequest.getDescription());
+        contentValues.put("Status", serviceRequest.getStatus());
+        contentValues.put("Is_Reviewed", serviceRequest.isReviewed());
+        long ins = db.insert("service_request", null, contentValues);
         if (ins == -1) return false;
         else return true;
     }

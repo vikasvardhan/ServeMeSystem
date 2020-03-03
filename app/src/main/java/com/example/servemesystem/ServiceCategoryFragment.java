@@ -83,15 +83,7 @@ public class ServiceCategoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Button cancelButton = view.findViewById(R.id.category_cancel_button);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-
+        
         categoryView = view.findViewById(R.id.service_category_list);
         categoryList.add(new CategoryItem("Appliances"));
         categoryList.add(new CategoryItem("Electrical"));
@@ -109,7 +101,14 @@ public class ServiceCategoryFragment extends Fragment {
             public void onItemClick(CategoryItem item) {
                 Bundle categoryBundle = new Bundle();
                 categoryBundle.putString("category_name", item.getCategoryName());
-                Navigation.findNavController(view).navigate(R.id.action_ServiceCategoryFragment_to_ServiceDetailFragment, categoryBundle);
+                Fragment serviceDetailFragment = null;
+                serviceDetailFragment = new ServiceDetailFragment();
+                serviceDetailFragment.setArguments(categoryBundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .add(serviceDetailFragment, "service_detail")
+                        .addToBackStack("service_detail")
+                        .replace(R.id.fragment_container_customer_home, serviceDetailFragment)
+                        .commit();
             }
         });
 
