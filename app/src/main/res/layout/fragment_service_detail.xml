@@ -58,14 +58,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_category_label" />
 
-        <EditText
-            android:id="@+id/detail_date_input"
+        <LinearLayout
+            android:id="@id/detail_date_bundle"
             android:layout_width="200dp"
             android:layout_height="48dp"
-            android:inputType="datetime"
-            android:hint="March/04/2020"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_category_name" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_category_name">
+
+            <EditText
+                android:id="@+id/detail_date_input"
+                android:layout_width="152dp"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:text="March/04/2020" />
+
+            <Button
+                android:id="@+id/detail_date_picker"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/ic_date_picker_24dp" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/detail_time_label"
@@ -78,14 +94,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_date_label" />
 
-        <EditText
-            android:id="@+id/detail_time_input"
+        <LinearLayout
+            android:id="@+id/detail_time_bundle"
             android:layout_width="200dp"
             android:layout_height="48dp"
-            android:inputType="datetime"
-            android:hint="2:00 PM"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_date_input" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_date_bundle">
+
+            <EditText
+                android:id="@+id/detail_time_input"
+                android:layout_width="152dp"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:text="10:00" />
+
+            <Button
+                android:id="@+id/detail_time_picker"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/ic_time_picker_24dp" />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/detail_location_label"
@@ -102,10 +135,10 @@
             android:id="@+id/detail_location_input"
             android:layout_width="200dp"
             android:layout_height="48dp"
-            android:inputType="textCapSentences|textMultiLine"
             android:hint="Location"
+            android:inputType="textCapSentences|textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_time_input" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_time_bundle" />
 
         <TextView
             android:id="@+id/detail_title_label"
@@ -122,8 +155,8 @@
             android:id="@+id/detail_title_input"
             android:layout_width="200dp"
             android:layout_height="48dp"
-            android:inputType="textCapSentences|textMultiLine"
             android:hint="Title"
+            android:inputType="textCapSentences|textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_location_input" />
 
@@ -142,8 +175,8 @@
             android:id="@+id/detail_description_input"
             android:layout_width="200dp"
             android:layout_height="48dp"
-            android:inputType="textCapSentences|textMultiLine"
             android:hint="Description"
+            android:inputType="textCapSentences|textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_title_input" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -169,8 +202,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Cancel"
-                android:background="@drawable/gradient"/>
+                android:background="@drawable/gradient"
+                android:text="Cancel" />
 
         </LinearLayout>
 
@@ -186,10 +219,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Submit"
                 android:background="@drawable/gradient"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="5dp"/>
+                android:text="Submit" />
         </LinearLayout>
 
     </LinearLayout>

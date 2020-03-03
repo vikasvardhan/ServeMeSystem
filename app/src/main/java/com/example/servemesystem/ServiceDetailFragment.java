@@ -1,5 +1,7 @@
 package com.example.servemesystem;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -12,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -36,6 +40,9 @@ public class ServiceDetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    EditText dateText, timeText;
+    private int mYear, mMonth, mDay, mHour, mMinute;
 
     public ServiceDetailFragment() {
         // Required empty public constructor
@@ -84,15 +91,60 @@ public class ServiceDetailFragment extends Fragment {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate localDate = LocalDate.now();
-        EditText dateHint = view.findViewById(R.id.detail_date_input);
-        dateHint.setHint(dtf.format(localDate));
+        dateText = view.findViewById(R.id.detail_date_input);
+        dateText.setText(dtf.format(localDate));
 
+        final Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a");
+        timeText = view.findViewById(R.id.detail_time_input);
+        timeText.setText(sdf.format(cal.getTime()));
 
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        EditText timeHint = view.findViewById(R.id.detail_time_input);
-        timeHint.setHint(sdf.format(cal.getTime()));
+        Button datePickerButton = view.findViewById(R.id.detail_date_picker);
+        Button timePickerButton = view.findViewById(R.id.detail_time_picker);
+        datePickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                mYear = calendar.get(Calendar.YEAR);
+                mMonth = calendar.get(Calendar.MONTH);
+                mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                dateText.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
+            }
+        });
+        timePickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                final Calendar c = Calendar.getInstance();
+                mHour = calendar.get(Calendar.HOUR_OF_DAY);
+                mMinute = calendar.get(Calendar.MINUTE);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                String am_pm;
+                                if (hourOfDay >= 12) {
+                                    am_pm = "PM";
+                                    hourOfDay -= 12;
+                                } else {
+                                    am_pm = "AM";
+                                }
+                                timeText.setText(hourOfDay + ":" + minute + " " + am_pm);
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
+            }
+        });
         categoryTextView.setText(categoryName);
         Button cancelButton = view.findViewById(R.id.detail_cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -109,4 +161,5 @@ public class ServiceDetailFragment extends Fragment {
             }
         });
     }
+
 }
