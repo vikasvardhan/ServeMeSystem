@@ -15,6 +15,8 @@ public class ServiceRequest {
     private String status;
     private boolean isReviewed;
     private String servicedBy;
+    private ServiceBid winningBid;
+    private ServiceBid pendingBid;
 
     public ServiceRequest()
     {
@@ -63,6 +65,22 @@ public class ServiceRequest {
 
     public void setServicedBy(String servicedBy) {
         this.servicedBy = servicedBy;
+    }
+
+    public void setWinningBid(ServiceBid winningBid) {
+        this.winningBid = winningBid;
+    }
+
+    public void setPendingBid(ServiceBid pendingBid) {
+        this.pendingBid = pendingBid;
+    }
+
+    public ServiceBid getWinningBid() {
+        return winningBid;
+    }
+
+    public ServiceBid getPendingBid() {
+        return pendingBid;
     }
 
     public int getCustomerId(){
