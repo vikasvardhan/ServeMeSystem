@@ -37,6 +37,31 @@ public class DatabaseAccess {
             this.db.close();
     }
 
+    public List<ServiceBid> getBidsForService(int serviceId){
+        List<ServiceBid> serviceBids = new LinkedList<ServiceBid>();
+        String query = "SELECT * FROM service_bids" +
+                " INNER JOIN user_account on service_bids.Vendor_ID=user_account.user_id" +
+                " WHERE Status='Pending' and Service_ID=?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(serviceId)});
+        if(cursor.moveToFirst()) {
+            do {
+                ServiceBid bid = new ServiceBid();  //Set Bid
+                bid.setBidId(cursor.getInt(cursor.getColumnIndex("Bid_ID")));
+                bid.setAmt(cursor.getDouble(cursor.getColumnIndex("Amount")));
+                bid.setNotes(cursor.getString(cursor.getColumnIndex("Notes")));
+                bid.setHours(cursor.getInt(cursor.getColumnIndex("Hours")));
+                bid.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                bid.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
+                String lastName = cursor.getString(cursor.getColumnIndex("last_name"));
+                String firstName = cursor.getString(cursor.getColumnIndex("first_name"));
+                String name = firstName + " " + lastName;
+                bid.setVendorName(name);
+                serviceBids.add(bid);
+            } while (cursor.moveToNext());
+        }
+        return serviceBids;
+    }
+
     public List<ServiceRequest> getConfirmedRequestsForVendor(int userId) {
         List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
         String query = "SELECT * from service_request"
@@ -209,6 +234,84 @@ public class DatabaseAccess {
             Log.d("SQL USERNAME", uc.getUsername());
         }
         return uc;
+    }
+
+    public UserAccount getAccount(int userId) {
+        String user_type = "";
+        UserAccount uc = null;
+        open();
+        Cursor cursor = db.rawQuery("Select * from user_account " +
+                        " natural join wallet" +
+                        " where user_id = ?",
+                new String[]{Integer.toString(userId)});
+        if (cursor.moveToFirst()) {
+
+            Log.d("SQL User found", "NEW USER");
+            uc = new UserAccount();
+            uc.setUserId(cursor.getInt(cursor.getColumnIndex("user_id")));
+            uc.setUserType(cursor.getString(cursor.getColumnIndex("user_type")));
+            uc.setUsername(cursor.getString(cursor.getColumnIndex("username")));
+            uc.setEmail(cursor.getString(cursor.getColumnIndex("email")));
+            uc.setAddress(cursor.getString(cursor.getColumnIndex("address")));
+            uc.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
+            uc.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
+            uc.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
+            uc.setPoints(cursor.getInt(cursor.getColumnIndex("points")));
+            uc.setRating(cursor.getDouble(cursor.getColumnIndex("rating")));
+            uc.setWalletAmt(cursor.getDouble(cursor.getColumnIndex("Balance")));
+            Log.d("SQL USERNAME", uc.getUsername());
+        }
+        return uc;
+    }
+
+    public void rejectBid(int bidId){
+        ContentValues cv = new ContentValues();
+        cv.put("Status","Rejected");
+        db.update("service_bids", cv, "Bid_ID = ?", new String[]{Integer.toString(bidId)});
+    }
+
+    public void acceptBid(int bidId){
+        ContentValues cv = new ContentValues();
+        cv.put("Status","Accepted");
+        db.update("service_bids", cv, "Bid_ID = ?", new String[]{Integer.toString(bidId)});
+    }
+
+    public void vendor_cancelBid(int bidId)
+    {
+        ContentValues cv = new ContentValues();
+        cv.put("Status","Cancelled");
+        db.update("service_bids", cv, "Bid_ID = ?", new String[]{Integer.toString(bidId)});
+    }
+
+    public void vendor_markServiceRequestAsComplete(int serviceId){
+        ContentValues cv = new ContentValues();
+        cv.put("Status","Completed");
+        db.update("service_request", cv, "Service_ID = ?", new String[]{Integer.toString(serviceId)});
+    }
+
+    public void updateWalletBalance(int customerId, double newBalance){
+        ContentValues cv = new ContentValues();
+        cv.put("Balance", newBalance);
+        db.update("wallet", cv, "User_ID = ?", new String[]{Integer.toString(customerId)});
+    }
+
+    public void setCustomerPoints(int userId, int numPoints){
+        ContentValues cv = new ContentValues();
+        cv.put("Points", numPoints);
+        db.update("user_account", cv, "user_id = ?", new String[]{Integer.toString(userId)});
+    }
+
+    public void customer_cancelServiceRequest(int serviceId){
+        ContentValues cv = new ContentValues();
+        cv.put("Status", "Cancelled");
+        db.update("service_request", cv, "Service_ID = ?", new String[]{Integer.toString(serviceId)});
+    }
+
+    public void setVendorToSeviceRequest(int vendorId, int serviceId){
+        ContentValues cv = new ContentValues();
+        cv.put("Vendor_ID",vendorId);
+        cv.put("Status","Confirmed");
+        db.update("service_request", cv, "Service_ID = ?", new String[]{Integer.toString(serviceId)});
     }
 
     public boolean insertUser(String firstName,

@@ -6,21 +6,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="55dp"
     android:orientation="vertical"
-    tools:context=".CustomerManagePending">
+    tools:context=".CustomerManageBids">
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Pending Service Requests"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/textView_customerManageBids_BidsForServiceLbl"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bids for:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_customerManageBids_serviceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Service"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    </LinearLayout>
 
     <ListView
-        android:id="@+id/listView_customer_pending_requests"
+        android:id="@+id/listView_customer_manage_bids"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
@@ -48,16 +62,13 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_editRequest"
+                android:id="@+id/btn_acceptBid"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:enabled="false"
-                android:text="Edit"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/gradient"/>
+                android:text="Accept" />
 
         </LinearLayout>
 
@@ -68,15 +79,14 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_viewBids"
+                android:id="@+id/btn_rejectBid"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:enabled="false"
-                android:text="View Bids"
-                android:background="@drawable/gradient"
-                android:layout_marginBottom="5dp"/>
+                android:layout_gravity="center_horizontal"
+                android:text="Reject" />
+
         </LinearLayout>
 
     </LinearLayout>

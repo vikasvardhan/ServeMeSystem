@@ -5,6 +5,7 @@ public class UserAccount {
     public static String USERID = "UserId";
     public static String USERTYPE = "UserType";
     public static String USERNAME = "Username";
+    public static String USERPOINTS = "UserPoints";
 
     int userId;
     String userType;
@@ -16,6 +17,7 @@ public class UserAccount {
     String phone;
     int points;
     double rating;
+    double walletAmt;
 
     public int getUserId() {
         return userId;
@@ -57,6 +59,10 @@ public class UserAccount {
         return rating;
     }
 
+    public double getWalletAmt() {
+        return walletAmt;
+    }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -95,5 +101,9 @@ public class UserAccount {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public void setWalletAmt(double walletAmt) {
+        this.walletAmt = walletAmt;
     }
 }
