@@ -100,7 +100,7 @@ public class ServiceDetailFragment extends Fragment {
         Button submitButton = view.findViewById(R.id.detail_submit_button);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.now();
+        final LocalDate localDate = LocalDate.now();
         dateText.setText(dtf.format(localDate));
 
         final Calendar cal = Calendar.getInstance();
@@ -182,38 +182,41 @@ public class ServiceDetailFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (locationText.getText().toString().isEmpty()) {
-                    locationText.setError("Location is required!");
-                }
-                if (titleText.getText().toString().isEmpty()) {
-                    titleText.setError("Title is required!");
-                }
-                if (descriptionText.getText().toString().isEmpty()) {
-                    descriptionText.setError("Description is required!");
-                }
-                ServiceRequest serviceRequest = new ServiceRequest();
-                serviceRequest.setServiceId(db.getNewServiceId());
-                serviceRequest.setCustomerId(1);
-                serviceRequest.setVendorId(2);
-                serviceRequest.setCategory(categoryText.getText().toString());
-                serviceRequest.setServiceTime(dateText.getText().toString() + " " + timeText.getText().toString());
-                serviceRequest.setLocation(locationText.getText().toString());
-                serviceRequest.setTitle(titleText.getText().toString());
-                serviceRequest.setDescription(descriptionText.getText().toString());
-                serviceRequest.setStatus("Pending");
-                serviceRequest.setReviewed(false);
-                if (db.insertServiceRequest(serviceRequest)) {
-                    Toast.makeText(getContext(), "Successfully submit the service request", Toast.LENGTH_LONG).show();
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    int count = fragmentManager.getBackStackEntryCount();
-                    for (int i = 0; i < count; ++i) {
-                        fragmentManager.popBackStack();
+                if (locationText.getText().toString().isEmpty() || titleText.getText().toString().isEmpty() || descriptionText.getText().toString().isEmpty()) {
+                    if (locationText.getText().toString().isEmpty()) {
+                        locationText.setError("Location is required!");
                     }
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container_customer_home, new CustomerManageServiceRequests())
-                            .commit();
+                    if (titleText.getText().toString().isEmpty()) {
+                        titleText.setError("Title is required!");
+                    }
+                    if (descriptionText.getText().toString().isEmpty()) {
+                        descriptionText.setError("Description is required!");
+                    }
                 } else {
-                    Toast.makeText(getContext(), "False", Toast.LENGTH_LONG).show();
+                    ServiceRequest serviceRequest = new ServiceRequest();
+                    serviceRequest.setServiceId(db.getNewServiceId());
+                    serviceRequest.setCustomerId(1);
+                    serviceRequest.setVendorId(2);
+                    serviceRequest.setCategory(categoryText.getText().toString());
+                    serviceRequest.setServiceTime(dateText.getText().toString() + " " + timeText.getText().toString());
+                    serviceRequest.setLocation(locationText.getText().toString());
+                    serviceRequest.setTitle(titleText.getText().toString());
+                    serviceRequest.setDescription(descriptionText.getText().toString());
+                    serviceRequest.setStatus("Pending");
+                    serviceRequest.setReviewed(false);
+                    if (db.insertServiceRequest(serviceRequest)) {
+                        Toast.makeText(getContext(), "Successfully submit the service request", Toast.LENGTH_LONG).show();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        int count = fragmentManager.getBackStackEntryCount();
+                        for (int i = 0; i < count; ++i) {
+                            fragmentManager.popBackStack();
+                        }
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container_customer_home, new CustomerManageServiceRequests())
+                                .commit();
+                    } else {
+                        Toast.makeText(getContext(), "False", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
