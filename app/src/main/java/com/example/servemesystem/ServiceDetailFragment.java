@@ -100,7 +100,7 @@ public class ServiceDetailFragment extends Fragment {
         Button submitButton = view.findViewById(R.id.detail_submit_button);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.now();
+        final LocalDate localDate = LocalDate.now();
         dateText.setText(dtf.format(localDate));
 
         final Calendar cal = Calendar.getInstance();
@@ -182,17 +182,16 @@ public class ServiceDetailFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (locationText.getText().toString().isEmpty()) {
-                    locationText.setError("Location is required!");
-                }
-                if (titleText.getText().toString().isEmpty()) {
-                    titleText.setError("Title is required!");
-                }
-                if (descriptionText.getText().toString().isEmpty()) {
-                    descriptionText.setError("Description is required!");
-                }
                 if (locationText.getText().toString().isEmpty() || titleText.getText().toString().isEmpty() || descriptionText.getText().toString().isEmpty()) {
-                    ;
+                    if (locationText.getText().toString().isEmpty()) {
+                        locationText.setError("Location is required!");
+                    }
+                    if (titleText.getText().toString().isEmpty()) {
+                        titleText.setError("Title is required!");
+                    }
+                    if (descriptionText.getText().toString().isEmpty()) {
+                        descriptionText.setError("Description is required!");
+                    }
                 } else {
                     ServiceRequest serviceRequest = new ServiceRequest();
                     serviceRequest.setServiceId(db.getNewServiceId());
