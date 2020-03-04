@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -83,7 +84,7 @@ public class ServiceCategoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
+
         categoryView = view.findViewById(R.id.service_category_list);
         categoryList.add(new CategoryItem("Appliances"));
         categoryList.add(new CategoryItem("Electrical"));
@@ -106,12 +107,12 @@ public class ServiceCategoryFragment extends Fragment {
                 serviceDetailFragment.setArguments(categoryBundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .add(serviceDetailFragment, "service_detail")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .addToBackStack("service_detail")
                         .replace(R.id.fragment_container_customer_home, serviceDetailFragment)
                         .commit();
             }
         });
-
         categoryView.setAdapter(categoryAdapter);
         categoryView.setLayoutManager(new LinearLayoutManager(getContext()));
         categoryView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
