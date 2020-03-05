@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -112,7 +113,12 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuItem_customer_createServiceRequest:
-                getSupportFragmentManager().beginTransaction()
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                int count = fragmentManager.getBackStackEntryCount();
+                for (int i = 0; i < count; ++i) {
+                    fragmentManager.popBackStack();
+                }
+                fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container_customer_home, new ServiceCategoryFragment())
                         .commit();
                 break;
