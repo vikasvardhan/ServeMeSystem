@@ -185,7 +185,8 @@ public class DatabaseAccess {
         List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
         String query = "select * from service_request"
                 + " where User_ID=?"
-                + " and Status='Pending'";
+                + " and Status='Pending'"
+                + " order by Service_ID desc";
 
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         ServiceRequest serviceRequest = null;
