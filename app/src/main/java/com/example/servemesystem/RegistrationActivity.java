@@ -163,7 +163,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 UserType = "vendor";
             }
         }));
-
+//Auto Complete
         placesAutocomplete = findViewById(R.id.edittext_address);
 
         placesAutocomplete.setOnPlaceSelectedListener(
