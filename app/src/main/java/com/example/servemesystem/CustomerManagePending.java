@@ -41,8 +41,8 @@ public class CustomerManagePending extends Fragment {
     ListCustPendingServiceRequest mListDataAdapter;
     SharedPreferences sharedpreferences;
 
-    Button viewBids;
-    Button editRequest;
+//    Button viewBids;
+//    Button editRequest;
 
     int currentItemPosition = -1;
 
@@ -78,6 +78,8 @@ public class CustomerManagePending extends Fragment {
                                      container,
                                     false);
 
+        getActivity().setTitle("Pending Requests");
+
         ListView lvItems = (ListView) view.findViewById (R.id.listView_customer_pending_requests);
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -85,13 +87,13 @@ public class CustomerManagePending extends Fragment {
                 view.setSelected(true);
                 currentItemPosition = position;
                 if(currentItemPosition != -1){
-                    viewBids.setEnabled(true);
+//                    viewBids.setEnabled(true);
                 }
             }
         });
 
-        viewBids = (Button) view.findViewById(R.id.btn_viewBids);
-        editRequest = (Button) view.findViewById(R.id.btn_editRequest);
+//        viewBids = (Button) view.findViewById(R.id.btn_viewBids);
+//        editRequest = (Button) view.findViewById(R.id.btn_editRequest);
 
         sharedpreferences = getActivity().getSharedPreferences(FirstFragment.PREFERENCES,
                                                                Context.MODE_PRIVATE);
@@ -112,26 +114,26 @@ public class CustomerManagePending extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewBids.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currentItemPosition != -1){
-                    ServiceRequest currentPendingRequest
-                            = (ServiceRequest) pendingRequests.get(currentItemPosition);
-                    Fragment managebidsFragment = new CustomerManageBids(currentPendingRequest);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_manager_requests,
-                            managebidsFragment).commit();
-                }
-            }
-        });
+//        viewBids.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(currentItemPosition != -1){
+//                    ServiceRequest currentPendingRequest
+//                            = (ServiceRequest) pendingRequests.get(currentItemPosition);
+//                    Fragment managebidsFragment = new CustomerManageBids(currentPendingRequest);
+//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_manager_requests,
+//                            managebidsFragment).commit();
+//                }
+//            }
+//        });
 
-        editRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
+//        editRequest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
         // Find ListView to populate
 
 

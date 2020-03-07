@@ -33,6 +33,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         final CategoryItem item = itemList.get(position);
 
         holder.categoryName.setText(item.getCategoryName());
+        holder.categoryIcon.setImageResource(item.getCategoryImgId());
 
         holder.vBackground.setOnClickListener(new View.OnClickListener() {
             @Override

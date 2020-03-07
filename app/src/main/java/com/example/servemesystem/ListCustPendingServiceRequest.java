@@ -21,7 +21,7 @@ public class ListCustPendingServiceRequest extends ArrayAdapter {
     }
 
     static class LayoutHandler{
-        TextView category, title, date;
+        TextView location, title, date;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ListCustPendingServiceRequest extends ArrayAdapter {
                                            parent,
                                           false);
             layoutHandler = new LayoutHandler();
-            layoutHandler.category = (TextView)mView.findViewById(R.id.customerPendingRequests_category);
+            layoutHandler.location = (TextView)mView.findViewById(R.id.customerPendingRequests_location);
             layoutHandler.title = (TextView)mView.findViewById(R.id.customerPendingRequests_title);
             layoutHandler.date =(TextView)mView.findViewById(R.id.customerPendingRequests_date);
 
@@ -56,7 +56,7 @@ public class ListCustPendingServiceRequest extends ArrayAdapter {
         }
 
         ServiceRequest serviceRequest = (ServiceRequest) this.getItem(position);
-        layoutHandler.category.setText(serviceRequest.getCategory());
+        layoutHandler.location.setText(serviceRequest.getLocation());
         layoutHandler.title.setText(serviceRequest.getTitle());
         layoutHandler.date.setText(serviceRequest.getServiceTime());
         return mView;

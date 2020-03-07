@@ -78,6 +78,7 @@ public class ServiceCategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_service_category, container, false);
+        getActivity().setTitle("Categories");
         return view;
     }
 

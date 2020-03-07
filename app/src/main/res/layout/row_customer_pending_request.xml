@@ -1,87 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@drawable/bg_key"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@drawable/list_selector"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <RelativeLayout
         android:orientation="horizontal"
-        android:paddingLeft="5.0dip"
-        android:paddingTop="5.0dip"
-        android:paddingBottom="5.0dip">
+        android:layout_width="fill_parent"
+        android:background="@drawable/list_selector"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/customerPendingRequests_categoryLbl"
-            style="@style/Widget.AppCompat.TextView"
+        <!--            android:background="@drawable/image_bg"-->
+
+        <!--  Category Image -->
+        <LinearLayout android:id="@+id/thumbnail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Category:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"/>
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dip">
 
-        <TextView
-            android:id="@+id/customerPendingRequests_category"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="139dp"
+                android:layout_height="130dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/plumbing" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Category Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:orientation="vertical"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail">
 
-    </LinearLayout>
+            <!-- Title -->
+            <TextView
+                android:id="@+id/customerPendingRequests_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#040404"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="5.0dip"
-        android:paddingTop="5.0dip"
-        android:paddingBottom="5.0dip">
+            <!-- Date -->
+            <TextView
+                android:id="@+id/customerPendingRequests_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dip"
+                android:text="Date"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#343434" />
 
-        <TextView
-            android:id="@+id/customerPendingRequests_titleLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"/>
+            <!-- Location -->
+            <TextView
+                android:id="@+id/customerPendingRequests_location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dip"
+                android:text="Category"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#343434" />
 
-        <TextView
-            android:id="@+id/customerPendingRequests_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Title Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <!-- Num Bids -->
+            <TextView
+                android:id="@+id/customerPendingRequests_numBids"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dip"
+                android:text="Num Bids"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#343434" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+<!--                android:theme="@style/PrimaryFlatButton"-->
+                <Button
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Edit" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="5.0dip"
-        android:paddingTop="5.0dip"
-        android:paddingBottom="5.0dip">
+                <Button
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Bids" />
 
-        <TextView
-            android:id="@+id/customerPendingRequests_dateLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"/>
+                <Button
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="Details" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/customerPendingRequests_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Date Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
 
-    </LinearLayout>
+        <!--    <View-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="1dp"-->
+        <!--        android:background="@android:color/darker_gray"/>-->
+        <!--    <LinearLayout-->
+        <!--        android:orientation="vertical"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="121dp">-->
 
-</LinearLayout>
+        <!--        <TextView-->
+        <!--            android:id="@+id/customerPendingRequests_title"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Title"-->
+        <!--            android:layout_marginLeft="10dp"-->
+        <!--            android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+        <!--            app:autoSizeTextType="uniform"-->
+        <!--            app:textAllCaps="false" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/customerPendingRequests_date"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginLeft="10dp"-->
+        <!--            android:text="Date"-->
+        <!--            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/customerPendingRequests_category"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginLeft="10dp"-->
+        <!--            android:text="Category"-->
+        <!--            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />-->
+
+        <!--    </LinearLayout>-->
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
