@@ -1,0 +1,21 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml:16:1-20:12
+INJECTED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml:16:1-20:12
+INJECTED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml:16:1-20:12
+	package
+		ADDED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml:17:5-42
+		INJECTED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml
+		INJECTED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml:16:11-69
+application
+ADDED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml:19:3-17
+uses-sdk
+INJECTED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml
+INJECTED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml
+		ADDED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml
+		INJECTED from /Users/vikasvardhan/Documents/SemesterTwo/material-components-android-master/lib/java/com/google/android/material/AndroidManifest.xml
