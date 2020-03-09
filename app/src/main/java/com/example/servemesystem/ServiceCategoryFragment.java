@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
@@ -38,23 +39,20 @@ public class ServiceCategoryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private List<CategoryItem> categoryList = new ArrayList<>();
+    private List<ServiceCategory> categoryList = new ArrayList<>();
     private CategoryAdapter categoryAdapter;
     private RecyclerView categoryView;
+    private String type;
 
     public ServiceCategoryFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ServiceCategoryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    public ServiceCategoryFragment(String inType) {
+        type = inType;
+        // Required empty public constructor
+    }
+
     public static ServiceCategoryFragment newInstance(String param1, String param2) {
         ServiceCategoryFragment fragment = new ServiceCategoryFragment();
         Bundle args = new Bundle();
@@ -78,6 +76,7 @@ public class ServiceCategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_service_category, container, false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Select Category");
         return view;
     }
 
@@ -86,35 +85,50 @@ public class ServiceCategoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         categoryView = view.findViewById(R.id.service_category_list);
-        categoryList.add(new CategoryItem("Appliances"));
-        categoryList.add(new CategoryItem("Electrical"));
-        categoryList.add(new CategoryItem("Plumbing"));
-        categoryList.add(new CategoryItem("Home Cleaning"));
-        categoryList.add(new CategoryItem("Tutoring"));
-        categoryList.add(new CategoryItem("Packaging and Moving"));
-        categoryList.add(new CategoryItem("Computer Repair"));
-        categoryList.add(new CategoryItem("Home Repair and Painting"));
-        categoryList.add(new CategoryItem("Pest Control"));
+        categoryList.add(new ServiceCategory("Appliances"));
+        categoryList.add(new ServiceCategory("Electrical"));
+        categoryList.add(new ServiceCategory("Plumbing"));
+        categoryList.add(new ServiceCategory("Home Cleaning"));
+        categoryList.add(new ServiceCategory("Tutoring"));
+        categoryList.add(new ServiceCategory("Packaging and Moving"));
+        categoryList.add(new ServiceCategory("Computer Repair"));
+        categoryList.add(new ServiceCategory("Home Repair and Painting"));
+        categoryList.add(new ServiceCategory("Pest Control"));
 
         categoryAdapter = new CategoryAdapter(categoryList);
         categoryAdapter.setItemClickListener(new CategoryAdapter.ItemClickListener() {
             @Override
-            public void onItemClick(CategoryItem item) {
+            public void onItemClick(ServiceCategory item) {
                 Bundle categoryBundle = new Bundle();
-                categoryBundle.putString("category_name", item.getCategoryName());
-                Fragment serviceDetailFragment = null;
-                serviceDetailFragment = new ServiceDetailFragment();
-                serviceDetailFragment.setArguments(categoryBundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .add(serviceDetailFragment, "service_detail")
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack("service_detail")
-                        .replace(R.id.fragment_container_customer_home, serviceDetailFragment)
-                        .commit();
+                if(type.equals("customer")){
+                    categoryBundle.putString("category_name", item.getCategoryName());
+                    Fragment serviceDetailFragment = null;
+                    serviceDetailFragment = new ServiceDetailFragment();
+                    serviceDetailFragment.setArguments(categoryBundle);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(serviceDetailFragment, "service_detail")
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .addToBackStack("service_detail")
+                            .replace(R.id.fragment_container_customer_home, serviceDetailFragment)
+                            .commit();
+                }
+                else{
+
+
+//                    categoryBundle.putString("category_name", item.getCategoryName());
+                    Fragment availableRequests = new VendorViewAvailable(item.getCategoryName());
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(availableRequests, "vendor_view_available")
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .addToBackStack("vendor_view_available")
+                            .replace(R.id.fragment_container, availableRequests)
+                            .commit();
+                }
             }
         });
         categoryView.setAdapter(categoryAdapter);
         categoryView.setLayoutManager(new LinearLayoutManager(getContext()));
-        categoryView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        categoryView.addItemDecoration(new DividerItemDecoration(getContext(),
+                                        DividerItemDecoration.VERTICAL));
     }
 }

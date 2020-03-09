@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +15,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class VendorHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawer;
+    SharedPreferences sharedpreferences;
+    DatabaseAccess db;
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +39,40 @@ public class VendorHome extends AppCompatActivity implements NavigationView.OnNa
         drawer = findViewById(R.id.vendor_drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
-                                                                  drawer,
-                                                                  toolbar,
-                                                                  R.string.navigation_drawer_open,
-                                                                  R.string.navigation_drawer_close);
+                drawer,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
 
+        //set background image
+        View header= navView.getHeaderView(0);
+        LinearLayout sideNavLayout = (LinearLayout)header.findViewById(R.id.navHeaderVendor);
+        sideNavLayout.setBackgroundResource(R.drawable.nav_menu_header);
+
+        View headerView = navView.getHeaderView(0);
+        TextView name = (TextView) headerView.findViewById(R.id.nav_header_vendor_name);
+        TextView email = (TextView) headerView.findViewById(R.id.nav_header_vendor_email);
+        sharedpreferences = getSharedPreferences(FirstFragment.PREFERENCES,
+                Context.MODE_PRIVATE);
+
+        db = DatabaseAccess.getInstance(this);
+        userId = sharedpreferences.getInt(UserAccount.USERID, -1);
+        UserAccount uc = db.getAccount(userId);
+        if(uc != null){
+            name.setText(uc.getLastName() + ", " + uc.getFirstName());
+            email.setText(uc.getEmail());
+        }
+
         if(savedInstanceState == null)
         {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new VendorViewServiceRequest()).commit();
-            navView.setCheckedItem(R.id.menuItem_vendor_view_service_requests);
+                    new VendorManageServiceRequests()).commit();
+            navView.setCheckedItem(R.id.menuItem_vendor_manage_service_requests);
         }
     }
 
@@ -61,10 +88,17 @@ public class VendorHome extends AppCompatActivity implements NavigationView.OnNa
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_options_vendor, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.menuItem_customer_options_logout:
+            case R.id.menuItem_vendor_options_logout:
                 logout();
                 return true;
             default:
@@ -74,18 +108,32 @@ public class VendorHome extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment currentFragment;
         switch (item.getItemId()){
             case R.id.menuItem_vendor_view_service_requests:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new VendorViewServiceRequest()).commit();
+                currentFragment = new ServiceCategoryFragment("vendor");
+                fragmentManager.beginTransaction()
+                        .add(currentFragment, "service_category_vendor")
+                        .addToBackStack("service_category_vendor")
+                        .replace(R.id.fragment_container, currentFragment)
+                        .commit();
                 break;
             case R.id.menuItem_vendor_manage_service_requests:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new VendorManageServiceRequests()).commit();
+                currentFragment = new VendorManageServiceRequests();
+                fragmentManager.beginTransaction()
+                        .add(currentFragment, "vendor_manage_service_requests")
+                        .addToBackStack("vendor_manage_service_requests")
+                        .replace(R.id.fragment_container, currentFragment)
+                        .commit();
                 break;
             case R.id.menuItem_vendor_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new VendorProfile()).commit();
+                currentFragment = new VendorProfile();
+                fragmentManager.beginTransaction()
+                        .add(currentFragment, "vendor_profile")
+                        .addToBackStack("vendor_profile")
+                        .replace(R.id.fragment_container, currentFragment)
+                        .commit();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

@@ -45,7 +45,7 @@ public class ListPendingServiceRequest extends ArrayAdapter {
                                            parent,
                                           false);
             layoutHandler = new LayoutHandler();
-            layoutHandler.category = (TextView)mView.findViewById(R.id.customerPendingRequests_category);
+            layoutHandler.category = (TextView)mView.findViewById(R.id.customerPendingRequests_location);
             layoutHandler.title = (TextView)mView.findViewById(R.id.customerPendingRequests_title);
             layoutHandler.date =(TextView)mView.findViewById(R.id.customerPendingRequests_date);
 
@@ -56,7 +56,7 @@ public class ListPendingServiceRequest extends ArrayAdapter {
         }
 
         ServiceRequest serviceRequest = (ServiceRequest) this.getItem(position);
-        layoutHandler.category.setText(serviceRequest.getCategory());
+        layoutHandler.category.setText(serviceRequest.getCategory().getCategoryName());
         layoutHandler.title.setText(serviceRequest.getTitle());
         layoutHandler.date.setText(serviceRequest.getServiceTime());
         return mView;

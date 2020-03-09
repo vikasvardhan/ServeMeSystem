@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,7 +22,8 @@ public class ListCustCompletedServiceRequest extends ArrayAdapter {
     }
 
     static class LayoutHandler{
-        TextView category, title, date, vendor;
+        TextView location, title, date, vendor;
+        ImageView categoryIcon;
     }
 
     @Override
@@ -45,10 +47,17 @@ public class ListCustCompletedServiceRequest extends ArrayAdapter {
                                            parent,
                                            false);
             layoutHandler = new LayoutHandler();
-            layoutHandler.category = (TextView)mView.findViewById(R.id.customerCompletedRequests_category);
-            layoutHandler.title = (TextView)mView.findViewById(R.id.customerCompletedRequests_title);
-            layoutHandler.date =(TextView)mView.findViewById(R.id.customerCompletedRequests_date);
-            layoutHandler.vendor =(TextView)mView.findViewById(R.id.customerCompletedRequests_vendor);
+//            layoutHandler.category = (TextView)mView.findViewById(R.id.customerCompletedRequests_category);
+            layoutHandler.categoryIcon
+                    = (ImageView)mView.findViewById(R.id.customerCompletedRequests_categoryIcon);
+            layoutHandler.title
+                    = (TextView)mView.findViewById(R.id.customerCompletedRequests_title);
+            layoutHandler.location
+                    = (TextView)mView.findViewById(R.id.customerCompletedRequests_location);
+            layoutHandler.date
+                    = (TextView)mView.findViewById(R.id.customerCompletedRequests_date);
+            layoutHandler.vendor
+                    =(TextView)mView.findViewById(R.id.customerCompletedRequests_vendor);
 
             mView.setTag(layoutHandler);
         }
@@ -57,8 +66,11 @@ public class ListCustCompletedServiceRequest extends ArrayAdapter {
         }
 
         ServiceRequest serviceRequest = (ServiceRequest) this.getItem(position);
-        layoutHandler.category.setText(serviceRequest.getCategory());
+//        layoutHandler.category.setText(serviceRequest.getCategory().getCategoryName());
         layoutHandler.title.setText(serviceRequest.getTitle());
+        layoutHandler.categoryIcon.setImageResource
+                (serviceRequest.getCategory().getCategoryImgId());
+        layoutHandler.location.setText(serviceRequest.getLocation());
         layoutHandler.date.setText(serviceRequest.getServiceTime());
         layoutHandler.vendor.setText(serviceRequest.getServicedBy());
         return mView;

@@ -25,12 +25,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class CustomerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    SharedPreferences sharedpreferences;
+    DatabaseAccess db;
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,29 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.customer_drawer_layout);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_customer);
+
+        //set background image
+        View header= navigationView.getHeaderView(0);
+        LinearLayout sideNavLayout = (LinearLayout)header.findViewById(R.id.navHeaderCustomer);
+        sideNavLayout.setBackgroundResource(R.drawable.nav_menu_header);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView name = (TextView) headerView.findViewById(R.id.nav_header_customer_name);
+        TextView email = (TextView) headerView.findViewById(R.id.nav_header_customer_email);
+        sharedpreferences = getSharedPreferences(FirstFragment.PREFERENCES,
+                                                 Context.MODE_PRIVATE);
+
+        db = DatabaseAccess.getInstance(this);
+        userId = sharedpreferences.getInt(UserAccount.USERID, -1);
+        UserAccount uc = db.getAccount(userId);
+        if(uc != null){
+            name.setText(uc.getLastName() + ", " + uc.getFirstName());
+            email.setText(uc.getEmail());
+        }
+//        username.setText(uc.getUsername());
+//        email.setText(uc.getEmail());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer,
@@ -111,31 +139,42 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+//        int count = fragmentManager.getBackStackEntryCount();
+//        for (int i = 0; i < count; ++i) {
+//            fragmentManager.popBackStack();
+//        }
+        Fragment currentFragment;
+
         switch (item.getItemId()) {
             case R.id.menuItem_customer_createServiceRequest:
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                int count = fragmentManager.getBackStackEntryCount();
-                for (int i = 0; i < count; ++i) {
-                    fragmentManager.popBackStack();
-                }
+                currentFragment = new ServiceCategoryFragment("customer");
                 fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_customer_home, new ServiceCategoryFragment())
+                        .add(currentFragment, "service_category")
+                        .addToBackStack("service_category")
+                        .replace(R.id.fragment_container_customer_home, currentFragment)
                         .commit();
                 break;
             case R.id.menuItem_customer_manageServiceRequest:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_home,
-                        new CustomerManageServiceRequests()).commit();
+                currentFragment = new CustomerManageServiceRequests();
+                fragmentManager.beginTransaction()
+                        .add(currentFragment, "customer_manage_service_requests")
+                        .addToBackStack("customer_manage_service_requests")
+                        .replace(R.id.fragment_container_customer_home, currentFragment)
+                        .commit();
                 break;
             case R.id.menuItem_customer_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_home,
-                        new CustomerProfile()).commit();
+                currentFragment = new CustomerProfile();
+                fragmentManager.beginTransaction()
+                        .add(currentFragment, "customer_profile")
+                        .addToBackStack("customer_profile")
+                        .replace(R.id.fragment_container_customer_home, currentFragment)
+                        .commit();
                 break;
             case R.id.action_settings_customer:
                 Intent settingsIntent = new Intent(CustomerActivity.this, SettingsActivity.class);
                 startActivity(settingsIntent);
                 break;
-
-
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

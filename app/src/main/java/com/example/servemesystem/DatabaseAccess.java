@@ -62,15 +62,17 @@ public class DatabaseAccess {
         return serviceBids;
     }
 
-    public List<ServiceRequest> getConfirmedRequestsForVendor(int userId) {
+    public List<ServiceRequest> getAvailableRequestsForVendor(String category) {
         List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
         String query = "SELECT * from service_request"
-                + " WHERE Vendor_ID=?"
-                + " AND Status='Confirmed'";
+                + " LEFT JOIN user_account"
+                + " ON service_request.User_ID=user_account.user_id"
+                + " WHERE service_request.Category=?"
+                + " AND service_request.Status='Pending'";
 
         Log.d("SQL Query", query);
 
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        Cursor cursor = db.rawQuery(query, new String[]{category});
         ServiceRequest serviceRequest = null;
         if (cursor.moveToFirst()) {
             do {
@@ -78,19 +80,156 @@ public class DatabaseAccess {
                 serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
                 serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
                 serviceRequest.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
-                serviceRequest.setCategory(cursor.getString(cursor.getColumnIndex("Category")));
+                serviceRequest.setCategory
+                        (new ServiceCategory(cursor.getString(cursor.getColumnIndex("Category"))));
                 serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
                 serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
                 serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
                 serviceRequest.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
                 serviceRequest.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
                 serviceRequest.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
+                String lastName = cursor.getString(cursor.getColumnIndex("last_name"));
+                String firstName = cursor.getString(cursor.getColumnIndex("first_name"));
+                String name = lastName + ", " + firstName;
+                serviceRequest.setRequestedBy(name);
                 serviceRequests.add(serviceRequest);
             } while (cursor.moveToNext());
         }
-        for (ServiceRequest sr : serviceRequests) {
-            Log.d("SQL Query Category", sr.getCategory());
-            Log.d("SQL Query Title", sr.getTitle());
+//        for (ServiceRequest sr : serviceRequests) {
+//            Log.d("SQL Query Category", sr.getCategory());
+//            Log.d("SQL Query Title", sr.getTitle());
+//        }
+        return serviceRequests;
+    }
+
+    public List<ServiceRequest> getPendingRequestsForVendor(int userId){
+        List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
+        String query = "SELECT service_request.Service_ID, service_request.User_ID, service_request.Category, service_request.Datetime," +
+                " service_request.Location, service_request.Title, service_request.Description, service_request.Status, service_request.Is_Reviewed," +
+                " service_bids.Bid_ID, service_bids.Amount, service_bids.Notes, service_bids.Hours, service_bids.Status, service_bids.Vendor_ID" +
+                " FROM service_request" +
+                " INNER JOIN service_bids" +
+                " ON service_request.Service_ID=service_bids.Service_ID" +
+                " WHERE service_request.Status='Pending' and service_bids.Status='Pending' and service_bids.Vendor_ID=?" +
+                " ORDER BY service_request.Service_ID DESC";
+
+        Log.d("SQL Query", query);
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        ServiceRequest serviceRequest = null;
+        if(cursor.moveToFirst()){
+            do{
+                serviceRequest = new ServiceRequest();
+                serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
+                serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
+                serviceRequest.setCategory(new ServiceCategory(cursor.getString(cursor.getColumnIndex("Category"))));
+                serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
+                serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+                serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
+                serviceRequest.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                serviceRequest.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
+                serviceRequest.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
+
+                //Set Bid
+                ServiceBid bid = new ServiceBid();
+                bid.setBidId(cursor.getInt(cursor.getColumnIndex("Bid_ID")));
+                bid.setAmt(cursor.getDouble(cursor.getColumnIndex("Amount")));
+                bid.setNotes(cursor.getString(cursor.getColumnIndex("Notes")));
+                bid.setHours(cursor.getInt(cursor.getColumnIndex("Hours")));
+                bid.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                bid.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
+                serviceRequest.setPendingBid(bid);
+
+                serviceRequests.add(serviceRequest);
+            }while(cursor.moveToNext());
+        }
+        return serviceRequests;
+    }
+
+    public List<ServiceRequest> getConfirmedRequestsForVendor(int userId){
+        List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
+        String query = "SELECT service_request.Service_ID, service_request.User_ID, service_request.Vendor_ID, service_request.Category, service_request.Datetime," +
+                " service_request.Location, service_request.Title, service_request.Description, service_request.Status, service_request.Is_Reviewed," +
+                " service_bids.Bid_ID, service_bids.Amount, service_bids.Notes, service_bids.Hours, service_bids.Status" +
+                " FROM service_request" +
+                " INNER JOIN service_bids" +
+                " ON service_request.Service_ID=service_bids.Service_ID AND service_request.Vendor_ID=service_bids.Vendor_ID" +
+                " WHERE service_request.Vendor_ID=?" +
+                " and service_request.Status='Confirmed'";
+
+        Log.d("SQL Query", query);
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        ServiceRequest serviceRequest = null;
+        if(cursor.moveToFirst()){
+            do{
+                serviceRequest = new ServiceRequest();
+                serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
+                serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
+                serviceRequest.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
+                serviceRequest.setCategory(new ServiceCategory(cursor.getString(cursor.getColumnIndex("Category"))));
+                serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
+                serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+                serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
+                serviceRequest.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                serviceRequest.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
+                serviceRequest.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
+
+                //Set Bid
+                ServiceBid bid = new ServiceBid();
+                bid.setBidId(cursor.getInt(cursor.getColumnIndex("Bid_ID")));
+                bid.setAmt(cursor.getDouble(cursor.getColumnIndex("Amount")));
+                bid.setNotes(cursor.getString(cursor.getColumnIndex("Notes")));
+                bid.setHours(cursor.getInt(cursor.getColumnIndex("Hours")));
+                bid.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                serviceRequest.setWinningBid(bid);
+
+                serviceRequests.add(serviceRequest);
+            }while(cursor.moveToNext());
+        }
+        return serviceRequests;
+    }
+
+    public List<ServiceRequest> getCompletedRequestsForVendor(int userId){
+        List<ServiceRequest> serviceRequests = new LinkedList<ServiceRequest>();
+        String query = "SELECT service_request.Service_ID, service_request.User_ID, service_request.Vendor_ID, service_request.Category, service_request.Datetime," +
+                " service_request.Location, service_request.Title, service_request.Description, service_request.Status, service_request.Is_Reviewed," +
+                " service_bids.Bid_ID, service_bids.Amount, service_bids.Notes, service_bids.Hours, service_bids.Status" +
+                " FROM service_request" +
+                " INNER JOIN service_bids" +
+                " ON service_request.Service_ID=service_bids.Service_ID AND service_request.Vendor_ID=service_bids.Vendor_ID" +
+                " WHERE service_request.Vendor_ID=?" +
+                " and service_request.Status in ('Completed', 'Cancelled')";
+
+        Log.d("SQL Query", query);
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        ServiceRequest serviceRequest = null;
+        if(cursor.moveToFirst()){
+            do{
+                serviceRequest = new ServiceRequest();
+                serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
+                serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
+                serviceRequest.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
+                serviceRequest.setCategory(new ServiceCategory(cursor.getString(cursor.getColumnIndex("Category"))));
+                serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
+                serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+                serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
+                serviceRequest.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                serviceRequest.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
+                serviceRequest.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
+
+                //Set Bid
+                ServiceBid bid = new ServiceBid();
+                bid.setBidId(cursor.getInt(cursor.getColumnIndex("Bid_ID")));
+                bid.setAmt(cursor.getDouble(cursor.getColumnIndex("Amount")));
+                bid.setNotes(cursor.getString(cursor.getColumnIndex("Notes")));
+                bid.setHours(cursor.getInt(cursor.getColumnIndex("Hours")));
+                bid.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+                serviceRequest.setWinningBid(bid);
+
+                serviceRequests.add(serviceRequest);
+            }while(cursor.moveToNext());
         }
         return serviceRequests;
     }
@@ -113,7 +252,8 @@ public class DatabaseAccess {
                 serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
                 serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
                 serviceRequest.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
-                serviceRequest.setCategory(cursor.getString(cursor.getColumnIndex("Category")));
+                serviceRequest.setCategory
+                        (new ServiceCategory(cursor.getString(cursor.getColumnIndex("Category"))));
                 serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
                 serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
                 serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
@@ -127,19 +267,11 @@ public class DatabaseAccess {
                 serviceRequests.add(serviceRequest);
             } while (cursor.moveToNext());
         }
-        for (ServiceRequest sr : serviceRequests) {
-            Log.d("SQL Query Category", sr.getCategory());
-            Log.d("SQL Query Title", sr.getTitle());
-        }
+//        for (ServiceRequest sr : serviceRequests) {
+//            Log.d("SQL Query Category", sr.getCategory());
+//            Log.d("SQL Query Title", sr.getTitle());
+//        }
         return serviceRequests;
-    }
-
-    public int getNewServiceId() {
-        String query = "SELECT MAX(Service_ID) as service_id from service_request";
-        Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
-        int serviceId = cursor.getInt(cursor.getColumnIndex("service_id"));
-        return serviceId + 1;
     }
 
     public List<ServiceRequest> getConfirmedRequestsForCustomer(int userId) {
@@ -160,7 +292,8 @@ public class DatabaseAccess {
                 serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
                 serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
                 serviceRequest.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
-                serviceRequest.setCategory(cursor.getString(cursor.getColumnIndex("Category")));
+                serviceRequest.setCategory
+                        (new ServiceCategory(cursor.getString(cursor.getColumnIndex("Category"))));
                 serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
                 serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
                 serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
@@ -174,10 +307,10 @@ public class DatabaseAccess {
                 serviceRequests.add(serviceRequest);
             } while (cursor.moveToNext());
         }
-        for (ServiceRequest sr : serviceRequests) {
-            Log.d("SQL Query Category", sr.getCategory());
-            Log.d("SQL Query Title", sr.getTitle());
-        }
+//        for (ServiceRequest sr : serviceRequests) {
+//            Log.d("SQL Query Category", sr.getCategory());
+//            Log.d("SQL Query Title", sr.getTitle());
+//        }
         return serviceRequests;
     }
 
@@ -196,7 +329,9 @@ public class DatabaseAccess {
                 serviceRequest.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
                 serviceRequest.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
                 serviceRequest.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
-                serviceRequest.setCategory(cursor.getString(cursor.getColumnIndex("Category")));
+                serviceRequest.setCategory
+                        (new ServiceCategory(cursor.getString(cursor.getColumnIndex("Category"))));
+//                serviceRequest.setCategory(cursor.getString(cursor.getColumnIndex("Category")));
                 serviceRequest.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
                 serviceRequest.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
                 serviceRequest.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
@@ -208,6 +343,14 @@ public class DatabaseAccess {
         }
 //        Log.d("SQL Query Title", sr.getTitle());
         return serviceRequests;
+    }
+
+    public int getNewServiceId() {
+        String query = "SELECT MAX(Service_ID) as service_id from service_request";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        int serviceId = cursor.getInt(cursor.getColumnIndex("service_id"));
+        return serviceId + 1;
     }
 
     public UserAccount getAccount(String username) {
@@ -363,13 +506,27 @@ public class DatabaseAccess {
         else return true;
     }
 
+    public boolean insertServiceBid(ServiceBid sb){
+        open();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Service_ID", sb.getServiceId());
+        contentValues.put("Vendor_ID", sb.getVendorId());
+        contentValues.put("Amount", sb.getAmt());
+        contentValues.put("Notes", sb.getNotes());
+        contentValues.put("Hours", sb.getHours());
+        contentValues.put("Status", "Pending");
+        long ins = db.insert("service_bids", null, contentValues);
+        if (ins == -1) return false;
+        else return true;
+    }
+
     public boolean insertServiceRequest(ServiceRequest serviceRequest) {
         open();
         ContentValues contentValues = new ContentValues();
         contentValues.put("Service_ID", serviceRequest.getServiceId());
         contentValues.put("User_ID", serviceRequest.getCustomerId());
         contentValues.put("Vendor_ID", serviceRequest.getVendorId());
-        contentValues.put("Category", serviceRequest.getCategory());
+        contentValues.put("Category", serviceRequest.getCategory().getCategoryName());
         contentValues.put("Datetime", serviceRequest.getServiceTime());
         contentValues.put("Location", serviceRequest.getLocation());
         contentValues.put("Title", serviceRequest.getTitle());
@@ -398,7 +555,8 @@ public class DatabaseAccess {
     //checking if user exists;
     public boolean checkUser(String username) {
         open();
-        Cursor cursor = db.rawQuery("Select * from user_account where username = ?", new String[]{username});
+        Cursor cursor = db.rawQuery("Select * from user_account where username = ?",
+                                    new String[]{username});
 
         if (cursor.getCount() > 0) return false;
         else return true;

@@ -1,5 +1,7 @@
 package com.example.servemesystem;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -23,6 +26,10 @@ public class CustomerProfile extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    SharedPreferences sharedpreferences;
+    DatabaseAccess db;
+    int userId;
 
     public CustomerProfile() {
         // Required empty public constructor
@@ -49,6 +56,7 @@ public class CustomerProfile extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -58,7 +66,42 @@ public class CustomerProfile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view
+                = inflater.inflate(R.layout.fragment_customer_profile, container, false);
+
+        sharedpreferences
+                = getActivity().getSharedPreferences(FirstFragment.PREFERENCES,Context.MODE_PRIVATE);
+
+        TextView name = (TextView) view.findViewById(R.id.customer_profile_name);
+        TextView email = (TextView) view.findViewById(R.id.customer_profile_email);
+        TextView phone = (TextView) view.findViewById(R.id.customer_profile_phone);
+        TextView points = (TextView) view.findViewById(R.id.customer_profile_points);
+        TextView balance = (TextView) view.findViewById(R.id.customer_profile_balance);
+        TextView location = (TextView) view.findViewById(R.id.customer_profile_location);
+
+        db = DatabaseAccess.getInstance(getActivity());
+        userId = sharedpreferences.getInt(UserAccount.USERID, -1);
+        UserAccount uc = db.getAccount(userId);
+
+        if (uc != null) {
+            name.setText(uc.getLastName() + ", " + uc.getFirstName());
+            email.setText(uc.getEmail());
+            phone.setText("+" + uc.getPhone());
+            points.setText(String.valueOf(uc.getPoints()));
+            balance.setText("$" + uc.getWalletAmt());
+            String locationStr = uc.getAddress();
+            if(locationStr != null){
+                if(locationStr.equals("")){
+                    locationStr = "No Address Provided";
+                }
+            }
+            else{
+                locationStr = "No Address Provided";
+            }
+            location.setText(locationStr);
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer_profile, container, false);
+        return view;
     }
 }

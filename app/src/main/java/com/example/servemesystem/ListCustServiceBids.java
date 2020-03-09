@@ -49,8 +49,8 @@ public class ListCustServiceBids extends ArrayAdapter {
             LayoutInflater layoutInflater
                     = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mView = layoutInflater.inflate(R.layout.row_customer_service_bid,
-                    parent,
-                    false);
+                                            parent,
+                                            false);
             layoutHandler = new LayoutHandler();
             layoutHandler.vendorName = (TextView)mView.findViewById(R.id.customerServiceBid_vendorName);
             layoutHandler.bidAmount = (TextView)mView.findViewById(R.id.customerServiceBid_bidAmt);

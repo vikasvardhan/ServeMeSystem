@@ -1,9 +1,12 @@
 package com.example.servemesystem;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -28,8 +31,11 @@ public class CustomerManageConfirmed extends Fragment {
     List<ServiceRequest> confirmedRequests;
     ListCustConfirmedServiceRequest mListDataAdapter;
     SharedPreferences sharedpreferences;
+    ServiceRequest currConfirmedRequest;
+    CustomerManageConfirmed mFrame;
 
     public CustomerManageConfirmed() {
+        mFrame = this;
         // Required empty public constructor
     }
 
@@ -58,6 +64,8 @@ public class CustomerManageConfirmed extends Fragment {
         View view = inflater.inflate(R.layout.fragment_customer_manage_confirmed,
                                     container,
                                     false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Confirmed Requests");
+
         ListView lvItems = (ListView) view.findViewById (R.id.listView_customer_confirmed_requests);
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,9 +84,58 @@ public class CustomerManageConfirmed extends Fragment {
             confirmedRequests = db.getConfirmedRequestsForCustomer(userId);
             mListDataAdapter = new ListCustConfirmedServiceRequest(getContext(),
                                                                     R.layout.row_customer_confirmed_request,
-                                                                    confirmedRequests);
+                                                                    confirmedRequests,
+                                                                    mFrame);
             lvItems.setAdapter(mListDataAdapter);
         }
         return view;
+    }
+
+    public void cancelServiceRequest(int position){
+        currConfirmedRequest
+                = (ServiceRequest) confirmedRequests.get(position);
+        String username
+                = sharedpreferences.getString(UserAccount.USERNAME, "");
+        if(!username.equals(""))
+        {
+            if(!username.equals(""))
+            {
+                UserAccount uc = db.getAccount(username);
+                int numPoints = uc.getPoints();
+                AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(getContext());
+                confirmBuilder.setMessage("You will lose "
+                        + Integer.toString(numPoints) + " points. Continue?");
+                confirmBuilder.setCancelable(true);
+
+                confirmBuilder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String un = sharedpreferences.getString(UserAccount.USERNAME,
+                                        "");
+                                UserAccount user = db.getAccount(un);
+                                // penalize customer
+                                db.setCustomerPoints(user.getUserId(), 0);
+                                db.customer_cancelServiceRequest(currConfirmedRequest.getServiceId());
+
+                                // refresh list
+                                confirmedRequests
+                                        = db.getConfirmedRequestsForCustomer(user.getUserId());
+                                mListDataAdapter.setList(confirmedRequests);
+                                dialog.cancel();
+                            }
+                        });
+
+                confirmBuilder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert11 = confirmBuilder.create();
+                alert11.show();
+            }
+        }
     }
 }

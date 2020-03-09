@@ -145,12 +145,12 @@ public class RegistrationActivity extends AppCompatActivity {
 
         cardCust = findViewById(R.id.cardCust);
         cardVend = findViewById(R.id.cardVend);
-        cardCust.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        cardCust.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.color_primary));
         cardCust.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardCust.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-                cardVend.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.default_color));
+                cardCust.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.color_primary));
+                cardVend.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.color_on_primary));
                 UserType = "customer";
 
             }
@@ -158,8 +158,8 @@ public class RegistrationActivity extends AppCompatActivity {
         cardVend.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardVend.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-                cardCust.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.default_color));
+                cardVend.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.color_primary));
+                cardCust.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.color_on_primary));
                 UserType = "vendor";
             }
         }));

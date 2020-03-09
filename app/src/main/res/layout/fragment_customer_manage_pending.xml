@@ -6,79 +6,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="55dp"
     android:orientation="vertical"
+    android:background="?colorControlHighlight"
     tools:context=".CustomerManagePending">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Pending Service Requests"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    <!--    android:background="#303030"-->
+<!--    <TextView-->
+<!--        android:id="@+id/textView2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:layout_marginRight="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:text="Pending Service Requests"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Large" />-->
+
+<!--    android:divider="#b5b5b5"-->
+<!--    android:dividerHeight="1dp"-->
 
     <ListView
         android:id="@+id/listView_customer_pending_requests"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
+        android:dividerHeight="10dp"
+        android:listSelector="@drawable/list_selector"
         android:layout_weight="1" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:paddingLeft="4.0dip"
-        android:paddingTop="1.0dip"
-        android:paddingRight="4.0dip"
-        android:paddingBottom="1.0dip">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:paddingLeft="4.0dip"-->
+<!--        android:paddingTop="1.0dip"-->
+<!--        android:paddingRight="4.0dip"-->
+<!--        android:paddingBottom="1.0dip">-->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="vertical">-->
 
-            <Button
-                android:id="@+id/btn_editRequest"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:enabled="false"
-                android:text="Edit"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/gradient"/>
+<!--            <Button-->
+<!--                android:id="@+id/btn_editRequest"-->
+<!--                style="@style/Widget.AppCompat.Button.Colored"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:enabled="false"-->
+<!--                android:text="Edit"-->
+<!--                android:layout_marginBottom="5dp"-->
+<!--                android:layout_marginRight="5dp"-->
+<!--                android:background="@drawable/gradient"/>-->
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="vertical">-->
 
-            <Button
-                android:id="@+id/btn_viewBids"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:enabled="false"
-                android:text="View Bids"
-                android:background="@drawable/gradient"
-                android:layout_marginBottom="5dp"/>
-        </LinearLayout>
+<!--            <Button-->
+<!--                android:id="@+id/btn_viewBids"-->
+<!--                style="@style/Widget.AppCompat.Button.Colored"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:enabled="false"-->
+<!--                android:text="View Bids"-->
+<!--                android:background="@drawable/gradient"-->
+<!--                android:layout_marginBottom="5dp"/>-->
+<!--        </LinearLayout>-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 </LinearLayout>

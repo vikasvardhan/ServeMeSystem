@@ -22,15 +22,39 @@
         android:layout_height="match_parent"
         android:layout_above="@id/customer_bottom_nav" />
 
+<!--    <io.material.materialthemebuilder.widget.LabelLinkView-->
+<!--        android:id="@+id/label"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/bottom_nav_label_title"-->
+<!--        app:linkUrl="https://material.io/design/components/bottom-navigation.html"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    android:background="@color/color_primary"-->
+<!--    app:itemIconTint="@color/color_on_primary"-->
+<!--    app:itemTextColor="@color/color_on_primary"-->
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
         android:id="@+id/customer_bottom_nav"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:itemBackground="@color/colorAccent"
-        app:itemHorizontalTranslationEnabled="false"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
-        app:menu="@menu/menu_customer_bottom_nav" />
+        app:menu="@menu/menu_customer_bottom_nav"
+        app:layout_constraintTop_toBottomOf="@+id/label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/customer_bottom_nav"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        app:itemBackground="@color/colorAccent"-->
+<!--        app:itemHorizontalTranslationEnabled="false"-->
+<!--        app:itemIconTint="@android:color/white"-->
+<!--        app:itemTextColor="@android:color/white"-->
+<!--        app:menu="@menu/menu_customer_bottom_nav" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

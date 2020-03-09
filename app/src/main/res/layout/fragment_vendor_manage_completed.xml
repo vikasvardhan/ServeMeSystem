@@ -1,13 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="55dp"
+    android:orientation="vertical"
+    android:background="?colorControlHighlight"
     tools:context=".VendorManageCompleted">
 
-    <TextView
+    <ListView
+        android:id="@+id/listView_vendor_completed_requests"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Manage Vendor's Completed Requests" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:layout_weight="1" />
 
-</FrameLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:paddingLeft="4.0dip"-->
+<!--        android:paddingTop="1.0dip"-->
+<!--        android:paddingRight="4.0dip"-->
+<!--        android:paddingBottom="1.0dip">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_billCustomer"-->
+<!--                style="@style/Widget.AppCompat.Button.Colored"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:enabled="false"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:text="Bill Customer" />-->
+
+<!--        </LinearLayout>-->
+
+<!--    </LinearLayout>-->
+
+</LinearLayout>

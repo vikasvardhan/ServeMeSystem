@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -58,6 +59,7 @@ public class CustomerManageCompleted extends Fragment {
         View view = inflater.inflate(R.layout.fragment_customer_manage_completed,
                                     container,
                                     false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Completed Requests");
         ListView lvItems = (ListView) view.findViewById (R.id.listView_customer_completed_requests);
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

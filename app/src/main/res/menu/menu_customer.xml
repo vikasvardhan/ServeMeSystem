@@ -3,24 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.servemesystem.CustomerHome"
     tools:showIn="navigation_view">
-    <item
-        android:id="@+id/menuItem_customer_createServiceRequest"
-        android:orderInCategory="100"
-        android:title="Create Service Request"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/menuItem_customer_manageServiceRequest"
-        android:orderInCategory="100"
-        android:title="Manage Service Requests"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/menuItem_customer_profile"
-        android:orderInCategory="100"
-        android:title="Profile"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_settings_customer"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menuItem_customer_createServiceRequest"
+            android:orderInCategory="100"
+            android:title="Create Service Request"
+            android:icon="@drawable/ic_create_service_request_black_24dp"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/menuItem_customer_manageServiceRequest"
+            android:orderInCategory="100"
+            android:icon="@drawable/ic_manage_service_request_24dp"
+            android:title="Manage Service Requests"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/menuItem_customer_profile"
+            android:orderInCategory="100"
+            android:icon="@drawable/ic_profile_black_24dp"
+            android:title="Profile"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_settings_customer"
+            android:orderInCategory="100"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/action_settings"
+            app:showAsAction="never" />
+    </group>
 </menu>

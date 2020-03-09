@@ -2,6 +2,7 @@ package com.example.servemesystem;
 
 public class ServiceBid {
     private int bidId;
+    private int serviceId;
     private double amt;
     private int vendorId;
     private String vendorName;
@@ -35,6 +36,14 @@ public class ServiceBid {
 
     public String getVendorName() {
         return vendorName;
+    }
+
+    public int getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
     }
 
     public void setAmt(double amt) {

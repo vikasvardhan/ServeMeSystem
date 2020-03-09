@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
-    private List<CategoryItem> itemList;
+    private List<ServiceCategory> itemList;
     private ItemClickListener itemClickListener;
 
-    public CategoryAdapter(List<CategoryItem> itemList) {
+    public CategoryAdapter(List<ServiceCategory> itemList) {
         this.itemList = itemList;
     }
 
@@ -30,9 +30,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final CategoryItem item = itemList.get(position);
+        final ServiceCategory item = itemList.get(position);
 
         holder.categoryName.setText(item.getCategoryName());
+        holder.categoryIcon.setImageResource(item.getCategoryImgId());
 
         holder.vBackground.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +65,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public interface ItemClickListener {
-        void onItemClick(CategoryItem item);
+        void onItemClick(ServiceCategory item);
     }
 }

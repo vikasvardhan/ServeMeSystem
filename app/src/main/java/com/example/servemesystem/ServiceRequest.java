@@ -7,7 +7,7 @@ public class ServiceRequest {
     private int serviceId;
     private int customerId;
     private int vendorId;
-    private String category;
+    private ServiceCategory category;
     private String serviceTime;
     private String location;
     private String title;
@@ -15,6 +15,7 @@ public class ServiceRequest {
     private String status;
     private boolean isReviewed;
     private String servicedBy;
+    private String requestedBy;
     private ServiceBid winningBid;
     private ServiceBid pendingBid;
 
@@ -31,7 +32,7 @@ public class ServiceRequest {
         this.vendorId = vendorId;
     }
 
-    public void setCategory(String category){
+    public void setCategory(ServiceCategory category){
         this.category = category;
     }
 
@@ -75,6 +76,10 @@ public class ServiceRequest {
         this.pendingBid = pendingBid;
     }
 
+    public void setRequestedBy(String requestedBy) {
+        this.requestedBy = requestedBy;
+    }
+
     public ServiceBid getWinningBid() {
         return winningBid;
     }
@@ -99,7 +104,7 @@ public class ServiceRequest {
         return serviceTime;
     }
 
-    public String getCategory() {
+    public ServiceCategory getCategory() {
         return category;
     }
 
@@ -125,5 +130,9 @@ public class ServiceRequest {
 
     public String getServicedBy() {
         return servicedBy;
+    }
+
+    public String getRequestedBy() {
+        return requestedBy;
     }
 }
