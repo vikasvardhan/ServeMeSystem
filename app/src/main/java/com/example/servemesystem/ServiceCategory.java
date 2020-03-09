@@ -1,18 +1,17 @@
 package com.example.servemesystem;
 
-public class CategoryItem {
+public class ServiceCategory {
     private String categoryName;
 
-    public CategoryItem() {
+    public ServiceCategory() {
 
     }
 
-    public CategoryItem(String categoryName) {
+    public ServiceCategory(String categoryName) {
         this.categoryName = categoryName;
     }
 
-    public int getCategoryImgId()
-    {
+    public int getCategoryImgId(){
         int categoryImgId = -1;
         if(this.categoryName.equals("Appliances")){
             categoryImgId = R.drawable.appliances;

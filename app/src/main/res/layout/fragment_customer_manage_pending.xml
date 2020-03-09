@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="55dp"
     android:orientation="vertical"
+    android:background="?colorControlHighlight"
     tools:context=".CustomerManagePending">
 
     <!--    android:background="#303030"-->

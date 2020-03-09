@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/vikasvardhan/Documents/SemesterTwo/AdvancedTopics/serveMeSystem/material-theme-builder/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sw360dp-v13/values-sw360dp-v13.xml",
+            "outputFile": "C:\\Users\\sachi\\Documents\\ServeMeSystem\\material-theme-builder\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sw360dp-v13\\values-sw360dp-v13.xml",
             "map": [
                 {
-                    "source": "/Users/vikasvardhan/.gradle/caches/transforms-2/files-2.1/1165799916a00c8946d9c53ee751d06d/preference-1.1.0-rc01/res/values-sw360dp-v13/values-sw360dp-v13.xml",
+                    "source": "C:\\Users\\sachi\\.gradle\\caches\\transforms-2\\files-2.1\\1165799916a00c8946d9c53ee751d06d\\preference-1.1.0-rc01\\res\\values-sw360dp-v13\\values-sw360dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

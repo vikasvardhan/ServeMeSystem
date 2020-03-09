@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollView01"
@@ -22,7 +23,7 @@
             android:drawableLeft="@drawable/ic_assignment_black_24dp"
             android:drawablePadding="5dp"
             android:text="Registration"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/color_primary_variant"
             android:textSize="25dp"
             android:textStyle="bold" />
 
@@ -51,7 +52,7 @@
                     android:drawableLeft="@drawable/ic_contact_mail_black_24dp"
                     android:drawablePadding="5dp"
                     android:text="@string/userType"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/color_primary_variant"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
@@ -155,7 +156,7 @@
                         android:onClick="directView"
                         android:tag="userType"
                         android:text="Next"
-                        android:textColor="@color/textSecondary" />
+                        android:textColor="@color/color_on_secondary" />
 
                 </LinearLayout>
 
@@ -182,7 +183,7 @@
                     android:drawableLeft="@drawable/ic_contact_mail_black_24dp"
                     android:drawablePadding="5dp"
                     android:text="@string/regInitials"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/color_primary_variant"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
@@ -260,7 +261,7 @@
                         android:onClick="directView"
                         android:tag="back"
                         android:text="Back"
-                        android:textColor="@color/textSecondary" />
+                        android:textColor="@color/color_on_secondary" />
 
                     <Button
                         android:id="@+id/button_next_init"
@@ -272,7 +273,7 @@
                         android:onClick="directView"
                         android:tag="initials"
                         android:text="Next"
-                        android:textColor="@color/textSecondary" />
+                        android:textColor="@color/color_on_secondary" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -297,7 +298,7 @@
                     android:drawableLeft="@drawable/ic_contact_mail_black_24dp"
                     android:drawablePadding="5dp"
                     android:text="@string/regAddress"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/color_primary_variant"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
@@ -376,7 +377,7 @@
                         android:onClick="directView"
                         android:tag="back"
                         android:text="Back"
-                        android:textColor="@color/textSecondary" />
+                        android:textColor="@color/color_on_secondary" />
 
                     <Button
                         android:id="@+id/button_next_add"
@@ -388,7 +389,7 @@
                         android:onClick="directView"
                         android:tag="address"
                         android:text="Next"
-                        android:textColor="@color/textSecondary" />
+                        android:textColor="@color/color_on_secondary" />
 
                 </LinearLayout>
 
@@ -414,7 +415,7 @@
                     android:drawableLeft="@drawable/ic_contact_mail_black_24dp"
                     android:drawablePadding="5dp"
                     android:text="@string/regServices"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/color_primary_variant"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
@@ -439,7 +440,7 @@
                             android:text="@string/services">
 
                             <TextView
-                                style="@style/InputLabel"
+                                style="@style/Widget.Design.TextInputLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/services" />
@@ -490,7 +491,7 @@
                             android:layout_marginBottom="20dp"
                             android:gravity="center"
                             android:text="Add More"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/color_primary_variant"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -511,7 +512,7 @@
                         android:onClick="directView"
                         android:tag="back"
                         android:text="Back"
-                        android:textColor="@color/textSecondary" />
+                        android:textColor="@color/color_on_secondary" />
 
                     <Button
                         android:id="@+id/button_next_services"
@@ -523,7 +524,7 @@
                         android:onClick="directView"
                         android:tag="services"
                         android:text="Next"
-                        android:textColor="@color/textSecondary" />
+                        android:textColor="@color/color_on_secondary" />
 
                 </LinearLayout>
 
@@ -549,7 +550,7 @@
                     android:drawableLeft="@drawable/ic_verified_user_black_24dp"
                     android:drawablePadding="5dp"
                     android:text="@string/regCred"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/color_primary_variant"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
@@ -632,7 +633,7 @@
                         android:onClick="directView"
                         android:tag="back_cred"
                         android:text="Back"
-                        android:textColor="@color/textSecondary" />
+                        android:textColor="@color/color_on_secondary" />
 
                     <Button
                         android:id="@+id/button_register"
@@ -642,7 +643,7 @@
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/gradient"
                         android:text="Register"
-                        android:textColor="@color/textSecondary" />
+                        android:textColor="@color/color_on_secondary" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -657,7 +658,7 @@
             android:gravity="center"
             android:onClick="redirectLogin"
             android:text="Already Registered? Login here"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/color_primary_variant"
             android:textStyle="bold" />
     </LinearLayout>
 </ScrollView>

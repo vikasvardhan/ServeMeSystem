@@ -1,12 +1,16 @@
 package com.example.servemesystem;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -23,6 +27,10 @@ public class VendorProfile extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    SharedPreferences sharedpreferences;
+    DatabaseAccess db;
+    int userId;
 
     public VendorProfile() {
         // Required empty public constructor
@@ -59,6 +67,40 @@ public class VendorProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_vendor_profile, container, false);
+        View view
+                = inflater.inflate(R.layout.fragment_vendor_profile, container, false);
+
+        sharedpreferences
+                = getActivity().getSharedPreferences(FirstFragment.PREFERENCES, Context.MODE_PRIVATE);
+
+        TextView name = (TextView) view.findViewById(R.id.vendor_profile_name);
+        TextView email = (TextView) view.findViewById(R.id.vendor_profile_email);
+        TextView phone = (TextView) view.findViewById(R.id.vendor_profile_phone);
+        TextView balance = (TextView) view.findViewById(R.id.vendor_profile_balance);
+        TextView rating = (TextView) view.findViewById(R.id.vendor_profile_rating);
+        TextView location = (TextView) view.findViewById(R.id.vendor_profile_location);
+
+        db = DatabaseAccess.getInstance(getActivity());
+        userId = sharedpreferences.getInt(UserAccount.USERID, -1);
+        UserAccount uc = db.getAccount(userId);
+
+        if (uc != null) {
+            name.setText(uc.getLastName() + ", " + uc.getFirstName());
+            email.setText(uc.getEmail());
+            phone.setText("+" + uc.getPhone());
+            balance.setText("$" + uc.getWalletAmt());
+            rating.setText(String.valueOf(uc.getRating()));
+            String locationStr = uc.getAddress();
+            if(locationStr != null){
+                if(locationStr.equals("")){
+                    locationStr = "No Address Provided";
+                }
+            }
+            else{
+                locationStr = "No Address Provided";
+            }
+            location.setText(locationStr);
+        }
+        return view;
     }
 }

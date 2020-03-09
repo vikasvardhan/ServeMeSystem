@@ -8,7 +8,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -35,18 +37,20 @@ public class CustomerManagePending extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private CustomerManagePending mFrame;
 
     DatabaseAccess db;
     List<ServiceRequest> pendingRequests;
     ListCustPendingServiceRequest mListDataAdapter;
     SharedPreferences sharedpreferences;
 
-//    Button viewBids;
+    Button viewBids;
 //    Button editRequest;
 
     int currentItemPosition = -1;
 
     public CustomerManagePending() {
+        mFrame = this;
         // Required empty public constructor
     }
 
@@ -75,19 +79,21 @@ public class CustomerManagePending extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_customer_manage_pending,
-                                     container,
-                                    false);
+                container,
+                false);
 
-        getActivity().setTitle("Pending Requests");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Pending Requests");
 
-        ListView lvItems = (ListView) view.findViewById (R.id.listView_customer_pending_requests);
+        ListView lvItems = (ListView) view.findViewById(R.id.listView_customer_pending_requests);
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
-                view.setSelected(true);
                 currentItemPosition = position;
-                if(currentItemPosition != -1){
+                if (currentItemPosition != -1) {
 //                    viewBids.setEnabled(true);
+                    Toast.makeText(getActivity(),
+                            String.valueOf(position),
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -96,37 +102,37 @@ public class CustomerManagePending extends Fragment {
 //        editRequest = (Button) view.findViewById(R.id.btn_editRequest);
 
         sharedpreferences = getActivity().getSharedPreferences(FirstFragment.PREFERENCES,
-                                                               Context.MODE_PRIVATE);
+                Context.MODE_PRIVATE);
 
         db = DatabaseAccess.getInstance(getActivity());
 
         int userId = sharedpreferences.getInt(UserAccount.USERID, -1);
-        if(userId != -1){
+        if (userId != -1) {
             pendingRequests = db.getPendingRequestsForCustomer(userId);
             mListDataAdapter = new ListCustPendingServiceRequest(getContext(),
                     R.layout.row_customer_pending_request,
-                    pendingRequests);
+                    pendingRequests,
+                    mFrame);
             lvItems.setAdapter(mListDataAdapter);
         }
         return view;
     }
 
+    public void viewBids(int position) {
+        ServiceRequest currentPendingRequest
+                = (ServiceRequest) pendingRequests.get(position);
+        Fragment managebidsFragment = new CustomerManageBids(currentPendingRequest);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(managebidsFragment, "manage_bids_fragment")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack("manage_bids_fragment")
+                .replace(R.id.fragment_container_customer_manager_requests,
+                        managebidsFragment).commit();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        viewBids.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(currentItemPosition != -1){
-//                    ServiceRequest currentPendingRequest
-//                            = (ServiceRequest) pendingRequests.get(currentItemPosition);
-//                    Fragment managebidsFragment = new CustomerManageBids(currentPendingRequest);
-//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_manager_requests,
-//                            managebidsFragment).commit();
-//                }
-//            }
-//        });
-
 //        editRequest.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -135,7 +141,6 @@ public class CustomerManagePending extends Fragment {
 //            }
 //        });
         // Find ListView to populate
-
 
         // Setup cursor adapter using cursor from last step
 //        CursorAdaptorCustPendingRequests todoAdapter

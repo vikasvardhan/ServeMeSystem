@@ -1,113 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@drawable/bg_key"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/list_selector"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:paddingLeft="5.0dip"
-        android:paddingTop="5.0dip"
-        android:paddingBottom="5.0dip">
+        android:background="@drawable/list_selector"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/customerCompletedRequests_categoryLbl"
-            style="@style/Widget.AppCompat.TextView"
+        <!--  Category Image -->
+        <LinearLayout
+            android:id="@+id/thumbnail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Category:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"/>
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dip">
 
-        <TextView
-            android:id="@+id/customerCompletedRequests_category"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/customerCompletedRequests_categoryIcon"
+                android:layout_width="139dp"
+                android:layout_height="130dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Category Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <!-- Title -->
+            <TextView
+                android:id="@+id/customerCompletedRequests_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Title"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline5"
+                android:textColor="#040404"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="5.0dip"
-        android:paddingTop="5.0dip"
-        android:paddingBottom="5.0dip">
+            <!-- Date -->
+            <TextView
+                android:id="@+id/customerCompletedRequests_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dip"
+                android:text="Date"
+                android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+                android:textColor="#343434" />
 
-        <TextView
-            android:id="@+id/customerCompletedRequests_titleLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"/>
+            <!-- Location -->
+            <TextView
+                android:id="@+id/customerCompletedRequests_location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dip"
+                android:text="Location"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#343434" />
 
-        <TextView
-            android:id="@+id/customerCompletedRequests_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Title Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <!-- Vendor -->
+            <TextView
+                android:id="@+id/customerCompletedRequests_vendor"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dip"
+                android:text="Vendor"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#343434" />
 
-    </LinearLayout>
+            <!-- Review -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="5.0dip"
-        android:paddingTop="5.0dip"
-        android:paddingBottom="5.0dip">
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="Review" />
 
-        <TextView
-            android:id="@+id/customerCompletedRequests_dateLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"/>
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/customerCompletedRequests_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Date Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="5.0dip"
-        android:paddingTop="5.0dip"
-        android:paddingBottom="5.0dip">
-
-        <TextView
-            android:id="@+id/customerCompletedRequests_vendorLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Provider:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/customerCompletedRequests_vendor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Date Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

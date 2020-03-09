@@ -200,7 +200,7 @@ public class ServiceDetailFragment extends Fragment {
                     serviceRequest.setServiceId(db.getNewServiceId());
                     serviceRequest.setCustomerId(1);
                     serviceRequest.setVendorId(2);
-                    serviceRequest.setCategory(categoryText.getText().toString());
+                    serviceRequest.setCategory(new ServiceCategory(categoryText.getText().toString()));
                     serviceRequest.setServiceTime(dateText.getText().toString() + " " + timeText.getText().toString());
                     serviceRequest.setLocation(locationText.getText().toString());
                     serviceRequest.setTitle(titleText.getText().toString());

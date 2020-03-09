@@ -107,8 +107,8 @@ public class CustomerManageBids extends Fragment {
             }
         });
 
-        btn_acceptBid = (Button) view.findViewById(R.id.btn_acceptBid);
-        btn_rejectBid = (Button) view.findViewById(R.id.btn_rejectBid);
+//        btn_acceptBid = (Button) view.findViewById(R.id.btn_acceptBid);
+//        btn_rejectBid = (Button) view.findViewById(R.id.btn_rejectBid);
 
         db = DatabaseAccess.getInstance(getActivity());
 
@@ -127,57 +127,57 @@ public class CustomerManageBids extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        btn_rejectBid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currentBidPosition != -1){
-                    ServiceBid currentServiceBid
-                            = (ServiceBid) serviceBids.get(currentBidPosition);
-                    int bidId = currentServiceBid.getBidId();
-                    db.rejectBid(bidId);
-
-                    //query for pending service bids again
-                    serviceBids = db.getBidsForService(mServiceRequest.getServiceId());
-                    mListDataAdapter.setList(serviceBids);
-                    String toastMsg = "Rejected bid from: " + currentServiceBid.getVendorName();
-                    Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        btn_acceptBid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currentBidPosition != -1){
-                    ServiceBid currentServiceBid
-                            = (ServiceBid) serviceBids.get(currentBidPosition);
-
-                    //accept bid
-                    int bidId = currentServiceBid.getBidId();
-                    db.acceptBid(bidId);
-
-                    //set vendor
-                    int winningBidderId = currentServiceBid.getVendorId();
-                    db.setVendorToSeviceRequest(winningBidderId, mServiceRequest.getServiceId());
-
-                    //query for pending service bids again
+//        btn_rejectBid.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(currentBidPosition != -1){
+//                    ServiceBid currentServiceBid
+//                            = (ServiceBid) serviceBids.get(currentBidPosition);
+//                    int bidId = currentServiceBid.getBidId();
+//                    db.rejectBid(bidId);
+//
+//                    //query for pending service bids again
 //                    serviceBids = db.getBidsForService(mServiceRequest.getServiceId());
-
-                    //refresh list
 //                    mListDataAdapter.setList(serviceBids);
+//                    String toastMsg = "Rejected bid from: " + currentServiceBid.getVendorName();
+//                    Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
-                    //display notification
-                    String toastMsg = "Bid awarded to: " + currentServiceBid.getVendorName();
-                    Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_SHORT).show();
-
-                    //redirect to confirmed
-                    Fragment manageConfirmed = new CustomerManageConfirmed();
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_manager_requests,
-                            manageConfirmed).commit();
-//                    Toast.makeText(getActivity(), String.valueOf(bidId), Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
+//        btn_acceptBid.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(currentBidPosition != -1){
+//                    ServiceBid currentServiceBid
+//                            = (ServiceBid) serviceBids.get(currentBidPosition);
+//
+//                    //accept bid
+//                    int bidId = currentServiceBid.getBidId();
+//                    db.acceptBid(bidId);
+//
+//                    //set vendor
+//                    int winningBidderId = currentServiceBid.getVendorId();
+//                    db.setVendorToSeviceRequest(winningBidderId, mServiceRequest.getServiceId());
+//
+//                    //query for pending service bids again
+////                    serviceBids = db.getBidsForService(mServiceRequest.getServiceId());
+//
+//                    //refresh list
+////                    mListDataAdapter.setList(serviceBids);
+//
+//                    //display notification
+//                    String toastMsg = "Bid awarded to: " + currentServiceBid.getVendorName();
+//                    Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_SHORT).show();
+//
+//                    //redirect to confirmed
+//                    Fragment manageConfirmed = new CustomerManageConfirmed();
+//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_manager_requests,
+//                            manageConfirmed).commit();
+////                    Toast.makeText(getActivity(), String.valueOf(bidId), Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }
+//        });
     }
 }

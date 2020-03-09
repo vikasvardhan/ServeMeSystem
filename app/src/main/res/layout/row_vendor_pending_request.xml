@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@drawable/list_selector"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:background="@drawable/list_selector"
+        android:layout_height="match_parent">
+
+        <!--  Category Image -->
+        <LinearLayout android:id="@+id/thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dip">
+
+            <ImageView
+                android:id="@+id/vendorPendingRequests_categoryIcon"
+                android:layout_width="139dp"
+                android:layout_height="130dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail">
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/vendorPendingRequests_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Title"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline5"
+                android:textColor="#040404"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <!-- Date -->
+            <TextView
+                android:id="@+id/vendorPendingRequests_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dip"
+                android:text="Date"
+                android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+                android:textColor="#343434" />
+
+            <!-- Cost -->
+            <TextView
+                android:id="@+id/vendorPendingRequests_cost"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dip"
+                android:text="Category"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#343434" />
+
+            <!-- Duration -->
+            <TextView
+                android:id="@+id/vendorPendingRequests_duration"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dip"
+                android:text="Num Bids"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#343434" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/vendorPendingRequests_cancelBtn"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel Bid"
+                    android:textColor="@android:color/holo_red_dark" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="More" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

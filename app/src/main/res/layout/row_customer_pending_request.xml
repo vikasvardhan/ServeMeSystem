@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -15,8 +15,6 @@
         android:background="@drawable/list_selector"
         android:layout_height="match_parent">
 
-        <!--            android:background="@drawable/image_bg"-->
-
         <!--  Category Image -->
         <LinearLayout android:id="@+id/thumbnail"
             android:layout_width="wrap_content"
@@ -25,13 +23,12 @@
             android:layout_marginRight="5dip">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/customerPendingRequests_categoryIcon"
                 android:layout_width="139dp"
                 android:layout_height="130dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/plumbing" />
+                android:layout_marginTop="15dp" />
 
         </LinearLayout>
 
@@ -49,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Title"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline5"
                 android:textColor="#040404"
                 android:textStyle="bold"
                 android:typeface="sans" />
@@ -61,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dip"
                 android:text="Date"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textAppearance="@style/TextAppearance.MyTheme.Body1"
                 android:textColor="#343434" />
 
             <!-- Location -->
@@ -87,21 +84,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-<!--                android:theme="@style/PrimaryFlatButton"-->
-                <Button
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:text="Edit" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/btn_viewBids"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:text="Bids" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Details" />
+                    android:text="More" />
             </LinearLayout>
 
         </LinearLayout>
@@ -145,4 +146,4 @@
 
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

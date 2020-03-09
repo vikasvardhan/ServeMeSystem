@@ -56,7 +56,7 @@ public class ListPendingServiceRequest extends ArrayAdapter {
         }
 
         ServiceRequest serviceRequest = (ServiceRequest) this.getItem(position);
-        layoutHandler.category.setText(serviceRequest.getCategory());
+        layoutHandler.category.setText(serviceRequest.getCategory().getCategoryName());
         layoutHandler.title.setText(serviceRequest.getTitle());
         layoutHandler.date.setText(serviceRequest.getServiceTime());
         return mView;
