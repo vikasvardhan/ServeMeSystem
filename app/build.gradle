@@ -52,4 +52,6 @@ dependencies {
 
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.5'
 }
