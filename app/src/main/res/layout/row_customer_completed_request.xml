@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/customerCompletedRequests_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -9,94 +10,286 @@
     app:cardCornerRadius="6dp"
     app:cardElevation="6dp">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/list_selector"
-        android:orientation="horizontal">
+        android:layout_margin="8dp"
+        android:orientation="vertical">
 
-        <!--  Category Image -->
-        <LinearLayout
-            android:id="@+id/thumbnail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="5dip">
+        <RelativeLayout
+            android:id="@+id/main_view"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/customerCompletedRequests_categoryIcon"
-                android:layout_width="139dp"
-                android:layout_height="130dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="10dp" />
+            <!--  Status Bar -->
+            <!--            <ImageView-->
+            <!--                android:id="@+id/customerCompletedRequests_status_bar"-->
+            <!--                android:layout_width="5dp"-->
+            <!--                android:layout_height="130dp"-->
+            <!--                android:layout_alignParentLeft="true"-->
+            <!--                app:srcCompat="@android:color/holo_orange_dark" />-->
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/thumbnail"
-            android:layout_toRightOf="@+id/thumbnail"
-            android:orientation="vertical">
-
-            <!-- Title -->
-            <TextView
-                android:id="@+id/customerCompletedRequests_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Title"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline5"
-                android:textColor="#040404"
-                android:textStyle="bold"
-                android:typeface="sans" />
-
-            <!-- Date -->
-            <TextView
-                android:id="@+id/customerCompletedRequests_date"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dip"
-                android:text="Date"
-                android:textAppearance="@style/TextAppearance.MyTheme.Body1"
-                android:textColor="#343434" />
-
-            <!-- Location -->
-            <TextView
-                android:id="@+id/customerCompletedRequests_location"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dip"
-                android:text="Location"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#343434" />
-
-            <!-- Vendor -->
-            <TextView
-                android:id="@+id/customerCompletedRequests_vendor"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dip"
-                android:text="Vendor"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#343434" />
-
-            <!-- Review -->
+            <!-- Main Container -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="130dp"
+                android:layout_alignTop="@+id/thumbnail"
+                android:layout_marginLeft="8dp"
+                android:orientation="vertical">
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="80dp"
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/customerCompletedRequests_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Review" />
+                    android:text="Title"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline5"
+                    android:textColor="#040404"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+                <!-- Date -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_date_24dp">
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/customerCompletedRequests_date"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="1dip"
+                        android:text="Date"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="#343434" />
+
+                </LinearLayout>
+
+                <!-- Cost -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_cost_24dp"></ImageView>
+
+                    <TextView
+                        android:id="@+id/customerCompletedRequests_cost"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="1dip"
+                        android:text="Cost"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="#343434" />
+                </LinearLayout>
+
+                <!-- Customer-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@drawable/ic_employee_clipart"></ImageView>
+
+                    <!-- Duration -->
+                    <TextView
+                        android:id="@+id/customerCompletedRequests_vendor"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="1dip"
+                        android:text="Vendor"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="#343434" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
+            <!--  Category Image Container -->
+            <LinearLayout
+                android:id="@+id/thumbnail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+
+                <!--  Category Image -->
+                <ImageView
+                    android:id="@+id/customerCompletedRequests_categoryIcon"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- Expandable View -->
+        <LinearLayout
+            android:id="@+id/customerCompletedRequests_expandableView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Location-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_location_24dp"></ImageView>
+
+                <!-- Cost -->
+                <TextView
+                    android:id="@+id/customerCompletedRequests_location"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="1dip"
+                    android:text="Location"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="#343434" />
+
+            </LinearLayout>
+
+            <!-- Duration-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_duration_24dp"></ImageView>
+
+                <!-- Duration -->
+                <TextView
+                    android:id="@+id/customerCompletedRequests_duration"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="1dip"
+                    android:text="Duration"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="#343434" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:text="@string/cardDescriptionLbl"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"></com.google.android.material.textview.MaterialTextView>
+
+            <!--            <View-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="1dp"-->
+            <!--                android:background="@android:color/darker_gray"/>-->
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/customerCompletedRequests_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="5dp"
+                android:text="descriptioanssdsakdaskdaskldkalsdklasdklasdkaskdals"
+                android:textAppearance="@style/TextAppearance.MyTheme.Body1"></com.google.android.material.textview.MaterialTextView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:text="@string/cardNotesLbl"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"></com.google.android.material.textview.MaterialTextView>
+
+            <!--            <View-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="1dp"-->
+            <!--                android:background="@android:color/darker_gray"/>-->
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/customerCompletedRequests_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="5dp"
+                android:text="descriptioanssdsakdaskdaskldkalsdklasdklasdkaskdals"
+                android:textAppearance="@style/TextAppearance.MyTheme.Body1"></com.google.android.material.textview.MaterialTextView>
+
         </LinearLayout>
 
-    </RelativeLayout>
+        <View
+            android:id="@+id/customerCompletedRequests_hr"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="15dp"
+            android:background="@android:color/holo_green_dark" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/customerCompletedRequests_expandBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_arrow_downward_24dp"></ImageView>
+
+            <!-- Do not remove -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/customerCompletedRequests_placeHolderBtn"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/customerCompletedRequests_expandBtn"
+                android:text="Empty"
+                android:visibility="visible"
+                android:textColor="@color/color_on_primary"/>
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/customerCompletedRequests_ratingBar"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="5dp"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:progressTint="@color/sunset_yellow"
+                android:stepSize=".5"
+                android:visibility="visible"></androidx.appcompat.widget.AppCompatRatingBar>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

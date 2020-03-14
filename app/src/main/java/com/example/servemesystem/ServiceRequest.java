@@ -18,10 +18,20 @@ public class ServiceRequest {
     private String requestedBy;
     private ServiceBid winningBid;
     private ServiceBid pendingBid;
+    private VendorRating vendorRating;
+    private int numBids;
 
     public ServiceRequest()
     {
 
+    }
+
+    public void setRating(VendorRating inVendorRating) {
+        this.vendorRating = inVendorRating;
+    }
+
+    public void setNumBids(int inNumBids){
+        this.numBids = inNumBids;
     }
 
     public void setCustomerId(int customerId){
@@ -134,5 +144,13 @@ public class ServiceRequest {
 
     public String getRequestedBy() {
         return requestedBy;
+    }
+
+    public int getNumBids(){
+        return numBids;
+    }
+
+    public VendorRating getVendorRating() {
+        return vendorRating;
     }
 }

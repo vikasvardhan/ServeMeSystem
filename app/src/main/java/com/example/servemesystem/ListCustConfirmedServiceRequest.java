@@ -1,15 +1,20 @@
 package com.example.servemesystem;
 
 import android.content.Context;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -28,9 +33,12 @@ public class ListCustConfirmedServiceRequest extends ArrayAdapter {
     }
 
     static class LayoutHandler{
-        TextView location, title, date, vendor;
+        TextView location, title, date, vendor, cost, description, notes, duration;
         ImageView categoryIcon;
         Button cancelRequestBtn;
+        ImageView expandButton;
+        LinearLayout expandableView;
+        MaterialCardView cardView;
     }
 
     @Override
@@ -46,7 +54,7 @@ public class ListCustConfirmedServiceRequest extends ArrayAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
         View mView = convertView;
-        ListCustConfirmedServiceRequest.LayoutHandler layoutHandler;
+        final LayoutHandler layoutHandler;
         if(mView==null){
             LayoutInflater layoutInflater
                     = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,8 +67,21 @@ public class ListCustConfirmedServiceRequest extends ArrayAdapter {
             layoutHandler.date =(TextView)mView.findViewById(R.id.customerConfirmedRequests_date);
             layoutHandler.location = (TextView)mView.findViewById(R.id.customerConfirmedRequests_location);
             layoutHandler.vendor =(TextView)mView.findViewById(R.id.customerConfirmedRequests_vendor);
+            layoutHandler.cost = (TextView)mView.findViewById(R.id.customerConfirmedRequests_cost);
+            layoutHandler.description
+                    = (TextView)mView.findViewById(R.id.customerConfirmedRequests_description);
+            layoutHandler.notes
+                    = (TextView)mView.findViewById(R.id.customerConfirmedRequests_notes);
+            layoutHandler.duration
+                    = (TextView)mView.findViewById(R.id.customerConfirmedRequests_duration);
             layoutHandler.cancelRequestBtn
                     = (Button)mView.findViewById(R.id.customerConfirmedRequests_cancelRequest);
+            layoutHandler.expandableView
+                    = (LinearLayout)mView.findViewById(R.id.customerConfirmedRequests_expandable_view);
+            layoutHandler.cardView
+                    = (MaterialCardView) mView.findViewById(R.id.customerConfirmedRequests_card);
+            layoutHandler.expandButton
+                    = (ImageView) mView.findViewById(R.id.customerConfirmedRequests_expandBtn);
             mView.setTag(layoutHandler);
         }
         else {
@@ -74,10 +95,33 @@ public class ListCustConfirmedServiceRequest extends ArrayAdapter {
         layoutHandler.date.setText(serviceRequest.getServiceTime());
         layoutHandler.location.setText(serviceRequest.getLocation());
         layoutHandler.vendor.setText(serviceRequest.getServicedBy());
+        layoutHandler.cost.setText(String.valueOf(serviceRequest.getWinningBid().getAmt()));
+        layoutHandler.description.setText(serviceRequest.getDescription());
+        layoutHandler.notes.setText(serviceRequest.getWinningBid().getNotes());
+        layoutHandler.duration.setText(String.valueOf(serviceRequest.getWinningBid().getHours())
+                                        + " hours");
+
         layoutHandler.cancelRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mParent.cancelServiceRequest(position);
+            }
+        });
+        layoutHandler.expandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutHandler.expandableView.getVisibility()==View.GONE){
+                    TransitionManager.beginDelayedTransition(layoutHandler.cardView,
+                            new AutoTransition());
+                    layoutHandler.expandableView.setVisibility(View.VISIBLE);
+                    layoutHandler.expandButton.setImageResource(R.drawable.ic_arrow_upward_24dp);
+                }
+                else{
+//                    TransitionManager.beginDelayedTransition(layoutHandler.cardView,
+//                            new AutoTransition());
+                    layoutHandler.expandableView.setVisibility(View.GONE);
+                    layoutHandler.expandButton.setImageResource(R.drawable.ic_arrow_downward_24dp);
+                }
             }
         });
         return mView;

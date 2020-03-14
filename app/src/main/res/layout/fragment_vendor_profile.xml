@@ -23,7 +23,7 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="45dp"
-                app:srcCompat="@drawable/ic_method_draw_image" />
+                app:srcCompat="@drawable/ic_employee_white" />
 
             <TextView
                 android:id="@+id/vendor_profile_name"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/customerServiceBid_card"
+    android:id="@+id/vendorRating_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -22,14 +22,6 @@
             android:background="@drawable/list_selector"
             android:orientation="horizontal">
 
-            <!--  Status Bar -->
-            <!--            <ImageView-->
-            <!--                android:id="@+id/customerServiceBid_status_bar"-->
-            <!--                android:layout_width="5dp"-->
-            <!--                android:layout_height="130dp"-->
-            <!--                android:layout_alignParentLeft="true"-->
-            <!--                app:srcCompat="@android:color/holo_orange_dark" />-->
-
             <!-- Main Container -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,58 +30,60 @@
                 android:layout_marginLeft="8dp"
                 android:orientation="vertical">
 
-                <!-- Vendor Name -->
+                <!-- Customer Name -->
                 <TextView
-                    android:id="@+id/customerServiceBid_vendorName"
+                    android:id="@+id/vendorRating_customerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vendor Name"
+                    android:text="Customer Name"
                     android:textAppearance="@style/TextAppearance.MyTheme.Headline5"
                     android:textColor="#040404"
                     android:textStyle="bold"
                     android:typeface="sans" />
 
-                <!-- Bid Amount -->
+                <!-- Rating -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp">
 
                     <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@android:drawable/btn_star_big_on"></ImageView>
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/vendorRating_ratingBar"
+                        style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_cost_24dp"></ImageView>
-
-                    <TextView
-                        android:id="@+id/customerServiceBid_bidAmt"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="1dip"
-                        android:text="Bid Amount"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="#343434" />
+                        android:numStars="5"
+                        android:progressTint="@color/sunset_yellow"
+                        android:stepSize=".5"
+                        android:visibility="visible"></androidx.appcompat.widget.AppCompatRatingBar>
 
                 </LinearLayout>
 
-                <!-- Bid Duration -->
+                <!-- Service Title -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_duration_24dp"></ImageView>
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@drawable/ic_service_24dp"></ImageView>
 
                     <TextView
-                        android:id="@+id/customerServiceBid_bidDuration"
+                        android:id="@+id/vendorRating_serviceTitle"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="1dip"
-                        android:text="Bid Duration"
+                        android:text="Service Title"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="#343434" />
 
@@ -97,7 +91,7 @@
 
             </LinearLayout>
 
-            <!--  Category Image Container -->
+            <!--  Customer Image Container -->
             <LinearLayout
                 android:id="@+id/thumbnail"
                 android:layout_width="wrap_content"
@@ -106,79 +100,49 @@
 
                 <!--  Category Image -->
                 <ImageView
-                    android:id="@+id/customerServiceBid_categoryIcon"
+                    android:id="@+id/vendorRating_categoryIcon"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
                     android:layout_marginTop="5dp"
-                    app:srcCompat="@drawable/ic_employee_clipart" />
+                    app:srcCompat="@drawable/ic_profile_black_24dp" />
             </LinearLayout>
 
         </RelativeLayout>
 
-        <!-- Expandable View -->
         <LinearLayout
-            android:id="@+id/customerServiceBid_expandableView"
+            android:id="@+id/vendorRating_commentsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="3dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:background="@android:color/darker_gray" />-->
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:padding="5dp"
-                android:text="@string/cardNotesLbl"
+                android:text="Comments"
                 android:textAppearance="@style/TextAppearance.MyTheme.Headline6"></com.google.android.material.textview.MaterialTextView>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/customerServiceBid_bidNotes"
+                android:id="@+id/vendorRating_comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:layout_marginBottom="5dp"
                 android:paddingLeft="5dp"
                 android:text="descriptioanssdsakdaskdaskldkalsdklasdklasdkaskdals"
                 android:textAppearance="@style/TextAppearance.MyTheme.Body1">
             </com.google.android.material.textview.MaterialTextView>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginTop="15dp"
-            android:background="@android:color/darker_gray" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/customerServiceBid_expandBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/ic_arrow_downward_24dp"></ImageView>
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:id="@+id/customerServiceBid_acceptBid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Accept"
-                android:textColor="@android:color/holo_green_dark" />
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:id="@+id/customerServiceBid_rejectBid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reject"
-                android:textColor="@android:color/holo_red_dark" />
 
         </LinearLayout>
 

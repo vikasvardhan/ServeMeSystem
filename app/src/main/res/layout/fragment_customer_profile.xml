@@ -23,7 +23,7 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="45dp"
-                app:srcCompat="@android:drawable/sym_def_app_icon"/>
+                app:srcCompat="@drawable/ic_customer_white_75dp" />
 
             <TextView
                 android:id="@+id/customer_profile_name"

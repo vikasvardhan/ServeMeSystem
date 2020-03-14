@@ -96,7 +96,10 @@ public class VendorViewAvailable extends Fragment {
 
         db = DatabaseAccess.getInstance(getActivity());
 
-        availableRequests = db.getAvailableRequestsForVendor(category);
+        userId = sharedpreferences.getInt(UserAccount.USERID, -1);
+
+        availableRequests = db.getAvailableRequestsForVendor(category, userId);
+
         mListDataAdapter = new ListVendAvailableServiceRequest(getContext(),
                                                                 R.layout.row_vendor_available_request,
                                                                 availableRequests,

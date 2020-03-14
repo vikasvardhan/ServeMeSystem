@@ -36,6 +36,7 @@
     <!--selection controls.-->
     <color name="color_primary">#0E305D</color>
     <color name="color_primary_variant">#14406F</color>
+<!--    <color name="color_secondary">#ff8c00</color>-->
     <color name="color_secondary">#BD142B</color>
     <color name="color_secondary_variant">#7E1918</color>
 
@@ -57,5 +58,6 @@
 
     <color name="cultured">#F6F6F7</color>
     <color name="gold">#FFD700</color>
-
+    <color name="yellow">#ffd500</color>
+    <color name="sunset_yellow">#ffc922</color>
 </resources>
