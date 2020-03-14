@@ -7,7 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -26,9 +30,12 @@ public class ListVendConfirmedServiceRequest extends ArrayAdapter {
     }
 
     static class LayoutHandler{
-        TextView category, title, date, cost, duration;
+        TextView category, title, date, cost, duration, location, description, notes, customer;
         ImageView categoryIcon;
         Button markComplete;
+        ImageView expandButton;
+        LinearLayout expandableView;
+        MaterialCardView cardView;
     }
 
     @Override
@@ -44,7 +51,7 @@ public class ListVendConfirmedServiceRequest extends ArrayAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
         View mView = convertView;
-        ListVendConfirmedServiceRequest.LayoutHandler layoutHandler;
+        final LayoutHandler layoutHandler;
         if(mView==null){
             LayoutInflater layoutInflater
                     = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -58,8 +65,18 @@ public class ListVendConfirmedServiceRequest extends ArrayAdapter {
             layoutHandler.date =(TextView)mView.findViewById(R.id.vendorConfirmedRequests_date);
             layoutHandler.cost = (TextView)mView.findViewById(R.id.vendorConfirmedRequests_cost);
             layoutHandler.duration = (TextView)mView.findViewById(R.id.vendorConfirmedRequests_duration);
+            layoutHandler.location = (TextView)mView.findViewById(R.id.vendorConfirmedRequests_location);
+            layoutHandler.description = (TextView)mView.findViewById(R.id.vendorConfirmedRequests_description);
+            layoutHandler.notes = (TextView)mView.findViewById(R.id.vendorConfirmedRequests_notes);
+            layoutHandler.customer = (TextView)mView.findViewById(R.id.vendorConfirmedRequests_customer);
             layoutHandler.markComplete
                     = (Button)mView.findViewById(R.id.vendorConfirmedRequests_markComplete);
+            layoutHandler.expandableView
+                    = (LinearLayout)mView.findViewById(R.id.vendorConfirmedRequests_expandable_view);
+            layoutHandler.cardView
+                    = (MaterialCardView) mView.findViewById(R.id.vendorConfirmedRequests_card);
+            layoutHandler.expandButton
+                    = (ImageView) mView.findViewById(R.id.vendorConfirmedRequests_expandBtn);
 
             mView.setTag(layoutHandler);
         }
@@ -74,10 +91,31 @@ public class ListVendConfirmedServiceRequest extends ArrayAdapter {
         layoutHandler.date.setText(serviceRequest.getServiceTime());
         layoutHandler.cost.setText("$" + Double.toString(serviceRequest.getWinningBid().getAmt()));
         layoutHandler.duration.setText(Integer.toString(serviceRequest.getWinningBid().getHours()) + " hours");
+        layoutHandler.location.setText(serviceRequest.getLocation());
+        layoutHandler.description.setText(serviceRequest.getDescription());
+        layoutHandler.notes.setText(serviceRequest.getWinningBid().getNotes());
+        layoutHandler.customer.setText(serviceRequest.getRequestedBy());
         layoutHandler.markComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mParent.markComplete(position);
+            }
+        });
+        layoutHandler.expandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutHandler.expandableView.getVisibility()==View.GONE){
+                    TransitionManager.beginDelayedTransition(layoutHandler.cardView,
+                            new AutoTransition());
+                    layoutHandler.expandableView.setVisibility(View.VISIBLE);
+                    layoutHandler.expandButton.setImageResource(R.drawable.ic_arrow_upward_24dp);
+                }
+                else{
+//                    TransitionManager.beginDelayedTransition(layoutHandler.cardView,
+//                            new AutoTransition());
+                    layoutHandler.expandableView.setVisibility(View.GONE);
+                    layoutHandler.expandButton.setImageResource(R.drawable.ic_arrow_downward_24dp);
+                }
             }
         });
         return mView;

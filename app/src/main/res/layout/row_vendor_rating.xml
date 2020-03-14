@@ -1,6 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/vendorRating_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/list_selector"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/main_view"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/list_selector"
+            android:orientation="horizontal">
+
+            <!-- Main Container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_alignTop="@+id/thumbnail"
+                android:layout_marginLeft="8dp"
+                android:orientation="vertical">
+
+                <!-- Customer Name -->
+                <TextView
+                    android:id="@+id/vendorRating_customerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Name"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline5"
+                    android:textColor="#040404"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+                <!-- Rating -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@android:drawable/btn_star_big_on"></ImageView>
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/vendorRating_ratingBar"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:numStars="5"
+                        android:progressTint="@color/sunset_yellow"
+                        android:stepSize=".5"
+                        android:visibility="visible"></androidx.appcompat.widget.AppCompatRatingBar>
+
+                </LinearLayout>
+
+                <!-- Service Title -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@drawable/ic_service_24dp"></ImageView>
+
+                    <TextView
+                        android:id="@+id/vendorRating_serviceTitle"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="1dip"
+                        android:text="Service Title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="#343434" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--  Customer Image Container -->
+            <LinearLayout
+                android:id="@+id/thumbnail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+
+                <!--  Category Image -->
+                <ImageView
+                    android:id="@+id/vendorRating_categoryIcon"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_marginTop="5dp"
+                    app:srcCompat="@drawable/ic_profile_black_24dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/vendorRating_commentsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="3dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:background="@android:color/darker_gray" />-->
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:padding="5dp"
+                android:text="Comments"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"></com.google.android.material.textview.MaterialTextView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/vendorRating_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="5dp"
+                android:text="descriptioanssdsakdaskdaskldkalsdklasdklasdkaskdals"
+                android:textAppearance="@style/TextAppearance.MyTheme.Body1">
+            </com.google.android.material.textview.MaterialTextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

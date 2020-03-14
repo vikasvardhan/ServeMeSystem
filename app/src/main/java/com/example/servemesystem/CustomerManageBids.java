@@ -47,13 +47,15 @@ public class CustomerManageBids extends Fragment {
 //    ArrayList<myList> myArrayList=new ArrayList<myList>();
     ListCustServiceBids mListDataAdapter;
     ListView lvItems;
+    CustomerManageBids mFrame;
 
     public CustomerManageBids() {
-
+        mFrame = this;
     }
 
     public CustomerManageBids(ServiceRequest serviceRequest) {
         mServiceRequest = serviceRequest;
+        mFrame = this;
     }
 
     /**
@@ -119,9 +121,52 @@ public class CustomerManageBids extends Fragment {
         serviceBids = db.getBidsForService(mServiceRequest.getServiceId());
         mListDataAdapter = new ListCustServiceBids(getContext(),
                                                    R.layout.row_customer_service_bid,
-                                                   serviceBids);
+                                                   serviceBids,
+                                                   mFrame);
         lvItems.setAdapter(mListDataAdapter);
         return view;
+    }
+
+    public void rejectBid(int position) {
+        ServiceBid currentServiceBid
+                = (ServiceBid) serviceBids.get(position);
+        int bidId = currentServiceBid.getBidId();
+        db.rejectBid(bidId);
+
+        //query for pending service bids again
+        serviceBids = db.getBidsForService(mServiceRequest.getServiceId());
+        mListDataAdapter.setList(serviceBids);
+        String toastMsg = "Rejected bid from: " + currentServiceBid.getVendorName();
+        Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    public void acceptBid(int position) {
+        ServiceBid currentServiceBid
+                = (ServiceBid) serviceBids.get(position);
+
+        //accept bid
+        int bidId = currentServiceBid.getBidId();
+        db.acceptBid(bidId);
+
+        //set vendor
+        int winningBidderId = currentServiceBid.getVendorId();
+        db.setVendorToSeviceRequest(winningBidderId, mServiceRequest.getServiceId());
+
+        //query for pending service bids again
+//                    serviceBids = db.getBidsForService(mServiceRequest.getServiceId());
+
+        //refresh list
+//                    mListDataAdapter.setList(serviceBids);
+
+        //display notification
+        String toastMsg = "Bid awarded to: " + currentServiceBid.getVendorName();
+        Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_SHORT).show();
+
+        //redirect to confirmed
+        Fragment manageConfirmed = new CustomerManageConfirmed();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_customer_manager_requests,
+                manageConfirmed).commit();
+//                    Toast.makeText(getActivity(), String.valueOf(bidId), Toast.LENGTH_SHORT).show();
     }
 
     @Override

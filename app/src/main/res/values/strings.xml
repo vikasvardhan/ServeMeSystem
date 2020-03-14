@@ -10,6 +10,11 @@
     <string name="hello_first_fragment">ServeMe</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <!-- Card Labels-->
+    <string name="cardDescriptionLbl">Description</string>
+    <string name="cardNotesLbl">Notes</string>
+    <string name="cardLocationTxt">Location</string>
+
     <!-- Registration Activity -->
     <string name="username">Username</string>
     <string name="password">Password</string>

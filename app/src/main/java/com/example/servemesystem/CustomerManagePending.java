@@ -43,6 +43,7 @@ public class CustomerManagePending extends Fragment {
     List<ServiceRequest> pendingRequests;
     ListCustPendingServiceRequest mListDataAdapter;
     SharedPreferences sharedpreferences;
+    int userId;
 
     Button viewBids;
 //    Button editRequest;
@@ -106,7 +107,7 @@ public class CustomerManagePending extends Fragment {
 
         db = DatabaseAccess.getInstance(getActivity());
 
-        int userId = sharedpreferences.getInt(UserAccount.USERID, -1);
+        userId = sharedpreferences.getInt(UserAccount.USERID, -1);
         if (userId != -1) {
             pendingRequests = db.getPendingRequestsForCustomer(userId);
             mListDataAdapter = new ListCustPendingServiceRequest(getContext(),
@@ -116,6 +117,18 @@ public class CustomerManagePending extends Fragment {
             lvItems.setAdapter(mListDataAdapter);
         }
         return view;
+    }
+
+    public void cancelRequest(int position) {
+        ServiceRequest currentPendingRequest
+                = (ServiceRequest) pendingRequests.get(position);
+        db.customer_invalidateBids(currentPendingRequest.getServiceId());
+        db.customer_cancelServiceRequest(currentPendingRequest.getServiceId());
+
+        // refresh list
+        pendingRequests
+                = db.getPendingRequestsForCustomer(userId);
+        mListDataAdapter.setList(pendingRequests);
     }
 
     public void viewBids(int position) {

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -79,6 +80,20 @@ public class VendorProfile extends Fragment {
         TextView balance = (TextView) view.findViewById(R.id.vendor_profile_balance);
         TextView rating = (TextView) view.findViewById(R.id.vendor_profile_rating);
         TextView location = (TextView) view.findViewById(R.id.vendor_profile_location);
+        Button displayReviewsBtn
+                = (Button) view.findViewById(R.id.vendor_profile_viewReviewsBtn);
+
+        displayReviewsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment vendorRatings = new VendorRatings();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .add(vendorRatings, "vendor_reviews")
+                        .addToBackStack("vendor_reviews")
+                        .replace(R.id.fragment_container, vendorRatings)
+                        .commit();
+            }
+        });
 
         db = DatabaseAccess.getInstance(getActivity());
         userId = sharedpreferences.getInt(UserAccount.USERID, -1);

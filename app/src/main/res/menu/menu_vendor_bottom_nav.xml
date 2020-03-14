@@ -10,7 +10,7 @@
     <item
         android:id="@+id/menuItem_vendor_displayConfirmedRequests"
         android:title="Confirmed"
-        android:icon="@drawable/ic_check_circle_black_24dp"
+        android:icon="@drawable/ic_build_white_24dp"
         android:orderInCategory="2"
         app:showAsAction="never" />
     <item
