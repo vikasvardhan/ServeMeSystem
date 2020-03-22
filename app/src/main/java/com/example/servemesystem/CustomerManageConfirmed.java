@@ -183,4 +183,16 @@ public class CustomerManageConfirmed extends Fragment {
             }
         }
     }
+
+    public void cancelServiceRequest_withoutPenalty(int position) {
+        currConfirmedRequest
+                = (ServiceRequest) confirmedRequests.get(position);
+        db.customer_invalidateBids(currConfirmedRequest.getServiceId());
+        db.customer_cancelServiceRequest(currConfirmedRequest.getServiceId());
+
+        // refresh list
+        confirmedRequests
+                = db.getConfirmedRequestsForCustomer(userId);
+        mListDataAdapter.setList(confirmedRequests);
+    }
 }

@@ -4,12 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.OrientationHelper;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -143,12 +147,49 @@ public class VendorManageConfirmed extends Fragment {
                 + ", A:" + Double.toString(adminWallet);
         Log.d("Wallet figures: ", msg);
 
-        AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(getContext());
-        String dialogMsg = "Bill Customer $" + Double.toString(serviceCost) + "?"
-                + " You will receive $"
-                + Double.toString(round(vendorPay, 2));
-        confirmBuilder.setMessage(dialogMsg);
-        confirmBuilder.setCancelable(true);
+        AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(getActivity(),
+                R.style.ThemeOverlay_MaterialComponents_Dialog);
+
+        LinearLayout linearLayout = new LinearLayout(getActivity());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout.LayoutParams layoutParams
+                = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+
+        TextView lbl1 = new TextView(getActivity());
+        lbl1.setText("Bill Customer: ");
+        lbl1.setWidth(275);
+        TextView txt1 = new TextView(getActivity());
+        txt1.setText("$" + Double.toString(serviceCost));
+        txt1.setTextColor(Color.RED);
+
+        LinearLayout row1 = new LinearLayout(getActivity());
+        row1.setOrientation(LinearLayout.HORIZONTAL);
+        row1.setPadding(0, 20, 0, 10);
+        row1.addView(lbl1);
+        row1.addView(txt1);
+
+        TextView lbl2 = new TextView(getActivity());
+        lbl2.setText("Your Earnings: ");
+        lbl2.setWidth(275);
+        TextView txt2 = new TextView(getActivity());
+        txt2.setText("$" + Double.toString(round(vendorPay, 2)));
+        txt2.setTextColor(Color.GREEN);
+
+        LinearLayout row2 = new LinearLayout(getActivity());
+        row2.setOrientation(LinearLayout.HORIZONTAL);
+        row2.setPadding(0, 10, 0, 10);
+        row2.addView(lbl2);
+        row2.addView(txt2);
+
+        linearLayout.addView(row1);
+        linearLayout.addView(row2);
+        linearLayout.setPadding(60, 0, 60, 0);
+
+        confirmBuilder.setTitle("Cost Breakdown");
+        confirmBuilder.setView(linearLayout);
+
         confirmBuilder.setPositiveButton(
                 "Yes",
                 new DialogInterface.OnClickListener() {
@@ -179,8 +220,7 @@ public class VendorManageConfirmed extends Fragment {
                         dialog.cancel();
                     }
                 });
-        AlertDialog alert11 = confirmBuilder.create();
-        alert11.show();
+        confirmBuilder.show().getWindow().setLayout(600,500);
     }
 
     @Override
