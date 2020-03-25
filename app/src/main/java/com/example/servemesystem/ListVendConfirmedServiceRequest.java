@@ -1,6 +1,7 @@
 package com.example.servemesystem;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import com.google.android.material.card.MaterialCardView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ListVendConfirmedServiceRequest extends ArrayAdapter {
@@ -118,6 +122,22 @@ public class ListVendConfirmedServiceRequest extends ArrayAdapter {
                 }
             }
         });
+
+        String serviceDate = serviceRequest.getServiceTime();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
+        try{
+            Date recordDt = df.parse(serviceDate);
+            Date currDt = new Date();
+
+            if(currDt.after(recordDt)){
+                layoutHandler.markComplete.setVisibility(View.VISIBLE);
+            }
+            else{
+                layoutHandler.markComplete.setVisibility(View.GONE);
+            }
+        }catch(Exception ex){
+            Log.d("DBG: ", "Cannot parse service datetime");
+        }
         return mView;
     }
 

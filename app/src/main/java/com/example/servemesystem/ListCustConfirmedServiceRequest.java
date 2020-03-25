@@ -3,6 +3,7 @@ package com.example.servemesystem;
 import android.content.Context;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,14 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.card.MaterialCardView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ListCustConfirmedServiceRequest extends ArrayAdapter {
 
+    long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
     List<ServiceRequest> mList;
     CustomerManageConfirmed mParent;
 
@@ -101,12 +106,32 @@ public class ListCustConfirmedServiceRequest extends ArrayAdapter {
         layoutHandler.duration.setText(String.valueOf(serviceRequest.getWinningBid().getHours())
                                         + " hours");
 
-        layoutHandler.cancelRequestBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mParent.cancelServiceRequest(position);
+        String serviceDate = serviceRequest.getServiceTime();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
+        try{
+            Date recordDt = df.parse(serviceDate);
+            Date currDt = new Date();
+
+            boolean lessThanDay = Math.abs(currDt.getTime() - recordDt.getTime()) < MILLIS_PER_DAY;
+            if(lessThanDay){
+                layoutHandler.cancelRequestBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mParent.cancelServiceRequest(position);
+                    }
+                });
+            } else{
+                layoutHandler.cancelRequestBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mParent.cancelServiceRequest_withoutPenalty(position);
+                    }
+                });
             }
-        });
+        }catch(Exception ex){
+            Log.d("DBG: ", "Cannot parse service datetime");
+        }
+
         layoutHandler.expandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
