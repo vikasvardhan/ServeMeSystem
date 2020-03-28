@@ -732,4 +732,33 @@ public class DatabaseAccess {
         if (cursor.getCount() > 0) return false;
         else return true;
     }
+
+    //Search For Vendors
+
+    public List<UserAccount> getVendorsForSearch(){
+        List<UserAccount> accounts = new LinkedList<UserAccount>();
+        String vendor = "vendor";
+        open();
+        Cursor cursor = db.rawQuery("Select * from user_account where user_type = ? ",new String[]{vendor});
+        if (cursor.moveToFirst()) {
+            do {
+                Log.d("SQL User found", "NEW USER");
+
+                UserAccount uc = new UserAccount();
+                uc.setUserId(cursor.getInt(cursor.getColumnIndex("user_id")));
+                uc.setUserType(cursor.getString(cursor.getColumnIndex("user_type")));
+                uc.setUsername(cursor.getString(cursor.getColumnIndex("username")));
+                uc.setEmail(cursor.getString(cursor.getColumnIndex("email")));
+                uc.setAddress(cursor.getString(cursor.getColumnIndex("address")));
+                uc.setFirstName(cursor.getString(cursor.getColumnIndex("first_name")));
+                uc.setLastName(cursor.getString(cursor.getColumnIndex("last_name")));
+                uc.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
+                uc.setPoints(cursor.getInt(cursor.getColumnIndex("points")));
+                uc.setRating(cursor.getDouble(cursor.getColumnIndex("rating")));
+                accounts.add(uc);
+            }while(cursor.moveToNext());
+        }
+        return accounts;
+
+    }
 }

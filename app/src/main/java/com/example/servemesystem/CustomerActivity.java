@@ -123,9 +123,23 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
             case R.id.menuItem_customer_options_logout:
                 logout();
                 return true;
+            case R.id.menuItem_customer_options_search:
+                searchScreen();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void searchScreen() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment currentFragment;
+        currentFragment = new CustomerSearch();
+        fragmentManager.beginTransaction()
+                .add(currentFragment, "customer_search")
+                .addToBackStack("customer_search")
+                .replace(R.id.fragment_container_customer_home, currentFragment)
+                .commit();
     }
 
     @Override
