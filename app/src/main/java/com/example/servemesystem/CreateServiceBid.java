@@ -25,6 +25,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -134,11 +136,18 @@ public class CreateServiceBid extends Fragment {
 
                     if (db.insertServiceBid(sb)) {
                         Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
-                        getActivity()
-                                .getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.fragment_container, new VendorManageServiceRequests())
-                                .commit();
+                        Timer timer = new Timer();
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                getActivity()
+                                        .getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.fragment_container, new VendorManageServiceRequests())
+                                        .commit();
+                            }
+                        }, 1500);
+
                     } else {
                         Toast.makeText(getContext(),
                                 "Failed to create bid",
@@ -160,7 +169,7 @@ public class CreateServiceBid extends Fragment {
             valid = false;
         }
         if(commentsText.getText().length() == 0){
-            comments.setError("Comments are required");
+            comments.setError("\u2022 Comments are required");
             valid = false;
         }
         return valid;
