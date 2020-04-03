@@ -7,10 +7,13 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +75,8 @@ public class VendorRatings extends Fragment {
                                                                Context.MODE_PRIVATE);
         userId = sharedpreferences.getInt(UserAccount.USERID, -1);
         db = DatabaseAccess.getInstance(getActivity());
+
+        userId = mParam1.length() > 0 ? Integer.parseInt(mParam1): userId;
         if(userId != -1){
             vendorReviews = db.getRatingsForVendor(userId);
             mListDataAdapter = new ListVendRating(getContext(),

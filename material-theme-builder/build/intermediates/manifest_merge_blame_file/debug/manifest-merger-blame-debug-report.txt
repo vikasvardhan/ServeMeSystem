@@ -32,7 +32,7 @@
 28        android:allowBackup="true"
 28-->/Users/vikasvardhan/Documents/SemesterTwo/AdvancedTopics/serveMeSystem/material-theme-builder/src/main/AndroidManifest.xml:24:9-35
 29        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-29-->[androidx.core:core:1.3.0-alpha02] /Users/vikasvardhan/.gradle/caches/transforms-2/files-2.1/61ecf07fffbe9ce93da3aa6dd48dca17/core-1.3.0-alpha02/AndroidManifest.xml:24:18-86
+29-->[androidx.core:core:1.3.0-beta01] /Users/vikasvardhan/.gradle/caches/transforms-2/files-2.1/10b0cb6fe19a9da032359a700cde5b9c/core-1.3.0-beta01/AndroidManifest.xml:24:18-86
 30        android:debuggable="true"
 31        android:extractNativeLibs="false"
 32        android:icon="@mipmap/ic_launcher"

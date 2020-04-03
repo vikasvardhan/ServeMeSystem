@@ -1,13 +1,22 @@
 package com.example.servemesystem;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ListView;
+import androidx.appcompat.widget.SearchView;
 
 import java.util.List;
 
@@ -31,6 +40,7 @@ public class CustomerSearch extends Fragment {
     private List<UserAccount> vendorList;
     private CustomerSearch mFrame;
     ListCustSearch mListDataAdapter;
+    private UserAccount currUserAccount;
 
     public CustomerSearch() {
         mFrame = this;
@@ -58,6 +68,8 @@ public class CustomerSearch extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //For Search
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -71,6 +83,7 @@ public class CustomerSearch extends Fragment {
                 container,
                 false);
         db = DatabaseAccess.getInstance(getActivity());
+
         vendorList = db.getVendorsForSearch();
         ListView lvItems = (ListView) view.findViewById(R.id.listView_vendor_search);
         mListDataAdapter = new ListCustSearch(getContext(),
@@ -81,4 +94,47 @@ public class CustomerSearch extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
+
+    public void viewReviews(int position){
+
+        currUserAccount
+                = (UserAccount) vendorList.get(position);
+        Integer userId = currUserAccount.getUserId();
+        Fragment vendorRatings = VendorRatings.newInstance(userId.toString(),"");
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(vendorRatings, "vendor_reviews")
+                .addToBackStack("vendor_reviews")
+                .replace(R.id.fragment_container_customer_home, vendorRatings)
+                .commit();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+
+        inflater.inflate(R.menu.menu_options_search, menu);
+        MenuItem searchItem = menu.findItem(R.id.menuItem_options_search);
+
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        EditText searchEditText = (EditText) searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setHint("Search...");
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mListDataAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        //super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
 }

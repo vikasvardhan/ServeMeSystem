@@ -96,28 +96,26 @@
 
                 </LinearLayout>
 
-                <!-- Customer -->
+                <!-- Rating -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/customerSearch_ratingBar"
+                        style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_profile_black_24dp"></ImageView>
-
-                    <TextView
-                        android:id="@+id/customerPendingRequests_requestor"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="1dip"
-                        android:text="Requestor"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="#343434" />
+                        android:numStars="5"
+                        android:progressTint="@color/sunset_yellow"
+                        android:stepSize=".5"
+                        android:visibility="visible"></androidx.appcompat.widget.AppCompatRatingBar>
 
                 </LinearLayout>
+
 
             </LinearLayout>
 
@@ -171,27 +169,12 @@
                     android:textColor="#343434" />
             </LinearLayout>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/customerPendingRequests_profileBtn"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="5dp"
-                android:text="@string/cardDescriptionLbl"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"></com.google.android.material.textview.MaterialTextView>
-
-            <!--            <View-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="1dp"-->
-            <!--                android:background="@android:color/darker_gray"/>-->
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/customerPendingRequests_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:paddingLeft="5dp"
-                android:text="descriptioanssdsakdaskdaskldkalsdklasdklasdkaskdals"
-                android:textAppearance="@style/TextAppearance.MyTheme.Body1"></com.google.android.material.textview.MaterialTextView>
+                android:text="Reviews" />
 
         </LinearLayout>
 
@@ -212,28 +195,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:srcCompat="@drawable/ic_arrow_downward_24dp"></ImageView>
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="Edit" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_viewBids"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="Bids"
-                android:visibility="gone"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/customerPendingRequests_cancelRequest"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:textColor="@android:color/holo_red_dark"/>
 
         </LinearLayout>
 

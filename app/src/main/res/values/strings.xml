@@ -180,4 +180,5 @@
     <string name="text_appearance_button_label">Button</string>
     <string name="text_appearance_caption_label">Caption</string>
     <string name="text_appearance_overline_label">Overline</string>
+    <string name="searchAddressText">Address</string>
 </resources>
