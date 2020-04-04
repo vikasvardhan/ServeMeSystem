@@ -144,12 +144,12 @@ public class ListCustSearch extends ArrayAdapter implements Filterable {
         return mView;
     }
 
-//    public void setList(List<UserAccount> inList) {
-//        mList.clear();
-//        mList.addAll(inList);
-////        this.notifyDataSetChanged();
-//        this.notifyDataSetInvalidated();
-//    }
+    public void setList(List<UserAccount> inList) {
+        mList.clear();
+        mList.addAll(inList);
+//        this.notifyDataSetChanged();
+        this.notifyDataSetInvalidated();
+    }
 
 //    public void searchText(String text){
 //        for(UserAccount uAcnt: mList){

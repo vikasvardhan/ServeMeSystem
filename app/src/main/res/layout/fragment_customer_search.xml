@@ -18,18 +18,6 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/customer_bottom_nav"
-        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:labelVisibilityMode="selected"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listView_vendor_search"
-        app:menu="@menu/menu_customer_search" />
-
     <FrameLayout
         android:id="@+id/fragment_container_search"
         android:layout_width="match_parent"

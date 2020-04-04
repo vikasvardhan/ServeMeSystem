@@ -1,11 +1,15 @@
 package com.example.servemesystem;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,9 +19,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
+
 import androidx.appcompat.widget.SearchView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,6 +46,7 @@ public class CustomerSearch extends Fragment {
 
     DatabaseAccess db;
     private List<UserAccount> vendorList;
+    private List<UserAccount> vendorListFull;
     private CustomerSearch mFrame;
     ListCustSearch mListDataAdapter;
     private UserAccount currUserAccount;
@@ -70,6 +79,7 @@ public class CustomerSearch extends Fragment {
         super.onCreate(savedInstanceState);
         //For Search
         setHasOptionsMenu(true);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -85,6 +95,7 @@ public class CustomerSearch extends Fragment {
         db = DatabaseAccess.getInstance(getActivity());
 
         vendorList = db.getVendorsForSearch();
+        vendorListFull = new ArrayList<>(vendorList);
         ListView lvItems = (ListView) view.findViewById(R.id.listView_vendor_search);
         mListDataAdapter = new ListCustSearch(getContext(),
                 R.layout.row_customer_search,
@@ -95,12 +106,12 @@ public class CustomerSearch extends Fragment {
         return view;
     }
 
-    public void viewReviews(int position){
+    public void viewReviews(int position) {
 
         currUserAccount
                 = (UserAccount) vendorList.get(position);
         Integer userId = currUserAccount.getUserId();
-        Fragment vendorRatings = VendorRatings.newInstance(userId.toString(),"");
+        Fragment vendorRatings = VendorRatings.newInstance(userId.toString(), "");
         getActivity().getSupportFragmentManager().beginTransaction()
                 .add(vendorRatings, "vendor_reviews")
                 .addToBackStack("vendor_reviews")
@@ -133,8 +144,63 @@ public class CustomerSearch extends Fragment {
                 return false;
             }
         });
-        //super.onCreateOptionsMenu(menu, inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuItem_options_filter:
+                onRatingSelect();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void onRatingSelect() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity(),
+                R.style.ThemeOverlay_MaterialComponents_Dialog);
+        final RatingBar input = new RatingBar(getActivity());
+        LinearLayout linearLayout = new LinearLayout(getActivity());
+
+        LinearLayout.LayoutParams layoutParams
+                = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER;
+
+        input.setLayoutParams(layoutParams);
+//        input.onEditorAction(EditorInfo.IME_ACTION_DONE);
+
+        linearLayout.addView(input);
+        linearLayout.setPadding(20, 30, 20, 0);
+        dialogBuilder.setTitle("Rating Filter");
+        dialogBuilder.setView(linearLayout);
+
+        dialogBuilder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                List<UserAccount> results = new ArrayList<>();
+                if (input.getRating() > 0) {
+                    for (UserAccount item : vendorListFull) {
+                        if (item.getRating() >= input.getRating())
+                            results.add(item);
+                    }
+                    mListDataAdapter.setList(results);
+                } else {
+                    results.addAll(vendorListFull);
+                    mListDataAdapter.setList(results);
+                }
+
+                dialog.cancel();
+            }
+        });
+
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+            }
+        });
+        dialogBuilder.show().getWindow().setLayout(800, 650);
+    }
 
 }
