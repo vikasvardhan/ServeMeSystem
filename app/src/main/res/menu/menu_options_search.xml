@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuItem_options_search"
+        android:title="@string/app_bar_menu_search"
+        android:icon="@drawable/ic_search_control_normal_24dp"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        />
+    <item
+        android:id="@+id/menuItem_options_filter"
+        android:title="@string/app_bar_menu_filter"
+        android:icon="@drawable/ic_filter_list_black_24dp"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menuItem_customer_options_logout"
+        android:orderInCategory="100"
+        android:title="Logout"
+        app:showAsAction="never" />
+</menu>
+
+
+
+

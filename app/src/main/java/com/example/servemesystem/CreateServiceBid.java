@@ -21,8 +21,12 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -44,6 +48,10 @@ public class CreateServiceBid extends Fragment {
     SharedPreferences sharedpreferences;
     int userId;
     DatabaseAccess db;
+
+    TextInputLayout amt;
+    TextInputLayout hrs;
+    TextInputLayout comments;
 
     EditText amtText;
     EditText hoursText;
@@ -80,7 +88,7 @@ public class CreateServiceBid extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view
-            = inflater.inflate(R.layout.fragment_create_service_bid, container, false);
+                = inflater.inflate(R.layout.fragment_create_service_bid, container, false);
         sharedpreferences = getActivity().getSharedPreferences(FirstFragment.PREFERENCES,
                 Context.MODE_PRIVATE);
         db = DatabaseAccess.getInstance(getActivity());
@@ -92,6 +100,10 @@ public class CreateServiceBid extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = DatabaseAccess.getInstance(getActivity());
+
+        amt = view.findViewById(R.id.create_service_bid_amountLbl);
+        hrs = view.findViewById(R.id.create_service_bid_hoursLbl);
+        comments = view.findViewById(R.id.create_service_commentsLbl);
 
         amtText = view.findViewById(R.id.create_service_bid_amount);
         hoursText = view.findViewById(R.id.create_service_bid_hours);
@@ -110,31 +122,58 @@ public class CreateServiceBid extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String amount = amtText.getText().toString();
-                String numHours = hoursText.getText().toString();
-                String comments = commentsText.getText().toString();
+                if (validate()) {
+                    String amount = amtText.getText().toString();
+                    String numHours = hoursText.getText().toString();
+                    String comments = commentsText.getText().toString();
 
-                ServiceBid sb = new ServiceBid();
-                sb.setAmt(Double.parseDouble(amount));
-                sb.setHours(Integer.parseInt(numHours));
-                sb.setNotes(comments);
-                sb.setVendorId(userId);
-                sb.setServiceId(serviceRequest.getServiceId());
+                    ServiceBid sb = new ServiceBid();
+                    sb.setAmt(Double.parseDouble(amount));
+                    sb.setHours(Integer.parseInt(numHours));
+                    sb.setNotes(comments);
+                    sb.setVendorId(userId);
+                    sb.setServiceId(serviceRequest.getServiceId());
 
-                if(db.insertServiceBid(sb)){
-                    Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
-                    getActivity()
-                            .getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, new VendorManageServiceRequests())
-                            .commit();
-                }
-                else{
-                    Toast.makeText(getContext(),
-                                   "Failed to create bid",
-                                   Toast.LENGTH_LONG).show();
+                    if (db.insertServiceBid(sb)) {
+                        Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+                        Timer timer = new Timer();
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                getActivity()
+                                        .getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.fragment_container, new VendorManageServiceRequests())
+                                        .commit();
+                            }
+                        }, 1500);
+
+                    } else {
+                        Toast.makeText(getContext(),
+                                "Failed to create bid",
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
     }
+
+    private boolean validate() {
+        boolean valid = true;
+        if (amtText.getText().length() == 0) {
+            amt.setError("\u2022 Amount is required");
+            valid = false;
+        }
+        if (hoursText.getText().length() == 0) {
+            hrs.setError("\u2022 Hours is required");
+            valid = false;
+        }
+        if(commentsText.getText().length() == 0){
+            comments.setError("\u2022 Comments are required");
+            valid = false;
+        }
+        return valid;
+    }
+
+    ;
 }

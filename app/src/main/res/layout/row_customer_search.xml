@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/customerPendingRequests_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/list_selector"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/main_view"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/list_selector"
+            android:orientation="horizontal">
+
+            <!--  Status Bar -->
+            <!--            <ImageView-->
+            <!--                android:id="@+id/customerPendingRequests_status_bar"-->
+            <!--                android:layout_width="5dp"-->
+            <!--                android:layout_height="130dp"-->
+            <!--                android:layout_alignParentLeft="true"-->
+            <!--                app:srcCompat="@android:color/holo_orange_dark" />-->
+
+            <!-- Main Container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_alignTop="@+id/thumbnail"
+                android:layout_marginLeft="8dp"
+                android:orientation="vertical">
+
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/customerSearch_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline5"
+                    android:textColor="#040404"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+                <!-- phone -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_phone_android_black_24dp">
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/customerSearch_phone"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="1dip"
+                        android:text="Phone"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="#343434" />
+
+                </LinearLayout>
+
+                <!-- Email -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_email_black_24dp"></ImageView>
+
+                    <TextView
+                        android:id="@+id/customerSearch_email"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="1dip"
+                        android:text="Email"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="#343434" />
+
+                </LinearLayout>
+
+                <!-- Rating -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/customerSearch_ratingBar"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:numStars="5"
+                        android:progressTint="@color/sunset_yellow"
+                        android:stepSize=".5"
+                        android:visibility="visible"></androidx.appcompat.widget.AppCompatRatingBar>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--  Category Image Container -->
+            <LinearLayout
+                android:id="@+id/thumbnail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+
+                <!--  Category Image -->
+                <ImageView
+                    android:id="@+id/customerPendingRequests_categoryIcon"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- Expandable View -->
+        <LinearLayout
+            android:id="@+id/customerPendingRequests_expandableView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_location_24dp"></ImageView>
+
+                <!-- Location -->
+                <TextView
+                    android:id="@+id/customerPendingRequests_location"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="1dip"
+                    android:text="Location"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="#343434" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/customerPendingRequests_profileBtn"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Reviews" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="15dp"
+            android:background="@android:color/holo_orange_dark" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/customerPendingRequests_expandBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_arrow_downward_24dp"></ImageView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

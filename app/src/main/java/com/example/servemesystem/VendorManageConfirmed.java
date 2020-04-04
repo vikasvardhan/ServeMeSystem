@@ -24,6 +24,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.List;
 
 public class VendorManageConfirmed extends Fragment {
@@ -40,7 +43,7 @@ public class VendorManageConfirmed extends Fragment {
     List<ServiceRequest> confirmedRequests;
     ListVendConfirmedServiceRequest mListDataAdapter;
     SharedPreferences sharedpreferences;
-//    Button btn_markCompleted;
+    //    Button btn_markCompleted;
     int userId;
 
     int currentRequestPosition;
@@ -56,6 +59,7 @@ public class VendorManageConfirmed extends Fragment {
     Double customerWallet = 0.0;
     Double vendorWallet = 0.0;
     Double adminWallet = 0.0;
+    View view;
 
     public VendorManageConfirmed() {
         // Required empty public constructor
@@ -84,19 +88,19 @@ public class VendorManageConfirmed extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_vendor_manage_confirmed,
+        view = inflater.inflate(R.layout.fragment_vendor_manage_confirmed,
                 container,
                 false);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Confirmed Requests");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Confirmed Requests");
 
-        ListView lvItems = (ListView) view.findViewById (R.id.listView_vendor_confirmed_requests);
+        ListView lvItems = (ListView) view.findViewById(R.id.listView_vendor_confirmed_requests);
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
                 view.setSelected(true);
                 currentRequestPosition = position;
-                if(currentRequestPosition != -1){
+                if (currentRequestPosition != -1) {
 //                    btn_markCompleted.setEnabled(true);
                 }
             }
@@ -109,7 +113,7 @@ public class VendorManageConfirmed extends Fragment {
         db = DatabaseAccess.getInstance(getActivity());
 
         userId = sharedpreferences.getInt(UserAccount.USERID, -1);
-        if(userId != -1){
+        if (userId != -1) {
             confirmedRequests = db.getConfirmedRequestsForVendor(userId);
             mListDataAdapter
                     = new ListVendConfirmedServiceRequest(getContext(),
@@ -122,6 +126,7 @@ public class VendorManageConfirmed extends Fragment {
     }
 
     public void markComplete(int position) {
+
 
         currentServiceRequest
                 = (ServiceRequest) confirmedRequests.get(position);
@@ -190,6 +195,7 @@ public class VendorManageConfirmed extends Fragment {
         confirmBuilder.setTitle("Cost Breakdown");
         confirmBuilder.setView(linearLayout);
 
+
         confirmBuilder.setPositiveButton(
                 "Yes",
                 new DialogInterface.OnClickListener() {
@@ -209,7 +215,12 @@ public class VendorManageConfirmed extends Fragment {
                         confirmedRequests = db.getConfirmedRequestsForVendor(userId);
                         mListDataAdapter.setList(confirmedRequests);
 
+
+
                         dialog.cancel();
+                        BottomNavigationView navigation
+                                = (BottomNavigationView) getActivity().findViewById(R.id.vendor_bottom_nav);
+                        navigation.setSelectedItemId(R.id.menuItem_vendor_displayCompletedRequests);
                     }
                 });
 
@@ -220,7 +231,7 @@ public class VendorManageConfirmed extends Fragment {
                         dialog.cancel();
                     }
                 });
-        confirmBuilder.show().getWindow().setLayout(600,500);
+        confirmBuilder.show().getWindow().setLayout(600, 500);
     }
 
     @Override
