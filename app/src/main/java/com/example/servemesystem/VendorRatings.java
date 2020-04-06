@@ -76,7 +76,7 @@ public class VendorRatings extends Fragment {
         userId = sharedpreferences.getInt(UserAccount.USERID, -1);
         db = DatabaseAccess.getInstance(getActivity());
 
-        userId = mParam1.length() > 0 ? Integer.parseInt(mParam1): userId;
+        userId = mParam1 != null && mParam1.length() > 0 ? Integer.parseInt(mParam1): userId;
         if(userId != -1){
             vendorReviews = db.getRatingsForVendor(userId);
             mListDataAdapter = new ListVendRating(getContext(),
