@@ -214,6 +214,7 @@
                 app:srcCompat="@drawable/ic_arrow_downward_24dp"></ImageView>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/customerPendingRequests_editRequest"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"

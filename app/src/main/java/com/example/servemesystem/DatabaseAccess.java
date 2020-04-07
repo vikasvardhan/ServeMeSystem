@@ -37,6 +37,25 @@ public class DatabaseAccess {
             this.db.close();
     }
 
+    public ServiceRequest getServiceRequest(int serviceId){
+        ServiceRequest service = new ServiceRequest();
+        String query = "SELECT * FROM service_request WHERE Service_ID =?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(serviceId)});
+        if(cursor.moveToFirst()){
+            service.setServiceId(cursor.getInt(cursor.getColumnIndex("Service_ID")));
+            service.setCustomerId(cursor.getInt(cursor.getColumnIndex("User_ID")));
+            service.setVendorId(cursor.getInt(cursor.getColumnIndex("Vendor_ID")));
+            service.setCategory(new ServiceCategory(cursor.getString(cursor.getColumnIndex("Category"))));
+            service.setLocation(cursor.getString(cursor.getColumnIndex("Location")));
+            service.setTitle(cursor.getString(cursor.getColumnIndex("Title")));
+            service.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
+            service.setStatus(cursor.getString(cursor.getColumnIndex("Status")));
+            service.setReviewed(cursor.getInt(cursor.getColumnIndex("Is_Reviewed")) > 0);
+            service.setServiceTime(cursor.getString(cursor.getColumnIndex("Datetime")));
+        }
+        return service;
+    }
+
     public List<ServiceBid> getBidsForService(int serviceId){
         List<ServiceBid> serviceBids = new LinkedList<ServiceBid>();
         String query = "SELECT * FROM service_bids" +
@@ -693,6 +712,8 @@ public class DatabaseAccess {
 
     public boolean insertServiceRequest(ServiceRequest serviceRequest) {
         open();
+        Cursor cursor = db.rawQuery("Select * from user_account where username = ?",
+                new String[]{String.valueOf(serviceRequest.getServiceId())});
         ContentValues contentValues = new ContentValues();
         contentValues.put("Service_ID", serviceRequest.getServiceId());
         contentValues.put("User_ID", serviceRequest.getCustomerId());
@@ -704,7 +725,14 @@ public class DatabaseAccess {
         contentValues.put("Description", serviceRequest.getDescription());
         contentValues.put("Status", serviceRequest.getStatus());
         contentValues.put("Is_Reviewed", serviceRequest.isReviewed());
-        long ins = db.insert("service_request", null, contentValues);
+        long ins;
+        if (cursor.getCount() > 0) {
+         ins = db.insert("service_request", null, contentValues);
+        }
+        else{
+            ins = db.update("service_request",contentValues," service_id = ?", new String[]{String.valueOf(serviceRequest.getServiceId())});
+            customer_invalidateBids(serviceRequest.getServiceId());
+        }
         if (ins == -1) return false;
         else return true;
     }

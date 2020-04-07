@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +23,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -110,6 +113,7 @@ public class ServiceDetailFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
         timeText.setText(sdf.format(cal.getTime()));
 
+
         datePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,6 +186,17 @@ public class ServiceDetailFragment extends Fragment {
             }
         });
 
+        //If Edit Request
+        if (mParam1 != null) {
+            ServiceRequest service = db.getServiceRequest(Integer.parseInt(mParam1));
+            categoryText.setText(service.getCategory().getCategoryName());
+            dateText.setText(service.getServiceTime().split(" ")[0]);
+            timeText.setText(service.getServiceTime().split(" ")[1]);
+            locationText.setText(service.getLocation());
+            titleText.setText(service.getTitle());
+            descriptionText.setText(service.getDescription());
+        }
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,7 +212,11 @@ public class ServiceDetailFragment extends Fragment {
                     }
                 } else {
                     ServiceRequest serviceRequest = new ServiceRequest();
-                    serviceRequest.setServiceId(db.getNewServiceId());
+                    if (mParam1 == null)
+                        serviceRequest.setServiceId(db.getNewServiceId());
+                    else
+                        serviceRequest.setServiceId(Integer.parseInt(mParam1));
+
                     serviceRequest.setCustomerId(1);
                     serviceRequest.setVendorId(2);
                     serviceRequest.setCategory(new ServiceCategory(categoryText.getText().toString()));
@@ -208,7 +227,17 @@ public class ServiceDetailFragment extends Fragment {
                     serviceRequest.setStatus("Pending");
                     serviceRequest.setReviewed(false);
                     if (db.insertServiceRequest(serviceRequest)) {
-                        Toast.makeText(getContext(), "Successfully submit the service request", Toast.LENGTH_LONG).show();
+                        Snackbar snackbar;
+                        if (mParam1 != null) {
+                             snackbar = Snackbar
+                                    .make(v, "Service Request has been saved successfully!", Snackbar.LENGTH_LONG);
+
+                        } else {
+                            snackbar = Snackbar
+                                    .make(v, "Service Request edited Successfully, All existing bids have been removed as a result!", Snackbar.LENGTH_LONG);
+
+                        }
+                        snackbar.show();
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         int count = fragmentManager.getBackStackEntryCount();
                         for (int i = 0; i < count; ++i) {

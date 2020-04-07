@@ -131,6 +131,19 @@ public class CustomerManagePending extends Fragment {
         mListDataAdapter.setList(pendingRequests);
     }
 
+    public void editRequest(int position) {
+        ServiceRequest currentPendingRequest
+                = (ServiceRequest) pendingRequests.get(position);
+
+        Fragment serviceDetailFragment =  ServiceDetailFragment.newInstance( Integer.toString(currentPendingRequest.getServiceId()),null);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(serviceDetailFragment, "service_detail")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack("service_detail")
+                .replace(R.id.fragment_container_customer_home, serviceDetailFragment)
+                .commit();
+    }
+
     public void viewBids(int position) {
         ServiceRequest currentPendingRequest
                 = (ServiceRequest) pendingRequests.get(position);

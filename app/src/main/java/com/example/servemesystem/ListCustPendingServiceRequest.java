@@ -40,6 +40,7 @@ public class ListCustPendingServiceRequest extends ArrayAdapter {
         ImageView categoryIcon;
         Button viewBids;
         Button cancelRequest;
+        Button editRequest;
         ImageView expandButton;
         LinearLayout expandableView;
         MaterialCardView cardView;
@@ -82,6 +83,8 @@ public class ListCustPendingServiceRequest extends ArrayAdapter {
                     = (ImageView) mView.findViewById(R.id.customerPendingRequests_expandBtn);
             layoutHandler.cancelRequest
                     = (Button) mView.findViewById(R.id.customerPendingRequests_cancelRequest);
+            layoutHandler.editRequest
+                    = (Button) mView.findViewById(R.id.customerPendingRequests_editRequest);
             mView.setTag(layoutHandler);
         }
         else {
@@ -134,8 +137,16 @@ public class ListCustPendingServiceRequest extends ArrayAdapter {
                 mParent.cancelRequest(position);
             }
         });
+        layoutHandler.editRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mParent.editRequest(position);
+            }
+        });
         return mView;
     }
+
+
 
     public void setList(List<ServiceRequest> inList) {
         mList.clear();
