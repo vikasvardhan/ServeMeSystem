@@ -1,5 +1,7 @@
 package com.example.servemesystem;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.craftman.cardform.Card;
+import com.craftman.cardform.CardForm;
+import com.craftman.cardform.OnPayBtnClickListner;
 
 
 /**
@@ -24,8 +32,20 @@ public class CustomerRefillWallet extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    SharedPreferences sharedpreferences;
+    DatabaseAccess db;
+    int userId;
+
+    private double currBalance;
+    private double refillAmt;
+
     public CustomerRefillWallet() {
         // Required empty public constructor
+    }
+
+    public CustomerRefillWallet(double inCurrBalance, double inRefillAmt){
+        currBalance = inCurrBalance;
+        refillAmt = inRefillAmt;
     }
 
     /**
@@ -59,6 +79,34 @@ public class CustomerRefillWallet extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer_refill_wallet, container, false);
+        View view = inflater.inflate(R.layout.fragment_customer_refill_wallet, container, false);
+
+        sharedpreferences
+                = getActivity().getSharedPreferences(FirstFragment.PREFERENCES, Context.MODE_PRIVATE);
+
+        db = DatabaseAccess.getInstance(getActivity());
+        userId = sharedpreferences.getInt(UserAccount.USERID, -1);
+        UserAccount uc = db.getAccount(userId);
+
+        CardForm cardForm = (CardForm) view.findViewById(R.id.card_form);
+        TextView txtDes = (TextView) view.findViewById(R.id.payment_amount);
+        Button btnPay = (Button) view.findViewById(R.id.btn_pay);
+
+        txtDes.setText("$" + refillAmt);
+        btnPay.setText("Refill Wallet");
+
+        cardForm.setPayBtnClickListner(new OnPayBtnClickListner() {
+            @Override
+            public void onClick(Card card) {
+                db.updateWalletBalance(userId, (currBalance + refillAmt));
+                Fragment custProfile = new CustomerProfile();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .add(custProfile, "customer_profile")
+                        .addToBackStack("customer_profile")
+                        .replace(R.id.fragment_container_customer_home, custProfile)
+                        .commit();
+            }
+        });
+        return view;
     }
 }
