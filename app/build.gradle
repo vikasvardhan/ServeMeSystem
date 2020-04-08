@@ -50,6 +50,7 @@ dependencies {
     //Google Places
     implementation 'com.seatgeek:placesautocomplete:0.3-SNAPSHOT'
 
+    implementation 'com.craftman.cardform:cardform:0.0.2'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

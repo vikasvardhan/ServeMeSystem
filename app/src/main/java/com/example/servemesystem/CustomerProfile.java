@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 
@@ -30,6 +33,8 @@ public class CustomerProfile extends Fragment {
     SharedPreferences sharedpreferences;
     DatabaseAccess db;
     int userId;
+    double currBalance = 0.0;
+    double refillAmt = 100;
 
     public CustomerProfile() {
         // Required empty public constructor
@@ -77,7 +82,33 @@ public class CustomerProfile extends Fragment {
         TextView phone = (TextView) view.findViewById(R.id.customer_profile_phone);
         TextView points = (TextView) view.findViewById(R.id.customer_profile_points);
         TextView balance = (TextView) view.findViewById(R.id.customer_profile_balance);
-        TextView location = (TextView) view.findViewById(R.id.customer_profile_location);
+//        TextView location = (TextView) view.findViewById(R.id.customer_profile_location);
+
+        Button refillWalletBtn
+                = (Button) view.findViewById(R.id.customer_profile_refillWalletBtn);
+
+        // This will get the radiogroup
+        RadioGroup rGroup = (RadioGroup) view.findViewById(R.id.radio_group_refill_amt);
+
+        // This will get the radiobutton in the radiogroup that is checked
+        RadioButton checkedRadioButton = (RadioButton) rGroup.findViewById(rGroup.getCheckedRadioButtonId());
+
+        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                // This will get the radiobutton that has changed in its check state
+                RadioButton checkedRadioButton = (RadioButton) group.findViewById(checkedId);
+                // This puts the value (true/false) into the variable
+                boolean isChecked = checkedRadioButton.isChecked();
+                // If the radiobutton that has changed in check state is now checked...
+                if (isChecked)
+                {
+                    // Changes the textview's text to "Checked: example radiobutton text"
+                    refillAmt = Double.parseDouble(checkedRadioButton.getText().toString().replace("$", ""));
+                }
+            }
+        });
 
         db = DatabaseAccess.getInstance(getActivity());
         userId = sharedpreferences.getInt(UserAccount.USERID, -1);
@@ -88,7 +119,8 @@ public class CustomerProfile extends Fragment {
             email.setText(uc.getEmail());
             phone.setText("+" + uc.getPhone());
             points.setText(String.valueOf(uc.getPoints()));
-            balance.setText("$" + uc.getWalletAmt());
+            currBalance = uc.getWalletAmt();
+            balance.setText("$" + currBalance);
             String locationStr = uc.getAddress();
             if(locationStr != null){
                 if(locationStr.equals("")){
@@ -98,7 +130,19 @@ public class CustomerProfile extends Fragment {
             else{
                 locationStr = "No Address Provided";
             }
-            location.setText(locationStr);
+
+            refillWalletBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment refillWalet = new CustomerRefillWallet(currBalance, refillAmt);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(refillWalet, "customer_refill_wallet")
+                            .addToBackStack("customer_refill_wallet")
+                            .replace(R.id.fragment_container_customer_home, refillWalet)
+                            .commit();
+                }
+            });
+//            location.setText(locationStr);
         }
 
         // Inflate the layout for this fragment
