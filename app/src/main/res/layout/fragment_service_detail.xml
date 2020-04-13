@@ -12,19 +12,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="24dp"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            android:layout_marginEnd="24dp"-->
-<!--            android:gravity="center"-->
-<!--            android:text="Please fill the information"-->
-<!--            android:textColor="@color/color_primary"-->
-<!--            android:textSize="24sp"-->
-<!--            android:textStyle="bold" />-->
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -88,12 +75,13 @@
                     android:padding="8dp"
                     android:text="March/04/2020" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/detail_date_picker"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginStart="6dp"
-                    android:background="@drawable/ic_date_picker_24dp" />
+                    android:background="@drawable/gradient_primary"
+                    app:srcCompat="@drawable/ic_date_picker_24dp" />
             </LinearLayout>
 
 
@@ -129,12 +117,13 @@
                     android:padding="8dp"
                     android:text="10:00" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/detail_time_picker"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginStart="6dp"
-                    android:background="@drawable/ic_time_picker_24dp" />
+                    android:background="@drawable/gradient_primary"
+                    app:srcCompat="@drawable/ic_time_picker_24dp" />
 
             </LinearLayout>
 
@@ -228,17 +217,16 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/detail_cancel_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/gradient"
+                    android:background="@drawable/gradient_primary"
                     android:text="Cancel" />
 
             </LinearLayout>
@@ -252,11 +240,10 @@
 
                 <Button
                     android:id="@+id/detail_submit_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/gradient"
+                    android:background="@drawable/gradient_primary"
                     android:text="Submit" />
             </LinearLayout>
 

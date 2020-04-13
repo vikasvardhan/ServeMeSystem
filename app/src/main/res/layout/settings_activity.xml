@@ -22,9 +22,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:background="@drawable/gradient"
+            android:background="@drawable/gradient_primary"
             android:gravity="center"
             android:text="@string/save"
-            android:textColor="@color/color_primary_variant"/>
+            android:textColor="@color/color_on_primary"/>
     </LinearLayout>
 </LinearLayout>
