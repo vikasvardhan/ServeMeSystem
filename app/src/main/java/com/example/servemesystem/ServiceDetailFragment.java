@@ -21,6 +21,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -97,8 +98,8 @@ public class ServiceDetailFragment extends Fragment {
         final EditText categoryText = view.findViewById(R.id.detail_category_name);
         final EditText dateText = view.findViewById(R.id.detail_date_input);
         final EditText timeText = view.findViewById(R.id.detail_time_input);
-        Button datePickerButton = view.findViewById(R.id.detail_date_picker);
-        Button timePickerButton = view.findViewById(R.id.detail_time_picker);
+        ImageButton datePickerButton = view.findViewById(R.id.detail_date_picker);
+        ImageButton timePickerButton = view.findViewById(R.id.detail_time_picker);
         final EditText locationText = view.findViewById(R.id.detail_location_input);
         final EditText titleText = view.findViewById(R.id.detail_title_input);
         final EditText descriptionText = view.findViewById(R.id.detail_description_input);
