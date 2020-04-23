@@ -229,7 +229,7 @@ public class ServiceDetailFragment extends Fragment {
                     serviceRequest.setReviewed(false);
                     if (db.insertServiceRequest(serviceRequest)) {
                         Snackbar snackbar;
-                        if (mParam1 != null) {
+                        if (mParam1 == null) {
                              snackbar = Snackbar
                                     .make(v, "Service Request has been saved successfully!", Snackbar.LENGTH_LONG);
 
