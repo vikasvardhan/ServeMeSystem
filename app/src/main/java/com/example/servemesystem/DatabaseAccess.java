@@ -712,7 +712,7 @@ public class DatabaseAccess {
 
     public boolean insertServiceRequest(ServiceRequest serviceRequest) {
         open();
-        Cursor cursor = db.rawQuery("Select * from user_account where username = ?",
+        Cursor cursor = db.rawQuery("Select * from service_request where Service_ID = ?",
                 new String[]{String.valueOf(serviceRequest.getServiceId())});
         ContentValues contentValues = new ContentValues();
         contentValues.put("Service_ID", serviceRequest.getServiceId());
@@ -726,7 +726,7 @@ public class DatabaseAccess {
         contentValues.put("Status", serviceRequest.getStatus());
         contentValues.put("Is_Reviewed", serviceRequest.isReviewed());
         long ins;
-        if (cursor.getCount() > 0) {
+        if (cursor.getCount() == 0) {
          ins = db.insert("service_request", null, contentValues);
         }
         else{

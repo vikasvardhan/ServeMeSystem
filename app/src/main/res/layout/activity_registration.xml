@@ -146,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_next_uTyp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
                         android:onClick="directView"
                         android:tag="userType"
                         android:text="Next"
-                        android:textColor="@color/color_on_secondary" />
+                        android:textColor="@color/color_on_primary" />
 
                 </LinearLayout>
 
@@ -191,9 +191,10 @@
                     android:id="@+id/firstTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edittext_firstName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -205,9 +206,10 @@
                     android:id="@+id/lstTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edittext_lastName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -219,9 +221,10 @@
                     android:id="@+id/emailtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edittext_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -234,9 +237,10 @@
                     android:id="@+id/phonetxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edittext_phonenumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -250,7 +254,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_back_initials"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -261,9 +265,9 @@
                         android:onClick="directView"
                         android:tag="back"
                         android:text="Back"
-                        android:textColor="@color/color_on_secondary" />
+                        android:textColor="@color/color_on_primary" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_next_init"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -273,7 +277,7 @@
                         android:onClick="directView"
                         android:tag="initials"
                         android:text="Next"
-                        android:textColor="@color/color_on_secondary" />
+                        android:textColor="@color/color_on_primary" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -302,28 +306,32 @@
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/addressTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/addressTxt"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
 
                     <com.seatgeek.placesautocomplete.PlacesAutocompleteTextView
                         android:id="@+id/edittext_address"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="70dp"
                         android:ems="15"
+                        android:textColor="@color/color_primary"
+                        android:textColorHint="@color/color_primary"
                         android:hint="@string/address"
                         app:pacv_googleMapsApiKey="AIzaSyBfy9-d4bO8-ok-dayM28eLkbn0as0I75A" />
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/cityTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edittext_city"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -335,9 +343,10 @@
                     android:id="@+id/stateTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edittext_state"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -350,9 +359,10 @@
                     android:id="@+id/pinCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edittext_pinCode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -366,7 +376,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_back_add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -377,9 +387,9 @@
                         android:onClick="directView"
                         android:tag="back"
                         android:text="Back"
-                        android:textColor="@color/color_on_secondary" />
+                        android:textColor="@color/color_on_primary" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_next_add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -389,7 +399,7 @@
                         android:onClick="directView"
                         android:tag="address"
                         android:text="Next"
-                        android:textColor="@color/color_on_secondary" />
+                        android:textColor="@color/color_on_primary" />
 
                 </LinearLayout>
 
@@ -437,9 +447,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:text="@string/services">
+                            android:text="@string/services"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 style="@style/Widget.Design.TextInputLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -458,9 +469,10 @@
                             android:id="@+id/sampleRate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp">
+                            android:layout_marginTop="20dp"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                            <EditText
+                            <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edittext_sampleRate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -473,9 +485,10 @@
                             android:id="@+id/tasks"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp">
+                            android:layout_marginTop="20dp"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                            <EditText
+                            <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edittext_tasks"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -483,16 +496,6 @@
                                 android:hint="@string/tasks" />
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <TextView
-                            android:id="@+id/lnkAddMore"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:gravity="center"
-                            android:text="Add More"
-                            android:textColor="@color/color_primary_variant"
-                            android:textStyle="bold" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -501,7 +504,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_back_services"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -512,9 +515,9 @@
                         android:onClick="directView"
                         android:tag="back"
                         android:text="Back"
-                        android:textColor="@color/color_on_secondary" />
+                        android:textColor="@color/color_on_primary" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_next_services"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -524,7 +527,7 @@
                         android:onClick="directView"
                         android:tag="services"
                         android:text="Next"
-                        android:textColor="@color/color_on_secondary" />
+                        android:textColor="@color/color_on_primary" />
 
                 </LinearLayout>
 
@@ -558,9 +561,10 @@
                     android:id="@+id/usrnameTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edittext_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -575,9 +579,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edittext_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -590,9 +595,10 @@
                     android:id="@+id/cnfpasswordText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edittext_cnf_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -605,7 +611,8 @@
                     android:id="@+id/checkBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <CheckBox
                         android:id="@+id/checkbox_consent"
@@ -622,7 +629,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_back_cred"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -633,9 +640,9 @@
                         android:onClick="directView"
                         android:tag="back_cred"
                         android:text="Back"
-                        android:textColor="@color/color_on_secondary" />
+                        android:textColor="@color/color_on_primary" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_register"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -643,7 +650,7 @@
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/gradient"
                         android:text="Register"
-                        android:textColor="@color/color_on_secondary" />
+                        android:textColor="@color/color_on_primary" />
                 </LinearLayout>
 
             </LinearLayout>

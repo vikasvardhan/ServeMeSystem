@@ -85,6 +85,7 @@ public class ServiceCategoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         categoryView = view.findViewById(R.id.service_category_list);
+        categoryList = new ArrayList<>();
         categoryList.add(new ServiceCategory("Appliances"));
         categoryList.add(new ServiceCategory("Electrical"));
         categoryList.add(new ServiceCategory("Plumbing"));

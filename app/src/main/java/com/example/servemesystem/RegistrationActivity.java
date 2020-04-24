@@ -115,7 +115,7 @@ public class RegistrationActivity extends AppCompatActivity {
         uNameText = findViewById(R.id.usrnameTxt);
         pwdText = findViewById(R.id.passwordText);
         cnfPwdText = findViewById(R.id.cnfpasswordText);
-        addressText = findViewById(R.id.addressTxt);
+//        addressText = findViewById(R.id.addressTxt);
         cityText = findViewById(R.id.cityTxt);
         stateText = findViewById(R.id.stateTxt);
         pinCodeText = findViewById(R.id.pinCode);
@@ -158,7 +158,7 @@ public class RegistrationActivity extends AppCompatActivity {
         cardVend.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardVend.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.color_primary));
+                cardVend.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.color_secondary));
                 cardCust.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.color_on_primary));
                 UserType = "vendor";
             }
@@ -343,11 +343,11 @@ public class RegistrationActivity extends AppCompatActivity {
                 valid = false;
             }
         } else if (type.equals("address")) {
-            addressText.setError(null);
-            if (isEmpty(address)) {
-                addressText.setError("\u2022 Address is required");
-                valid = false;
-            }
+//            addressText.setError(null);
+//            if (isEmpty(address)) {
+//                addressText.setError("\u2022 Address is required");
+//                valid = false;
+//            }
             cityText.setError(null);
             if (isEmpty(city)) {
                 cityText.setError("\u2022 City is required");
