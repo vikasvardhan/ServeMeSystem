@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,8 +63,11 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
 
         db = DatabaseAccess.getInstance(this);
         userId = sharedpreferences.getInt(UserAccount.USERID, -1);
+        Log.d("User ID", Integer.toString(userId));
         UserAccount uc = db.getAccount(userId);
         if(uc != null){
+            Log.d("Name: ", uc.getLastName() + ", " + uc.getFirstName());
+            Log.d("Email: ", uc.getEmail());
             name.setText(uc.getLastName() + ", " + uc.getFirstName());
             email.setText(uc.getEmail());
         }

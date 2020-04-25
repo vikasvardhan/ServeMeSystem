@@ -151,6 +151,7 @@ public class VendorManageConfirmed extends Fragment {
                 + ", V:" + Double.toString(vendorWallet)
                 + ", A:" + Double.toString(adminWallet);
         Log.d("Wallet figures: ", msg);
+        Log.d("Vendor Pay", Double.toString(vendorPay));
 
         AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(getActivity(),
                 R.style.ThemeOverlay_MaterialComponents_Dialog);
@@ -231,7 +232,7 @@ public class VendorManageConfirmed extends Fragment {
                         dialog.cancel();
                     }
                 });
-        confirmBuilder.show().getWindow().setLayout(600, 500);
+        confirmBuilder.show().getWindow().setLayout(650, 500);
     }
 
     @Override

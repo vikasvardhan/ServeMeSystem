@@ -38,6 +38,9 @@
     <string name="sync_header">Sync</string>
     <string name="base_header">Base</string>
 
+    <!-- Admin Activity -->
+    <string name="admin_heading">Admin Home</string>
+
     <!-- Base Preferences -->
     <string name="sound">Sound</string>
     <string name="receive_communication">Receive communication</string>
