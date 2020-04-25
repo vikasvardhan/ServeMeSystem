@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.seatgeek.placesautocomplete.DetailsCallback;
 import com.seatgeek.placesautocomplete.OnPlaceSelectedListener;
@@ -42,6 +43,7 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText email;
     EditText phoneNumber;
     EditText address;
+    EditText addressName;
     EditText city;
     EditText state;
     EditText pinCode;
@@ -100,6 +102,7 @@ public class RegistrationActivity extends AppCompatActivity {
         confirmPassword = findViewById(R.id.edittext_cnf_password);
         register = findViewById(R.id.button_register);
         address = findViewById(R.id.edittext_address);
+        addressName = findViewById(R.id.edittext_address_name);
         city = findViewById(R.id.edittext_city);
         state = findViewById(R.id.edittext_state);
         pinCode = findViewById(R.id.edittext_pinCode);
@@ -115,7 +118,7 @@ public class RegistrationActivity extends AppCompatActivity {
         uNameText = findViewById(R.id.usrnameTxt);
         pwdText = findViewById(R.id.passwordText);
         cnfPwdText = findViewById(R.id.cnfpasswordText);
-//        addressText = findViewById(R.id.addressTxt);
+        addressText = findViewById(R.id.addressTxt);
         cityText = findViewById(R.id.cityTxt);
         stateText = findViewById(R.id.stateTxt);
         pinCodeText = findViewById(R.id.pinCode);
@@ -174,7 +177,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(final PlaceDetails details) {
                                 Log.d("test", "details " + details);
-                                address.setText(details.name);
+                                addressName.setText(details.name);
                                 for (AddressComponent component : details.address_components) {
                                     for (AddressComponentType type : component.types) {
                                         switch (type) {
@@ -212,7 +215,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             username.getText().toString(),
                             password.getText().toString(),
                             UserType,
-                            address.getText().toString(),
+                            addressName.getText().toString(),
                             city.getText().toString(),
                             state.getText().toString(),
                             pinCode.getText().toString(),
@@ -220,7 +223,11 @@ public class RegistrationActivity extends AppCompatActivity {
                             sampleRate.getText().toString(),
                             tasks.getText().toString());
                     if (insert) {
-                        Toast.makeText(getApplicationContext(), "User Registered Succcessfully", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar
+                                .make(view, "\u2022 User Registered Succcessfully!", Snackbar.LENGTH_LONG);
+                        View sbView = snackbar.getView();
+                        sbView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.color_primary));
+                        snackbar.show();
 
                         Timer timer = new Timer();
                         timer.schedule(new TimerTask() {
@@ -343,11 +350,11 @@ public class RegistrationActivity extends AppCompatActivity {
                 valid = false;
             }
         } else if (type.equals("address")) {
-//            addressText.setError(null);
-//            if (isEmpty(address)) {
-//                addressText.setError("\u2022 Address is required");
-//                valid = false;
-//            }
+            addressText.setError(null);
+            if (isEmpty(addressName)) {
+                addressText.setError("\u2022 Address is required");
+                valid = false;
+            }
             cityText.setError(null);
             if (isEmpty(city)) {
                 cityText.setError("\u2022 City is required");
@@ -401,7 +408,11 @@ public class RegistrationActivity extends AppCompatActivity {
                 valid = false;
             }
             if (!db.checkUser(username.getText().toString())) {
-                Toast.makeText(getApplicationContext(), "User already exists!", Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar
+                        .make(this.getWindow().getDecorView().findViewById(android.R.id.content), "\u2022 User already exists!", Snackbar.LENGTH_LONG);
+                View sbView = snackbar.getView();
+                sbView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.color_secondary));
+                snackbar.show();
                 valid = false;
             }
             TextInputLayout consentChkBox = (TextInputLayout)findViewById(R.id.checkBox);
