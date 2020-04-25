@@ -2,6 +2,8 @@ package com.example.servemesystem;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -48,7 +50,10 @@ public class ServiceDetailFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    SharedPreferences sharedpreferences;
+    int userId;
     DatabaseAccess db;
+    View view;
 
     public ServiceDetailFragment() {
         // Required empty public constructor
@@ -75,17 +80,22 @@ public class ServiceDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_service_detail, container, false);
+        sharedpreferences = getActivity().getSharedPreferences(FirstFragment.PREFERENCES,
+                Context.MODE_PRIVATE);
+        userId = sharedpreferences.getInt(UserAccount.USERID, -1);
+
         return inflater.inflate(R.layout.fragment_service_detail, container, false);
     }
 
@@ -218,8 +228,8 @@ public class ServiceDetailFragment extends Fragment {
                     else
                         serviceRequest.setServiceId(Integer.parseInt(mParam1));
 
-                    serviceRequest.setCustomerId(1);
-                    serviceRequest.setVendorId(2);
+                    serviceRequest.setCustomerId(userId);
+//                    serviceRequest.setVendorId(2);
                     serviceRequest.setCategory(new ServiceCategory(categoryText.getText().toString()));
                     serviceRequest.setServiceTime(dateText.getText().toString() + " " + timeText.getText().toString());
                     serviceRequest.setLocation(locationText.getText().toString());

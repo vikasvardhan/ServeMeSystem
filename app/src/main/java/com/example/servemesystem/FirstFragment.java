@@ -77,15 +77,14 @@ public class FirstFragment extends Fragment {
                     if(userType.equals("customer")){
                         intent = new Intent(getActivity(), CustomerActivity.class);
                         startActivity(intent);
-//                        navController.navigate(R.id.customerActivity);
-//                        Integer settingsIntent = new Intent(getActivity(), CustomerActivity.class);
-//                        startActivity();
+                    }
+                    else if(userType.equals("admin")){
+                        intent = new Intent(getActivity(), AdminActivity.class);
+                        startActivity(intent);
                     }
                     else{
                         intent = new Intent(getActivity(), VendorHome.class);
                         startActivity(intent);
-//                        Intent settingsIntent = new Intent(getActivity(), VendorHome.class);
-//                        startActivity(settingsIntent);
                         navController.navigate(R.id.vendorHome);
                     }
                 }

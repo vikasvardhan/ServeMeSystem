@@ -230,7 +230,7 @@ public class DatabaseAccess {
                 " FROM service_request" +
                 " INNER JOIN service_bids" +
                 " ON service_request.Service_ID=service_bids.Service_ID AND service_request.Vendor_ID=service_bids.Vendor_ID" +
-                " LEFT JOIN vendor_ratings ON service_request.Vendor_ID=vendor_ratings.Vendor_ID" +
+                " LEFT JOIN vendor_ratings ON service_request.Service_ID=vendor_ratings.Service_ID" +
                 " LEFT JOIN user_account" +
                 " ON service_request.User_ID=user_account.user_id" +
                 " WHERE service_request.Vendor_ID=?" +
@@ -301,7 +301,7 @@ public class DatabaseAccess {
                 + " AND service_request.Vendor_ID=service_bids.Vendor_ID"
                 + " LEFT JOIN user_account"
                 + " ON service_request.Vendor_ID=user_account.user_id"
-                + " LEFT JOIN vendor_ratings ON service_request.Vendor_ID=vendor_ratings.Vendor_ID"
+                + " LEFT JOIN vendor_ratings ON service_request.Service_ID=vendor_ratings.Service_ID"
                 + " WHERE service_request.User_ID=?"
                 + " AND service_request.Status='Completed' AND service_bids.Status='Accepted'";
 
