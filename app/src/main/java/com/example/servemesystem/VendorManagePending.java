@@ -104,7 +104,7 @@ public class VendorManagePending extends Fragment {
 
     public void cancelBid(int position) {
         ServiceRequest currentServiceRequest
-                = (ServiceRequest) pendingRequests.get(currentRequestPosition);
+                = (ServiceRequest) pendingRequests.get(position);
 
         ServiceBid pendingBid = currentServiceRequest.getPendingBid();
         int pendingBidId = pendingBid.getBidId();

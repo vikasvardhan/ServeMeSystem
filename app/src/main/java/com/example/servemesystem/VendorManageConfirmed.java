@@ -141,6 +141,9 @@ public class VendorManageConfirmed extends Fragment {
         adminUc = db.getAccount("admin");
         adminWallet = adminUc.getWalletAmt();
 
+        Log.d("A (Before): ", adminWallet.toString());
+        Log.d("C (Before): ", customerWallet.toString());
+        Log.d("V (Before): ", vendorWallet.toString());
         //Calculate new values
         customerWallet = customerWallet - serviceCost;
         Double vendorPay = 0.8 * serviceCost;

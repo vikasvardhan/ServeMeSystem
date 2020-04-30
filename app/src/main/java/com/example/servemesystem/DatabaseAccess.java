@@ -502,12 +502,13 @@ public class DatabaseAccess {
         String user_type = "";
         UserAccount uc = null;
         open();
-        Cursor cursor = db.rawQuery("Select * from user_account where username = ?",
+        Cursor cursor = db.rawQuery("Select * from user_account " +
+                        " natural join wallet" +
+                        " where username = ?",
                 new String[]{username});
         if (cursor.moveToFirst()) {
 
             Log.d("SQL User found", "NEW USER");
-
             uc = new UserAccount();
             uc.setUserId(cursor.getInt(cursor.getColumnIndex("user_id")));
             uc.setUserType(cursor.getString(cursor.getColumnIndex("user_type")));
@@ -519,7 +520,7 @@ public class DatabaseAccess {
             uc.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
             uc.setPoints(cursor.getInt(cursor.getColumnIndex("points")));
             uc.setRating(cursor.getDouble(cursor.getColumnIndex("rating")));
-
+            uc.setWalletAmt(cursor.getDouble(cursor.getColumnIndex("Balance")));
             Log.d("SQL USERNAME", uc.getUsername());
         }
         return uc;
